@@ -1,0 +1,44 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Design Saved</h1>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <p class="item">Your design has been saved.
+                <span ng-show="email">A link has been mailed to {{email}} to access it in the future.
+                You can also list your designs using the Main Menu icon at the top right of the design
+                (though you'll need to create an account, if you haven't already).</span></p>
+            <p class="item">
+                <span ng-show="email">Otherwise, you can copy this link:</span>
+                <span ng-hide="email">To access this design in the future, you should copy this link:</span>
+                <a class="DesignURL" ng-href="{{designURL}}">Load {{designName}}</a></p>
+            <p class="item">You can also download a PDF copy of the design, key statistics,
+                and supporting calculations:</p>
+            <a class="item item-icon-left item-icon-right" ng-click="downloadPDF()">
+                <i class="icon ion-printer"></i>
+                Download PDF
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<modal-dialog ng-show="popupBlocked" class="ionic-ng-modal">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">PDF Popup Blocked</h1>
+    </div>
+    <div class="content dialog-header">
+        <div class="list">
+            <div class="item">
+                Your browser prevented me from opening the PDF.<br />
+                If you allow popups from this site, I will open PDFs<br />
+                automatically in the future.<br />
+                In the mean time, here's a link to click to open the PDF:
+            </div>
+            <a class="item item-icon-left item-icon-right" ng-click="openBlockedPDF()">
+                <i class="icon ion-model-s"></i>
+                View {{designName}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</modal-dialog>

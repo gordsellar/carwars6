@@ -1,0 +1,51 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Regenerate</h1>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <a class="item item-icon-left item-icon-right" ng-click="start()" ng-class="{'link-disabled': running}">
+                <i class="icon ion-refresh"></i>
+                Start Regenerate
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <checkbox-item ng-model="generatePDF" ng-hide="running">Regenerate PDF</checkbox-item>
+            <checkbox-item ng-model="generateImage" ng-hide="running">Regenerate Image</checkbox-item>
+            <checkbox-item ng-model="generateText" ng-hide="running">Overwrite Text/Tech/Pass</checkbox-item>
+            <label class="item item-input">
+                <span class="input-label">{{total}}<span ng-show="generate"> ({{generateCount}})</span>:</span>
+                <input type="number" ng-model="count">
+            </label>
+        </div>
+        <div class="card">
+            <div class="item narrow" style="text-align: center;"><b>"{{designName}}"<br />by {{authorName}}</b></div>
+            <div class="item item-image verynarrow" ng-show="running">
+                <img ng-src="{{thumbnail}}" alt="Design Thumbnail" width="233" height="200" style="width: 233px;"/>
+            </div>
+        </div>
+        <div class="list" ng-show="errorMessage">
+            <div class="item"><span ng-style="{color: costColor}">${{calculatedCost}}/{{loadedCost}}</span>
+                <span ng-style="{color: weightColor}">{{calculatedWeight}}/{{loadedWeight}} lbs</span></div>
+            <p class="item" ng-style="{'-moz-user-select': 'text', color: stockColor}">{{errorID}}</p>
+            <p class="item">{{errorMessage}}</p>
+            <label class="item item-input" ng-show="sql">
+                <span class="input-label">SQL:</span>
+                <input type="sql" value="{{sql}}">
+            </label>
+            <a class="item item-icon-right" ng-href="/load/{{errorID}}" target="_blank">
+                Load {{errorName}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-right" ng-href="/content/designs/{{errorID}}.pdf" target="_blank">
+                PDF for {{errorName}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+        <div class="list" ng-show="generatePDF || generateText || generateImage">
+            <label class="item item-input item-stacked-label verynarrow">
+                <span class="input-label">Generate Results:</span>
+                <textarea rows="6">{{generateResults}}</textarea>
+            </label>
+        </div>
+    </div>
+</div>

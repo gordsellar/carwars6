@@ -1,0 +1,137 @@
+<div class="hover-name" ng-click="processClick('design')"
+     ng-mouseenter="setHoverText('Design Name')" ng-mouseleave="setHoverText('')"
+     style="top: 60px; position: relative; display: inline-block; font-size: 30px; cursor: pointer; color: green; z-index: 1; white-space: nowrap;">{{hoverName}}{{lastSavedID ? " (Saved)" : ""}}</div>
+<div class="hover-text" style="position:absolute; left:0; width: 100%; font-size: 50px; pointer-events: none; color: green; text-align: center; z-index: 2;"
+     ng-style="{'bottom': hoverOffset}">{{hoverText}}</div>
+<div class="toolbar" toolbar-popup style="position:absolute; left:0; width: 100%; z-index: 4; background-color: white;"
+     ng-style="{'bottom': popupOffset}" ng-show="popupVisible">
+</div>
+<div class="status" ng-controller="StatusCtrl">
+    <div class="label cost">Cost</div>
+    <div class="field cost">{{carCost}}</div>
+    <div class="label weight">Weight</div>
+    <div class="field weight" ng-style="{'color': carOverweight}">{{carWeight}}</div>
+    <div class="label space">Space</div>
+    <div class="field space" ng-style="{'color': carOverspace}">{{carSpace}}</div>
+    <div class="label cargo" ng-show="cargo">Cargo</div>
+    <div class="field cargo" ng-show="cargo" ng-style="{'color': cargoOverspace}">{{cargoSpace}}</div>
+    <div class="label hc" ng-hide="carrierSpace || !engine">HC</div>
+    <div class="field hc" ng-hide="carrierSpace || !engine">{{carHC}}</div>
+    <div class="label acceleration" ng-hide="carrierSpace || !engine">Acceleration</div>
+    <div class="field acceleration" ng-hide="carrierSpace || !engine" ng-style="{'color': carUnderpowered}">{{carAcceleration}}</div>
+    <div class="label topspeed" ng-hide="carrierSpace || !engine">Top Speed</div>
+    <div class="field topspeed" ng-hide="carrierSpace || !engine" ng-style="{'color': carUnderpowered}">{{carTopSpeed}}</div>
+    <div class="label carrier-weight" ng-if="carrierWeight">Carrier Weight</div>
+    <div class="field carrier-weight" ng-if="carrierWeight" ng-style="{'color': carrierOverweight}">{{carrierWeight}}</div>
+    <div class="label carrier-space" ng-if="carrierSpace">Carrier Space</div>
+    <div class="field carrier-space" ng-if="carrierSpace" ng-style="{'color': carrierOverspace}">{{carrierSpace}}</div>
+</div>
+<div ng-show="sidecar" class="Sidecar Weight Label">Sidecar Weight</div>
+<div ng-show="sidecar" class="Sidecar Weight Field" ng-style="{'color': sidecarOverweight}">{{sidecarWeight}}</div>
+<div ng-show="sidecar" class="Sidecar Space Label">Sidecar Space</div>
+<div ng-show="sidecar" class="Sidecar Space Field" ng-style="{'color': sidecarOverspace}">{{sidecarSpace}}</div>
+<a class="button tight-button" style="position: absolute; right:5px; top: 60px; z-index: 1;" href
+   ng-mouseenter="setHoverText('Main Menu')" ng-mouseleave="setHoverText('')"
+   ng-click="showMainMenu()">
+    <i class="icon ion-clipboard" style="display: block;"></i>
+    Menu
+</a>
+<a class="button tight-button" style="position: absolute; right:95px; top: 60px; z-index: 1;" href
+   ng-mouseenter="setHoverText('Design Diagram')" ng-mouseleave="setHoverText('')" ng-show="show2D"
+   ng-click="setDisplay('2D')">
+    <i class="icon ion-ios7-film-outline" style="display: block;"></i>
+    Diagram
+</a>
+<a class="button tight-button" style="position: absolute; right:95px; top: 60px; z-index: 1;" href
+   ng-mouseenter="setHoverText('Exterior View')" ng-mouseleave="setHoverText('')" ng-show="show3D"
+   ng-click="setDisplay('3D')">
+    <i class="icon ion-model-s" style="display: block;"></i>
+    Exterior
+</a>
+<a class="button tight-button" style="position: absolute; right:50px; top: 60px; z-index: 1;" href
+   ng-mouseenter="setHoverText('Change to CWC Tech')" ng-mouseleave="setHoverText('')"
+   ng-show="classicTech" ng-click="processClick('techLevelCWC')">
+    <i class="icon ion-trophy" style="display: block;"></i>
+    Classic
+</a>
+<a class="button tight-button" style="position: absolute; right:50px; top: 60px; z-index: 1;" href
+   ng-mouseenter="setHoverText('Change to UACFH Tech')" ng-mouseleave="setHoverText('')"
+   ng-show="techLevel === 'CWC'" ng-click="processClick('techLevelUACFH')">
+    <i class="icon ion-speedometer" style="display: block;"></i>
+    CWC
+</a>
+<a class="button tight-button" style="position: absolute; right:50px; top: 60px; z-index: 1;" href
+   ng-mouseenter="showMinimumTechLevel()" ng-mouseleave="setHoverText('')"
+   ng-show="techLevel === 'All'" ng-click="processClick('techLevelClassic')">
+    <i class="icon ion-nuclear" style="display: block;"></i>
+    UACFH
+</a>
+<div ng-class="{'legal': legal}">
+    <div class="illegal" ng-mouseover="revealWarnings()" style="left: 5px; top: 70px;">Illegal Design</div>
+    <div class="illegal" ng-mouseover="revealWarnings()" style="left: 5px" ng-style="{'bottom': hoverOffset}">Illegal Design</div>
+    <div class="illegal" ng-mouseover="revealWarnings()" style="right: 5px;" ng-style="{'bottom': hoverOffset}">Illegal Design</div>
+</div>
+<div class="notifications" ng-show="errorMessages.length > 0 || infoMessages.length > 0" ng-style="{'bottom': (hoverOffset.substr(0,2)-10)+'px'}"
+     style="position:absolute; left:0; width: 100%; font-size: 16px; pointer-events: none; text-align: center; z-index: 1; padding: 0 170px;">
+    <div style="display: inline-block;">
+        <div class="notes" style="color: green; text-align: left;" ng-repeat="message in infoMessages">{{message}}</div>
+        <div class="errors" style="color: red; text-align: left;" ng-repeat="message in errorMessages">{{message}}</div>
+    </div>
+</div>
+<div class="toolbar button-bar" style="position: absolute; left: 0;"
+     ng-mouseleave="toolbarHover('')" ng-style="{'bottom': toolbarOffset}">
+    <a class="button tight-button" href ng-mouseenter="toolbarHover('Body Basics')" ng-click="processClick('editBody', null, true)">
+        <img src="images/136-tractor.png" width="35" height="25"/><div class="label">Body</div>
+    </a>
+    <a class="button tight-button" href ng-mouseenter="toolbarHover('Crew')" ng-click="processClick('crewList', null, true)"
+       ng-mouseleave="toolbarHover('')">
+        <img src="images/112-group.png" width="32" height="21"/><div class="label">Crew</div>
+    </a>
+    <a class="button tight-button" href ng-click="processClick('engineList', null, true)" ng-mouseleave="toolbarHover('')"
+       ng-mouseenter="toolbarHover(checkEngine ? 'Power '+checkEngine+'lbs. under Max Wt.' : 'Engine')"
+       ng-disabled="!engine">
+        <img ng-src="{{checkEngine ? 'images/check-engine.png' : 'images/81-dashboard.png'}}" width="42" height="28"/><div class="label">Engine</div>
+    </a>
+    <a class="button tight-button" href ng-mouseenter="toolbarHover('Gas Tank')"
+       ng-click="processClick('editGasTank', null, true)" ng-disabled="electric">
+        <img src="images/47-fuel.png" width="28" height="24"/><div class="label">Gas Tank</div>
+    </a>
+    <a class="button tight-button" href ng-mouseenter="toolbarHover('Tires')" ng-click="processClick('tireList', null, true)"
+       ng-mouseleave="toolbarHover('')">
+        <img src="images/90-life-buoy.png" width="24" height="24"/><div class="label">Tires</div>
+    </a>
+    <a class="button tight-button" href ng-mouseenter="toolbarHover('Performance')" ng-click="processClick('performanceMods', null, true)">
+        <img src="images/139-flags.png" width="42" height="21"/><div class="label">Sport</div>
+    </a>
+    <a class="button tight-button" href ng-mouseenter="toolbarHover('Modifications')" ng-click="processClick('bodyMods', null, true)"
+       ng-mouseleave="toolbarHover('')">
+        <img src="images/135-hockeymask.png" width="20" height="26"/><div class="label">Mods</div>
+    </a>
+    <a class="button tight-button" href ng-mouseenter="toolbarHover('Turrets')" ng-click="processClick('turretList', null, true)"
+       ng-disabled="turretDisabled">
+        <img src="images/131-tower.png" width="15" height="24"/><div class="label">Turret</div>
+    </a>
+    <a class="button tight-button" href ng-mouseenter="toolbarHover('Weapons')" ng-click="processClick('weaponLocations', null, true)"
+       ng-mouseleave="toolbarHover('')">
+        <img src="images/281-bullets.png" width="27" height="23"/><div class="label">Weapons</div>
+    </a>
+    <a class="button tight-button" href ng-mouseenter="toolbarHover('Armor')" ng-click="processClick('armor', null, true)">
+        <img src="images/134-viking.png" width="26" height="17"/><div class="label">Armor</div>
+    </a>
+    <a class="button tight-button" href ng-mouseenter="toolbarHover('Accessories')" ng-click="processClick('gearTypes', null, true)"
+       ng-mouseleave="toolbarHover('')">
+        <img src="images/73-radar.png" width="27" height="27"/><div class="label">Gear</div>
+    </a>
+    <!--                <a class="button tight-button notyet" href ng-mouseenter="toolbarHover('Repair &amp; Salvage (Not Yet)')"
+                       ng-show="mainDisplay === '2d'">
+                        <img src="images/157-wrench.png" width="24" height="24"/><div class="label">Repair</div>
+                    </a>-->
+    <a class="button tight-button" href ng-mouseenter="toolbarHover('3D Print')"
+       ng-disabled="!show3D && mainDisplay !== '3d'" ng-click="openScreen('stl')">
+        <i class="icon ion-printer"></i><div class="label">3D Print</div>
+    </a>
+    <a class="button tight-button" href ng-mouseenter="toolbarHover('Design Info')" ng-click="processClick('design', null, true)"
+       ng-mouseleave="toolbarHover('')">
+        <img src="images/85-trophy.png" width="24" height="24"/><div class="label">Design</div>
+    </a>
+</div>

@@ -1,0 +1,77 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Review Stock Car</h1>
+        <button class="button button-dark icon ion-ios7-undo" ng-click="returnToList()" ng-hide="tagging">Back</button>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <div ng-hide="tagging">
+                <div class="item item-divider">Review This Design</div>
+                <div class="item"><span ng-class="{'text-disabled': !loggedIn || sameAsAuthor}">Your Rating:</span>
+                    <span assign-stars="rating" ng-disabled="!loggedIn || sameAsAuthor"></span>
+                </div>
+                <label class="item item-input item-stacked-label verynarrow">
+                    <span class="input-label" ng-class="{'text-disabled': !loggedIn}"><i class="ion-edit"></i>
+                        <span ng-show="sameAsAuthor">Designer Notes:</span><span ng-hide="sameAsAuthor">Your Comments:</span></span>
+                    <textarea placeholder="Would be great arena design with a bit more armor..." style="height: 103px;"
+                              ng-disabled="!loggedIn" ng-model="comments"></textarea>
+                </label>
+                <a class="item item-icon-left item-icon-right slim" ng-click="tagging=true" ng-class="{'link-disabled': !loggedIn}">
+                    <i class="icon ion-pricetags"></i>
+                    Your Tags: {{tags}}
+                    <span ng-hide="tags" class="italic">none yet</span>
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+                <a class="item item-icon-left item-icon-right" ng-click="saveReview()"
+                   ng-class="{'link-disabled': !changed}" ng-show="loggedIn">
+                    <i class="icon ion-archive"></i>
+                    {{reviewed ? 'Update' : 'Save'}} Your Review
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+                <a class="item item-icon-left item-icon-right slim" ng-click="login()" ng-hide="loggedIn">
+                    <i class="icon ion-log-in"></i>
+                    <b>Sign in</b><br />to review this design
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+
+                <div class="item item-divider">Use This Design</div>
+                <a class="item item-icon-left item-icon-right" ng-click="editDesign()">
+                    <i class="icon ion-compose"></i>
+                    Customize Design
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+                <a class="item item-icon-left item-icon-right" ng-click="shareDesign()">
+                    <i class="icon ion-email"></i>
+                    Share Design
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+                <a class="item item-icon-left item-icon-right" ng-href="/content/designs/{{designId}}.pdf"
+                   target="_blank" ng-class="{'link-disabled': !stockConfirmed}">
+                    <i class="icon ion-printer"></i>
+                    Download PDF
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+
+                <div class="item item-divider">More Stock Cars</div>
+                <a class="item item-icon-left" ng-click="returnToList()">
+                    <i class="icon ion-ios7-undo"></i>
+                    Return to Stock Car List
+                </a>
+            </div>
+            <div ng-show="tagging">
+                <div class="item" style="padding: 0;">
+                    <div class="row" ng-repeat="option in tagOptions">
+                        <div class="col"><button class="button button-block GridButton" style="min-height: 37px; line-height: 32px;" ng-class="{'button-positive': selectedTags[option[0]]}"  ng-click="selectTag(option[0])">{{option[0]}}</button></div>
+                        <div class="col"><button class="button button-block GridButton" style="min-height: 37px; line-height: 32px;" ng-class="{'button-positive': selectedTags[option[1]]}"  ng-click="selectTag(option[1])">{{option[1]}}</button></div>
+                        <div class="col"><button class="button button-block GridButton" style="min-height: 37px; line-height: 32px;" ng-class="{'button-positive': selectedTags[option[2]]}"  ng-click="selectTag(option[2])">{{option[2]}}</button></div>
+                    </div>
+                </div>
+                <a class="item item-icon-left slim" ng-click="tagging=false">
+                    <i class="icon ion-ios7-undo"></i>
+                    Done tagging
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div inline="views/share.html"></div>

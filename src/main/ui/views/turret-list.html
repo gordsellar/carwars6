@@ -1,0 +1,87 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Turrets &amp; EWPs</h1>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <div class="item item-divider">{{tenWheeler}}Top {{oversize}}Mount</div>
+            <div class="TopTurret">
+                <a class="item item-icon-left item-icon-right" ng-hide="topTurret" ng-repeat="option in topOptions"
+                   ng-class="{'link-disabled':option.disabled, 'narrow': !bigList, 'mednarrow': bigList}" ng-click="createTopTurret(option.name)">
+                    <i class="icon ion-cube"></i>
+                    <b>{{option.name}}</b><br />
+                    {{option.range ? "Up to" : ""}} {{option.max}}-sp {{option.max === 0 ? "(TL)" : ""}}
+                    @ ${{option.cost}}, {{option.weight}} lbs.
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+                <a class="item item-icon-left item-icon-right" ng-show="topTurret"
+                   ng-class="{'narrow': !bigList, 'mednarrow': bigList}"
+                   ng-click="editTurret('TopTurret')">
+                    <i class="icon ion-cube"></i>
+                    <b>{{topTurret.fake ? "Fake " : ""}}{{topTurret.name}}</b><br />
+                    {{topTurret.size}}-sp {{topTurret.size === 0 ? "(TL)" : ""}}
+                    @ ${{topTurret.baseCost()}}, {{topTurret.baseWeight()}} lbs.
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+            </div>
+            <div class="item item-divider">{{tenWheeler}}Side {{oversize}}Mounts</div>
+            <div class="SideTurret">
+                <a class="item item-icon-left item-icon-right " ng-hide="sideTurret" ng-repeat="option in sideOptions"
+                   ng-class="{'link-disabled':option.disabled, 'narrow': !bigList, 'mednarrow': bigList}"
+                   ng-click="createSideTurret(option.name)">
+                    <i class="icon ion-code-working"></i>
+                    <b>{{option.name}}</b><br />
+                    {{option.range ? "Up to" : ""}} {{option.max}}-sp {{option.max === 0 ? "(TL)" : ""}}
+                    @ ${{option.cost}}, {{option.weight}} lbs.
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+                <a class="item item-icon-left item-icon-right" ng-show="sideTurret"
+                   ng-click="editTurret('SideTurret')" ng-class="{'narrow': !bigList, 'mednarrow': bigList}">
+                    <i class="icon ion-cube"></i>
+                    <b>{{sideTurret.fake ? "Fake " : ""}}{{sideTurret.name}}</b><br />
+                    {{sideTurret.size}}-sp {{sideTurret.size === 0 ? "(TL)" : ""}}
+                    @ ${{sideTurret.baseCost()}}, {{sideTurret.baseWeight()}} lbs.
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+            </div>
+
+            <div ng-show="sidecarTurret || sidecarOptions">
+                <div class="item item-divider">Sidecar Turret</div>
+                <div class="SidecarTurret">
+                    <a class="item item-icon-left item-icon-right narrow" ng-hide="sidecarTurret" ng-repeat="option in sidecarOptions"
+                       ng-class="{'link-disabled':option.disabled || classicTech}" ng-click="createSidecarTurret(option.name)">
+                        <i class="icon ion-code-working"></i>
+                        <b>{{option.name}}</b><br />
+                        {{option.range ? "Up to" : ""}} {{option.max}}-sp {{option.max === 0 ? "(TL)" : ""}}
+                        @ ${{option.cost}}, {{option.weight}} lbs.
+                        <i class="icon ion-chevron-right icon-accessory"></i>
+                    </a>
+                    <a class="item item-icon-left item-icon-right narrow" ng-show="sidecarTurret"
+                       ng-click="processClick('editSidecarTurret')">
+                        <i class="icon ion-cube"></i>
+                        <b>{{sidecarTurret.fake ? "Fake " : ""}}{{sidecarTurret.name}}</b><br />
+                        {{sidecarTurret.size}}-sp {{sidecarTurret.size === 0 ? "(TL)" : ""}}
+                        <span ng-hide="sidecarTurret.builtIn">@ ${{sidecarTurret.baseCost()}}, {{sidecarTurret.baseWeight()}} lbs.</span>
+                        <span ng-show="sidecarTurret.builtIn">(Built In)</span>
+                        <i class="icon ion-chevron-right icon-accessory"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="list" ng-show="tenWheeler">
+            <a class="item item-icon-left item-icon-right slim" ng-click="toggleCarrier()">
+                <i class="icon" ng-class="{'ion-model-s':switchTitle === 'Cab','ion-stop': switchTitle === 'Carrier'}"></i>
+                Turrets &amp; EWPs on {{switchTitle}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+        <div class="list" ng-show="oversize">
+            <a class="item item-icon-left item-icon-right slim" ng-click="switchHalf()">
+                <i class="icon" ng-class="{'ion-arrow-right-b':switchTitle === 'Front','ion-arrow-left-b': switchTitle === 'Back'}"></i>
+                {{switchTitle}} Turrets &amp; EWPs
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</div>

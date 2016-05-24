@@ -1,0 +1,16 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <button class="button" ng-click="showSpaces()">{{spaces}} space{{spaces === 1 ? '' : 's'}}</button>
+        <h1 class="title">Weapon Types</h1>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <a class="item item-icon-left item-icon-right"
+               ng-repeat="category in categories" ng-click="selectCategory(category)" ng-class="{'link-disabled':category.disabled}">
+                <i class="icon ion-pinpoint"></i>
+                {{category.name}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</div>

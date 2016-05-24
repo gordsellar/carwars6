@@ -1,0 +1,29 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Car Summary</h1>
+    </div>
+    <div class="content has-header">
+        <div ng-class="{SmallText: size > 1160 && size < 1800, SmallerText: size >= 1800}">
+            <p class="Selectable">{{designText}}</p>
+            <p class="Selectable" ng-show="extraText">{{extraText}}</p>
+        </div>
+        <br />
+        <div class="list">
+            <a class="item item-icon-left item-icon-right" ng-click="loadPrevious()" ng-show="history.length">
+                <i class="icon ion-ios7-albums"></i>
+                Previous Version
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="startTour()">
+                <i class="icon ion-map"></i>
+                Take the Tour
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+        <p><i>Basic Operation: click things in the vehicle design to edit them.  For the stuff where there's
+            no obvious place to click (like to add a turret), use the toolbar buttons below the design.</i></p>
+        <p><i>You can always click on the background around the design to get back to this summary screen.</i></p>
+        <p><i>Finally, if you want quick links to save a design, start over, or load your existing designs,
+            click the main menu (clipboard) icon in the top right of the design.</i></p>
+    </div>
+</div>

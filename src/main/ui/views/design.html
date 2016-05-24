@@ -1,0 +1,113 @@
+<div class="ionic-body">
+    <div class="content DesignPage">
+        <div class="list">
+            <div ng-hide="colorPicker">
+                <div class="item item-divider">Configure Design</div>
+                <label class="item item-input">
+                    <input type="text" placeholder="Design Name" ng-model="designName" ng-change="changeName()" focus-by-default>
+                </label>
+                <a class="item item-icon-left item-icon-right" ng-click="colorPicker=true">
+                    <i class="icon ion-flame" style="color: red"></i>
+                    Change Vehicle Color
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+                <checkbox-item ng-model="handWeaponWeight" ng-disabled="classicTech">Weight for Personal Equipment</checkbox-item>
+
+                <div class="item item-divider">Tech Level</div>
+                <label class="item item-radio radio-narrow">
+                    <input type="radio" ng-model="tech" value="Classic" name="tech">
+                    <i class="radio-icon ion-checkmark"></i>
+                    <div class="item-content">Classic Technology</div>
+                </label>
+                <label class="item item-radio radio-narrow">
+                    <input type="radio" ng-model="tech" value="CWC" name="tech">
+                    <i class="radio-icon ion-checkmark"></i>
+                    <div class="item-content">CWC Technology</div>
+                </label>
+                <label class="item item-radio radio-narrow">
+                    <input type="radio" ng-model="tech" value="All" name="tech">
+                    <i class="radio-icon ion-checkmark"></i>
+                    <div class="item-content">UAFCH+Pyramid Technology </div>
+                </label>
+                <label class="item item-radio radio-narrow">
+                    <input type="radio" ng-model="tech" value="Military" name="tech">
+                    <i class="radio-icon ion-checkmark"></i>
+                    <div class="item-content">Military Technology</div>
+                </label>
+
+
+                <div class="item item-divider">Design Options</div>
+
+                <a class="item item-icon-left item-icon-right" ng-click="saveDesign()">
+                    <i class="icon ion-archive"></i>
+                    Save Design
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+                <a class="item item-icon-left item-icon-right" ng-click="shareDesign()">
+                    <i class="icon ion-email"></i>
+                    Share Design
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+                <a class="item item-icon-left item-icon-right link-disabled" ng-click="addToList()">
+                    <i class="icon ion-images"></i>
+                    Add to List
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+                <a class="item item-icon-left item-icon-right" ng-click="downloadPDF()">
+                    <i class="icon ion-printer"></i>
+                    Download PDF
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+                <a class="item item-icon-right" ng-click="showScript()" ng-show="qaPresent">
+                    Recorded QA Script
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+            </div>
+
+            <div ng-show="colorPicker">
+                <div class="item" style="padding: 0;">
+                    <div class="row" ng-repeat="row in colorGrid">
+                        <div class="col" ng-repeat="col in row">
+                            <button class="button button-block button-clear ColorButton"
+                                    ng-style="{'background-color': col, 'border-color': col === color ? 'black' : 'transparent'}"
+                                    ng-mouseenter="tempColor(col)" ng-mouseleave="clearColor()" ng-click="setColor(col)"></button>
+                        </div>
+                    </div>
+                </div>
+                <a class="item item-icon-left slim" ng-click="colorPicker=false">
+                    <i class="icon ion-ios7-undo"></i>
+                    Done with colors
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<modal-dialog ng-show="popupBlocked" class="ionic-ng-modal">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">PDF Popup Blocked</h1>
+    </div>
+    <div class="content dialog-header">
+        <div class="list">
+            <div class="item">
+    Your browser prevented me from opening the PDF.<br />
+    If you allow popups from this site, I will open PDFs<br />
+    automatically in the future.<br />
+    In the mean time, here's a link to click to open the PDF:
+            </div>
+            <a class="item item-icon-left item-icon-right" ng-click="openBlockedPDF()">
+                <i class="icon ion-model-s"></i>
+                View {{designName || 'Unnamed Design'}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</modal-dialog>
+<modal-dialog ng-show="showQA" class="ionic-ng-modal">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">QA Script Recording</h1>
+    </div>
+    <div class="content dialog-header">
+        <textarea ng-model="qaScript" rows="15"></textarea>
+    </div>
+</modal-dialog>
+<div inline="views/share.html"></div>

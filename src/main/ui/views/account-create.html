@@ -1,0 +1,30 @@
+<modal-dialog ng-show="visible" class="ionic-ng-modal" on-close="closing()">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Create Account</h1>
+    </div>
+    <div class="content dialog-header">
+        <form method="post" onsubmit="return false;">
+            <button style="position: absolute; left: -9999px;" tabindex="1000" data-role="none" ng-disabled="!ready" ng-click="createAccount()"></button>
+            <div class="list">
+                <p class="item">An account will let you list your designs from right here within
+                  the app and make your own custom designs lists.<br />To create
+                  an account, enter your e-mail address and I'll send you an e-mail with
+                  the next step.</p>
+                <label class="item item-input">
+                    <input type="email" placeholder="E-mail Address" ng-model="email" ng-change="validate()" name="email" focus-by-default>
+                </label>
+
+                <div class="item item-icon-left" ng-show="working">
+                    <i class="icon ion-loading-a"></i>
+                    Creating an account...
+                </div>
+            </div>
+            <div class="list">
+                <a class="item item-icon-right" ng-click="createAccount()" ng-class="{'link-disabled': !ready}">
+                    Create Account
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+            </div>
+        </form>
+    </div>
+</modal-dialog>

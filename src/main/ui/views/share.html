@@ -1,0 +1,33 @@
+<modal-dialog ng-show="shareVisible" class="ionic-ng-modal" on-close="shareClosing()">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Share Design</h1>
+    </div>
+    <div class="content dialog-header">
+        <div class="list">
+            <p class="item">You can post or e-mail this link to {{designName}}:</p>
+            <label class="item item-input">
+                <input type="text" placeholder="Link to load design" ng-model="designURL" readonly
+                       name="designURL" select-by-default style="background-color: lightgrey; cursor: copy;">
+            </label>
+            <div ng-if="designPDF">
+                <p class="item">And here's the link to download a PDF:</p>
+                <label class="item item-input">
+                    <input type="text" placeholder="Link to download design PDF" ng-model="designPDF"
+                           name="designPDF" style="background-color: lightgrey; cursor: copy;" readonly>
+                </label>
+            </div>
+            <p class="item">And here's the full text of the design if you want to post that:</p>
+            <label class="item item-input verynarrow">
+                <textarea placeholder="Design description" rows="6" ng-model="designText"
+                          style="background-color: lightgrey; cursor: copy;" readonly></textarea>
+            </label>
+        </div>
+
+        <div class="list">
+            <a class="item item-icon-right" ng-click="shareVisible=false">
+                Done
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</modal-dialog>

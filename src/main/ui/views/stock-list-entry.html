@@ -1,0 +1,72 @@
+<div ng-controller="StockListCtrl">
+    <div style="font-size: 24px; font-weight: bold; width: 100%; text-align: center; padding-bottom: 5px;">{{listType}}</div>
+    <div class="StockCarDiv ID{{data.id}}" ng-repeat="data in stockCars">
+        <div class="StockCarName" ng-click="zoomTo($event, data)"
+             ng-class="{StockCarMine: data.author_email === currentUser, StockReviewed: data.author_email !== currentUser && data.rated}"
+             title="{{data.author_email === currentUser ? 'You created this design' : data.rated ? 'You\'ve reviewed this design' : 'Click to review or open this design'}}">{{data.name}}</div>
+        <img class="StockCarDiagram" ng-src="{{data.url}}" alt="Not a stock car; no diagram generated" width="233" height="200"
+             ng-click="zoomTo($event, data)"/>
+        <div class="StockCar Cost Label Row1">Cost</div>
+        <div class="StockCar Cost Field Row1">{{data.cost}}</div>
+        <div class="StockCar Body Label Row1">Body</div>
+        <div class="StockCar Body Field Row1">{{data.body}}</div>
+        <div class="StockCar Tech Label Row2">Tech Level</div>
+        <div class="StockCar Tech Field Row2" ng-bind="data.tech_level"></div>
+        <div ng-hide="data.vehicle === 'SemiTrailer' || data.vehicle === 'CarTrailer' || data.vehicle === 'Bus'">
+            <div class="StockCar HC Label Row1" ng-class="{'Tight': data.average_rating}">HC</div>
+            <div class="StockCar HC Field Row1" ng-class="{'Tight': data.average_rating}">{{data.hc}}</div>
+        </div>
+        <div ng-show="data.vehicle === 'Bus'">
+            <div class="StockCar HC Label Row1" ng-class="{'Tight': data.average_rating}">Pass</div>
+            <div class="StockCar HC Field Row1" ng-class="{'Tight': data.average_rating}">{{data.passengers}}</div>
+        </div>
+        <div ng-show="data.vehicle === 'TenWheeler' || data.vehicle === 'CarTrailer' || data.vehicle === 'Bus'">
+            <div class="StockCar CargoWeight Label Row2">Cargo Weight</div>
+            <div class="StockCar CargoWeight Field Row2">{{data.cargo_weight == null ? '' : data.cargo_weight}}</div>
+            <div class="StockCar CargoSpace Label Row2">Crg. Space</div>
+            <div class="StockCar CargoSpace Field Row2">{{data.cargo_space == null ? '' : data.cargo_space}}</div>
+        </div>
+        <div ng-show="data.vehicle === 'SemiTractor'">
+            <div class="StockCar CargoWeight Label Row2">Max Pull</div>
+            <div class="StockCar CargoWeight Field Row2">{{data.cargo_weight == null ? '' : data.cargo_weight}}</div>
+        </div>
+        <div ng-show="data.vehicle === 'SemiTrailer'">
+            <div class="StockCar CargoWeight Label Row2">Total Weight</div>
+            <div class="StockCar CargoWeight Field Row2">{{data.weight == null ? '' : data.weight}}</div>
+            <div class="StockCar CargoSpace Label Row2">Crg. Space</div>
+            <div class="StockCar CargoSpace Field Row2">{{data.cargo_space == null ? '' : data.cargo_space}}</div>
+        </div>
+        <div ng-show="data.vehicle === 'Car' || data.vehicle === 'Cycle' || data.vehicle === 'Trike'">
+            <div class="StockCar Acceleration Label Row2">Acceleration</div>
+            <div class="StockCar Acceleration Field Row2">{{data.acceleration}}</div>
+            <div class="StockCar Speed Label Row2">Top Speed</div>
+            <div class="StockCar Speed Field Row2">{{data.top_speed}}</div>
+        </div>
+        <div class="StockCarTags" ng-bind="data.tagList"></div>
+        <div class="StockCarStars" ng-show="data.average_rating"><span ng-class="{'StockCarStarOn': data.average_rating >= 0.5}">1</span><span ng-class="{'StockCarStarOn': data.average_rating >= 1}" class="StockCarStarRight">1</span><span ng-class="{'StockCarStarOn': data.average_rating >= 1.5}">2</span><span ng-class="{'StockCarStarOn': data.average_rating >= 2}" class="StockCarStarRight">2</span><span ng-class="{'StockCarStarOn': data.average_rating >= 2.5}">3</span><span ng-class="{'StockCarStarOn': data.average_rating >= 3}" class="StockCarStarRight">3</span><span ng-class="{'StockCarStarOn': data.average_rating >= 3.5}">4</span><span ng-class="{'StockCarStarOn': data.average_rating >= 4}" class="StockCarStarRight">4</span><span ng-class="{'StockCarStarOn': data.average_rating >= 4.5}" class="">5</span><span ng-class="{'StockCarStarOn': data.average_rating >= 5}" class="StockCarStarRight">5</span></div>
+    </div>
+    <div style="width: 100%; text-align: center;">
+        <button class="button icon-left ion-chevron-left" ng-show="stockPrevious || stockNext"
+                ng-disabled="!stockPrevious" ng-click="stockPrevious()">Previous Designs</button>
+        <button class="button icon-right ion-chevron-right" ng-show="stockPrevious || stockNext"
+                ng-disabled="!stockNext" ng-click="stockNext()">Next Designs</button>
+    </div>
+    <div id="StockCarZoom" style="overflow: auto; background-color: #dddddd; position: absolute; top:0; left: 0; width: 100%; height: 100%; z-index: 5;" ng-show="zoom">
+        <div class="Copy"></div>
+        <div class="StockCarSummary">
+            <span>{{summaryFirst}}</span>
+            <span ng-show="summarySecond"><br /><br />{{summarySecond}}</span>
+            <i class="StockCarSignature" ng-show="zoom.signature"><br />{{zoom.signature}}</i>
+        </div>
+        <div class="StockCarRating" ng-repeat="review in zoom.ratings">
+            <div ng-if="review.email === zoom.author_email && review.comments" style="font-style: italic;"><span class="StockReviewUser">Designer Notes:</span> <span class="StockReviewComments">{{review.comments}}</span></div>
+            <div ng-if="review.email !== zoom.author_email && (review.rating || review.comments)">
+                <div class="StockReviewUser" style="font-style: italic">{{review.user}} says:</div>
+                <div class="StockCarStars" ng-show="review.rating">
+                    <span ng-class="{StockCarStarOn: review.rating > 0}">1</span><span ng-class="{StockCarStarOn: review.rating > 0}" class="StockCarStarRight">1</span><span ng-class="{StockCarStarOn: review.rating > 1}">2</span><span ng-class="{StockCarStarOn: review.rating > 1}" class="StockCarStarRight">2</span><span ng-class="{StockCarStarOn: review.rating > 2}">3</span><span ng-class="{StockCarStarOn: review.rating > 2}" class="StockCarStarRight">3</span><span ng-class="{StockCarStarOn: review.rating > 3}">4</span><span ng-class="{StockCarStarOn: review.rating > 3}" class="StockCarStarRight">4</span><span ng-class="{StockCarStarOn: review.rating > 4}">5</span><span ng-class="{StockCarStarOn: review.rating > 4}" class="StockCarStarRight">5</span>
+                </div>
+                <div class="StockReviewComments" style="font-style: italic;" ng-show="review.comments">{{review.comments}}</div>
+            </div>
+        </div>
+    </div>
+</div>

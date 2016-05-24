@@ -1,0 +1,27 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Performance Modifications</h1>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <checkbox-item class="narrow" ng-model="CAFrame" ng-disabled="caDisabled && !CAFrame">Carbon-Aluminum Frame</checkbox-item>
+            <checkbox-item class="narrow" ng-model="activeSuspension" ng-disabled="asDisabled && !activeSuspension">Active Suspension</checkbox-item>
+            <checkbox-item class="narrow" ng-model="spoiler" ng-disabled="spoilerDisabled && !spoiler">Spoiler</checkbox-item>
+            <checkbox-item class="narrow" ng-model="airdam" ng-disabled="airdamDisabled && !airdam">Airdam</checkbox-item>
+            <checkbox-item class="narrow" ng-model="streamlined" ng-disabled="classicTech && !streamlined">Streamlined</checkbox-item>
+            <checkbox-item class="narrow" ng-model="HDShocks" ng-disabled="classicTech && !HDShocks">Heavy-Duty Shock Absorbers</checkbox-item>
+            <checkbox-item class="narrow" ng-model="HDBrakes" ng-disabled="classicTech && !HDBrakes">Heavy-Duty Brakes</checkbox-item>
+            <checkbox-item class="narrow" ng-model="antilockBrakes">Antilock Brakes</checkbox-item>
+            <checkbox-item class="narrow" ng-model="HDTransmission" ng-disabled="hdTransDisabled && !HDTransmission">Heavy-Duty Transmission</checkbox-item>
+            <checkbox-item class="narrow" ng-model="overdrive" ng-disabled="classicTech && !overdrive">Overdrive</checkbox-item>
+            <checkbox-item class="narrow" ng-model="rollCage" ng-disabled="spaces < 1 && !rollCage">Roll Cage</checkbox-item>
+            <checkbox-item class="narrow" ng-model="dragChute" ng-disabled="dragChuteDisabled && !dragChute">Drag Chute</checkbox-item>
+            <checkbox-item class="narrow" ng-model="FPDragChute" ng-disabled="dragChuteDisabled && !FPDragChute">Fireproof Drag Chute</checkbox-item>
+            <a class="item item-icon-left item-icon-right" ng-click="processClick('bodyMods')">
+                <i class="icon ion-android-settings"></i>
+                Body Modifications
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</div>

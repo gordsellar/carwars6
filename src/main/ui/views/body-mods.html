@@ -1,0 +1,30 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Body Modifications</h1>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <checkbox-item class="narrow" ng-model="ramplate" ng-hide="trailer" ng-disabled="ramplateDisabled || brushcutter || fakeRamplate || bumperSpikes">Ramplate</checkbox-item>
+            <checkbox-item class="narrow" ng-model="fakeRamplate" ng-hide="trailer" ng-disabled="ramplateDisabled || ramplate || brushcutter || bumperSpikes">Fake Ramplate</checkbox-item>
+            <checkbox-item class="narrow" ng-model="brushcutter" ng-hide="trailer" ng-disabled="ramplate || fakeRamplate || bumperSpikes">Brushcutter</checkbox-item>
+            <checkbox-item class="narrow" ng-model="bumperSpikes" ng-hide="trailer" ng-disabled="ramplate || fakeRamplate || brushcutter">Bumper Spikes (Front)</checkbox-item>
+            <checkbox-item class="narrow" ng-model="backBumperSpikes">Bumper Spikes (Back)</checkbox-item>
+            <checkbox-item class="narrow" ng-model="bodyBlades" ng-disabled="fakeBodyBlades">{{bodyBladeText}}</checkbox-item>
+            <checkbox-item class="narrow" ng-model="fakeBodyBlades" ng-disabled="bodyBlades">Fake {{bodyBladeText}}</checkbox-item>
+            <checkbox-item class="narrow" ng-model="amphibious" ng-show="showAmphibious" ng-disabled="(spaces < 2 || classicTech) && !amphibious">Amphibious Modification</checkbox-item>
+            <checkbox-item class="narrow" ng-model="assaultRamp" ng-show="showAssaultRamp" ng-disabled="assaultRampDisabled && !assaultRamp">Assault Ramp</checkbox-item>
+            <checkbox-item class="narrow" ng-model="wheelRamps" ng-show="showWheelRamps" ng-disabled="wheelRampsDisabled && !wheelRamps">Wheel Ramps</checkbox-item>
+            <checkbox-item class="narrow" ng-model="leftSideDoor" ng-show="showDoors" ng-disabled="doorsDisabled && !leftSideDoor">Left Side Door</checkbox-item>
+            <checkbox-item class="narrow" ng-model="rightSideDoor" ng-show="showDoors" ng-disabled="doorsDisabled && !rightSideDoor">Right Side Door</checkbox-item>
+            <checkbox-item class="narrow" ng-model="convertible" ng-show="showConvertible" ng-disabled="convertibleDisabled && !convertible">Convertible Hardtop</checkbox-item>
+            <checkbox-item class="narrow" ng-model="sunroof" ng-disabled="sunroofDisabled && !sunroof">Sunroof</checkbox-item>
+            <checkbox-item class="narrow" ng-model="noPaintWindshield" ng-disabled="noPaintDisabled && !noPaintWindshield">No-Paint Windshield</checkbox-item>
+            <checkbox-item class="narrow" ng-model="tintedWindows" ng-disabled="tintedDisabled && !tintedWindows">Tinted Windows</checkbox-item>
+            <a class="item item-icon-left item-icon-right" ng-click="processClick('performanceMods')">
+                <i class="icon ion-jet"></i>
+                Performance Modifications
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</div>

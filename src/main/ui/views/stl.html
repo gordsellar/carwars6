@@ -1,0 +1,23 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">3D Print Options</h1>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <div class="item">
+                Preview the STL file on the left.
+            </div>
+            <checkbox-item class="narrow" ng-model="raiseFront" ng-disabled="!frontWeapons">Raise Front Weapons</checkbox-item>
+            <a class="item item-icon-left item-icon-right" ng-click="download()">
+                <i class="icon ion-printer"></i>
+                Download STL File
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="cancel()">
+                <i class="icon ion-close"></i>
+                Cancel
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<modal-dialog ng-show="visible" class="ionic-ng-modal" on-close="closing()">
+    <div class="bar bar-header bar-positive">
+        <button class="button button-energized" ng-click="edit = !edit">{{edit ? 'Done' : 'Edit'}}</button>
+        <h1 class="title">Your Designs</h1>
+    </div>
+    <div class="content dialog-header">
+        <div class="list" style="height: 400px; overflow-y: scroll;">
+            <div class="item item-icon-left" ng-show="working">
+                <i class="icon ion-loading-a"></i>
+                Loading designs...
+            </div>
+            <div ng-repeat="division in data">
+                <div class="item item-divider">
+                    {{division.name}}
+                    <span class="badge badge-assertive">{{division.designs.length}}</span>
+                </div>
+                <a class="item item-icon-right" ng-repeat="design in division.designs" ng-click="loadDesign(design)" ng-hide="edit">
+                    <div style="float: left;"><b>{{design.name}}</b><br />
+                        {{design.body}} ${{design.cost}}</div>
+                    <span class="item-note">{{design.date}}</span>
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+                <div class="item item-button-right" ng-repeat="design in division.designs" ng-show="edit">
+                    <div style="float: left;"><b>{{design.name}}</b><br />
+                        {{design.body}} ${{design.cost}}</div>
+                    <span class="item-note">{{design.date}}</span>
+                    <button class="button button-assertive" ng-click="deleteDesign(design)">
+                        <i class="icon ion-close-circled" ng-class="{'ion-close-circled':!design.deleting, 'ion-loading-a':design.deleting}"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</modal-dialog>

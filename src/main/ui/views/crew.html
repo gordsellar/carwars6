@@ -1,0 +1,81 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">{{name}}</h1>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <div class="item narrow">
+              <span class="button-group BodyArmor">
+                <button class="button button-small icon ion-minus-circled" ng-click="previousBodyArmor()"></button>
+                <button class="button button-small icon ion-plus-circled" ng-click="nextBodyArmor()"></button>
+                {{bodyArmor}}
+              </span>
+            </div>
+            <div class="item narrow" ng-hide="classicTech">
+              <span class="button-group Seat">
+                <button class="button button-small icon ion-minus-circled" ng-click="previousSeat()"></button>
+                <button class="button button-small icon ion-plus-circled" ng-click="nextSeat()"></button>
+                {{seat}}
+              </span>
+            </div>
+            <checkbox-item class="narrow" ng-model="safetySeat" ng-show="classicTech">Safety Seat</checkbox-item>
+            <div class="item narrow" ng-hide="name === 'Passenger'">
+              <span class="button-group Computer">
+                <button class="button button-small icon ion-minus-circled" ng-click="previousComputer()"></button>
+                <button class="button button-small icon ion-plus-circled" ng-click="nextComputer()"></button>
+                {{computer}}
+              </span>
+            </div>
+            <div class="customize-wrapper">
+                <div class="item narrow">
+                    <span class="button-group CA">
+                        <button class="button button-small icon ion-minus-circled" ng-click="previousComponentArmor()"
+                                ng-disabled="(spaces < caSize && !hasCA && !hasMultiCA) || (classicTech && !hasCA)"></button>
+                        <button class="button button-small icon ion-plus-circled" ng-click="nextComponentArmor()"
+                                ng-disabled="classicTech || (spaces < caSize && !hasCA && !hasMultiCA)"></button>
+                    </span>
+                    <span ng-class="{'text-disabled': classicTech || (spaces < caSize && !hasCA && !hasMultiCA)}">{{componentArmor}}</span>
+                </div>
+                <span ng-show="hasCA" ng-click="changeCAType()" class="badge badge-positive customize">{{caAbbv}}</span>
+            </div>
+            <div class="item">
+                <div class="list list-inset">
+                    <checkbox-item class="narrow" ng-model="fireproofSuit">Fireproof Suit</checkbox-item>
+                    <checkbox-item class="narrow" ng-model="flakJacket" ng-disabled="cwcClassicTech && !flakJacket">Flak Jacket</checkbox-item>
+                    <checkbox-item class="narrow" ng-model="battleVest">Battle Vest</checkbox-item>
+                    <checkbox-item class="narrow" ng-model="armoredBattleVest">Armored Battle Vest</checkbox-item>
+                    <checkbox-item class="narrow" ng-model="extraDriverControls" ng-disabled="classicTech && !extraDriverControls">Extra Driver Controls</checkbox-item>
+                    <checkbox-item class="narrow" ng-model="portableFireExtinguisher">Portable Fire Ext.</checkbox-item>
+                </div>
+            </div>
+            <a class="item item-icon-left item-icon-right" ng-click="editGear()">
+                <i class="icon ion-ios7-briefcase"></i>
+                Hand Weapons &amp; Gear
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="addGunner()" ng-show="driver && !gunnerPresent">
+                <i class="icon ion-android-user-menu"></i>
+                Add Gunner
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="removePerson()" ng-show="!driver">
+                <i class="icon" ng-class="{'ion-android-social-user': name === 'Passenger','ion-android-user-menu': name !== 'Passenger'}"></i>
+                Remove {{name}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <div class="item item-divider" ng-show="multiCAAllowed">Crew Compartment CA</div>
+            <div class="customize-wrapper" ng-show="multiCAAllowed">
+                <div class="item narrow">
+                    <span class="button-group MultiCA">
+                        <button class="button button-small icon ion-minus-circled" ng-click="previousMultiCA()"
+                                ng-disabled="(spaces < 1 && !hasMultiCA && !hasCrewCA) || (classicTech && !hasMultiCA)"></button>
+                        <button class="button button-small icon ion-plus-circled" ng-click="nextMultiCA()"
+                                ng-disabled="classicTech || (spaces < 1 && !hasMultiCA && !hasCrewCA)"></button>
+                    </span>
+                    <span ng-class="{'text-disabled': classicTech || (spaces < 1 && !hasMultiCA && !hasCrewCA)}">{{multiCA}}</span>
+                </div>
+                <span ng-show="hasMultiCA" ng-click="changeMultiCAType()" class="badge badge-positive customize">{{multiCAAbbv}}</span>
+            </div>
+        </div>
+    </div>
+</div>

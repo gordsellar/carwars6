@@ -1,0 +1,19 @@
+{
+    "nonew": true,
+    "noarg": true,
+    "trailing": true,
+    "forin": true,
+    "maxerr": 100,
+    "eqeqeq": true,
+    "strict": true,
+    "undef": true,
+    "expr": true,
+    "bitwise": true,
+    "immed": true,
+    "browser": true,
+    "devel": true,
+    "nonbsp": true,
+    "freeze": true,
+    "laxbreak": true,
+    "laxcomma": true
+}

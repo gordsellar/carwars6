@@ -1,0 +1,53 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Gas Tank</h1>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <div class="item item-divider">Tank Size</div>
+            <div class="item narrow">
+              <span class="button-group TankSize">
+                <button class="button button-small icon ion-minus-circled" ng-click="lowerCapacity()"></button>
+                <button class="button button-small icon ion-plus-circled" ng-click="higherCapacity()"></button>
+                {{capacity}} gal; Range {{range}} miles
+              </span>
+            </div>
+            <div class="item"><b>Stats:</b> {{space}} sp, ${{cost}}, {{weight}} lbs (full)</div>
+            <div class="item item-divider">Tank Type</div>
+            <label class="item item-radio">
+                <input type="radio" ng-model="style" value="Economy" name="style">
+                <i class="radio-icon ion-checkmark"></i>
+                <div class="item-content">Economy (2 DP)</div>
+            </label>
+            <label class="item item-radio">
+                <input type="radio" ng-model="style" value="Heavy-Duty" name="style">
+                <i class="radio-icon ion-checkmark"></i>
+                <div class="item-content">Heavy-Duty (4 DP)</div>
+            </label>
+            <label class="item item-radio">
+                <input type="radio" ng-model="style" value="Racing" name="style">
+                <i class="radio-icon ion-checkmark"></i>
+                <div class="item-content">Racing (4 DP)</div>
+            </label>
+            <label class="item item-radio">
+                <input type="radio" ng-model="style" value="Duelling" name="style">
+                <i class="radio-icon ion-checkmark"></i>
+                <div class="item-content">Duelling (8 DP)</div>
+            </label>
+            <div class="item item-divider">Protection</div>
+            <checkbox-item class="narrow" ng-model="fri" ng-disabled="(spaces < 1 && !fri) || hasCA">Fire-Retardant Insulator</checkbox-item>
+            <div class="customize-wrapper">
+                <div class="item narrow">
+                    <span class="button-group CA">
+                        <button class="button button-small icon ion-minus-circled" ng-click="lessCA()"
+                                ng-disabled="(spaces < caSize || classicTech || fri) && !hasCA"></button>
+                        <button class="button button-small icon ion-plus-circled" ng-click="moreCA()"
+                                ng-disabled="(spaces < caSize && !hasCA) || classicTech || fri"></button>
+                    </span>
+                    <span ng-class="{'text-disabled': (spaces < caSize || classicTech || fri) && !hasCA}">{{componentArmor}}</span>
+                </div>
+                <span ng-show="hasCA" ng-click="changeCAType()" class="badge badge-positive customize">{{caAbbv}}</span>
+            </div>
+        </div>
+    </div>
+</div>

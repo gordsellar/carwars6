@@ -1,0 +1,22 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Configure {{caption}}</h1>
+        <button class="button button-dark icon ion-ios7-undo" ng-click="openScreen('linkList')">Back</button>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <checkbox-item class="narrow" ng-repeat="item in items" ng-model="item.present" ng-change="checkbox(item)"
+                           >{{item.name}}</checkbox-item>
+            <a class="item item-icon-left item-icon-right" ng-click="showMore()" ng-show="more">
+                <i class="icon ion-pinpoint"></i>
+                More Linkable Items
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="removeLink()">
+                <i class="icon ion-close"></i>
+                Remove Link
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</div>

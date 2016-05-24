@@ -1,0 +1,29 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">All Tires</h1>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <div class="item item-divider">Vehicle Tires</div>
+            <a class="item item-icon-left item-icon-right"
+               ng-repeat="tire in tires" ng-click="editTires(tire)">
+                <i class="icon ion-disc"></i>
+                {{tire.location}} Tires
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <p class="item tip">Tip: Click on the tire in the vehicle design to edit</i></p>
+            <div class="item item-divider">{{location1}}Spare Tire</div>
+            <checkbox-item class="narrow" ng-model="standardSpare" ng-change="updateStandardSpare(standardSpare)"
+                           ng-disabled="spaces<1 && !standardSpare">Spare Tire (Standard)</checkbox-item>
+            <checkbox-item class="narrow" ng-model="fullSpare" ng-change="updateFullSpare(fullSpare)"
+                           ng-disabled="spaces<1 && !fullSpare">Spare Tire (full size)</checkbox-item>
+            <div ng-show="location2">
+                <div class="item item-divider">{{location2}}Spare Tire</div>
+                <checkbox-item class="narrow" ng-model="otherStandardSpare" ng-change="updateStandardSpare(otherStandardSpare, true)"
+                               ng-disabled="otherSpaces<1 && !otherStandardSpare">Spare Tire (Standard)</checkbox-item>
+                <checkbox-item class="narrow" ng-model="otherFullSpare" ng-change="updateFullSpare(otherFullSpare, true)"
+                               ng-disabled="otherSpaces<1 && !otherFullSpare">Spare Tire (full size)</checkbox-item>
+            </div>
+        </div>
+    </div>
+</div>

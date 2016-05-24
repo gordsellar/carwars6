@@ -1,0 +1,2188 @@
+<!DOCTYPE HTML>
+<!--
+Car Wars is a trademark of Steve Jackson Games, and its rules and art are copyrighted by Steve Jackson Games.
+All rights are reserved by Steve Jackson Games.
+
+This game aid is the original creation of Aaron Mulder and is released for free distribution, and not for resale,
+under the permissions granted in the Steve Jackson Games Online Policy.
+
+Application code for this game aid (except for the Car Wars rules as noted above) copyright 2013 Aaron Mulder.
+-->
+<html>
+<head>
+    <title>Car Wars Combat Garage Revision History</title>
+</head>
+<body>
+
+<h1>Car Wars Combat Garage Current (v5) Revision History</h1>
+<h3>Revision 1200</h3>
+<ul>
+    <li>Fix some problems confirming accounts and changing passwords</li>
+</ul>
+<h3>Revision 1193</h3>
+<ul>
+    <li>Fix cycle CA on engine/gas tank (CWCG-70)</li>
+</ul>
+<h3>Revision 1186</h3>
+<ul>
+    <li>Fix URLs on the share screen that were missing colons</li>
+    <li>Send more specific e-mails for a password reset</li>
+</ul>
+<h3>Revision 1180</h3>
+<ul>
+    <li>Massage space on handheld Grenade Launcher screen to reveal all options (CWCG-63)</li>
+    <li>Allow impact fuse for grenades in a handheld GL or URGL</li>
+    <li>Don't show Extended Magazines <em>except</em> for pistols, rifles, and SMGs</li>
+    <li>Don't show Laser Scope for Under-Rifle weapons (though strangely, it appears to be legal for a GL)</li>
+    <li>Don't use plural for "URGL with 1 Explosive Grenades"</li>
+    <li>Limit the number of crew listed on the crew list screen in order to keep controls visible (CWCG-62)</li>
+    <li>List all drivers/gunners/etc. before passengers on the crew list (for sidecars & 10-wheelers)</li>
+    <li>Update statistics when a passenger is removed from a carrier or sidecar</li>
+</ul>
+<h3>Revision 1179</h3>
+<ul>
+    <li>Correct calculation for passenger cargo weight for buses on PDF (CWCG-61)</li>
+    <li>Fix PDF stats for impact fuses for multiple hand grenades added at once (CWCG-61)</li>
+    <li>Fix all calculations for multiple hand grenades added at once combined with a Battle Vest</li>
+    <li>Gas Tank Component Armor can use types other than plain plastic (CWCG-64)</li>
+</ul>
+<h3>Revision 1178</h3>
+<ul>
+    <li>Show max pull for semi tractors in stock car list (CWCG-60)</li>
+    <li>Show passenger count for buses in stock car list (CWCG-59)</li>
+</ul>
+<h3>Revision 1177</h3>
+<ul>
+    <li>Remove inapplicable fields from stock car list (HC for trailers, on-board cargo for semi tractors)
+      CWCG-24, CWCG-25, CWCG-26</li>
+</ul>
+<h3>Revision 1176</h3>
+<ul>
+    <li>Test &amp; fix body popup toolbar</li>
+</ul>
+<h3>Revision 1175</h3>
+<ul>
+    <li>Update the Tour to account for recent changes</li>
+</ul>
+<h3>Revision 1174</h3>
+<ul>
+    <li>Can include a FE/IFE in a link, e.g. to suppress fire mods (CWCG-16)</li>
+    <li>Can include an EWP Ejection System in a link</li>
+    <li>Don't allow magazine switch/rotary magazine for weapons that don't take ammo (CWCG-53)</li>
+    <li>Don't allow rotary magazine unless multiple ammo types and at least one not a multiple of magazine size (CWCG-57)</li>
+    <li>Don't allow magazine switch unless multiple magazines (CWCG-58)</li>
+    <li>When changing tech levels while viewing a weapon, account for space changes due to engine changes (CWCG-54)</li>
+</ul>
+<h3>Revision 1173</h3>
+<ul>
+    <li>Add reset password link to login screen (CWCG-19)</li>
+</ul>
+<h3>Revision 1172</h3>
+<ul>
+    <li>Set minimum engine power for engine selector to 90% for classic (vs. 95% for normal)</li>
+    <li>Migrate the to-do list to a formal issue tracker
+      (<a href="http://carwars.myjetbrains.com/" target="_blank">http://carwars.myjetbrains.com/</a>)</li>
+    <li>Switch all body type selections to checkradios (CWCG-30, CWCG-31, CWCG-32, CWCG-33, CWCG-50)</li>
+    <li>Move check mark to left for checkradios (CWCG-47)</li>
+</ul>
+<h3>Revision 1171</h3>
+<ul>
+    <li>Add "Division 7.5" and "Division 80" to the stock car lists</li>
+    <li>Confirm if somebody enters a sketchy-looking e-mail address</li>
+</ul>
+<h3>Revision 1170</h3>
+<ul>
+    <li>Fix stats for multiple grenades in the PDF</li>
+    <li>Fix truck tire DP on the tire screen</li>
+    <li>Fix truck Plasticore DP (not actually double the non-truck tire)</li>
+</ul>
+<h3>Revision 1169</h3>
+<ul>
+    <li>URLs to load stock cars for a given vehicle type or tech level
+        (e.g. /tags/Classic or /tags/Ten Wheeler)</li>
+</ul>
+<h3>Revision 1168</h3>
+<ul>
+    <li>Reserved cargo space</li>
+    <li>Status color indicator for when reserved cargo space is used</li>
+    <li>List of cargo requirements for vehicles-as-cargo</li>
+    <li>More/better IE 10 layout fixes</li>
+</ul>
+<h3>Revision 1167</h3>
+<ul>
+    <li>Make it easy to add multiple grenades</li>
+</ul>
+<h3>Revision 1166</h3>
+<ul>
+    <li>Infrastructure update</li>
+    <li>Add a warning when going to the 3D view for the first time</li>
+    <li>Combine grenades and other hand weapons in crew description</li>
+    <li>Don't show non-applicable hand weapon accessories</li>
+    <li>Fix "Impact Fuse" control</li>
+</ul>
+<h3>Revision 1165</h3>
+<ul>
+    <li>Add Pyrophoric Oil</li>
+    <li>Tweak the tour to account for the Classic tech level</li>
+    <li>Allow copy/paste of the overview text on non-tablets</li>
+    <li>Fixes to the Save and Stock Configure screens for IE 10</li>
+</ul>
+<h3>Revision 1164</h3>
+<ul>
+    <li>Change the color picker to a grid of options rather than a slider</li>
+</ul>
+<h3>Revision 1163</h3>
+<ul>
+    <li>Reset stock car results when signing out</li>
+</ul>
+<h3>Revision 1162</h3>
+<ul>
+    <li>Stock car review process</li>
+    <li>Load admin logic on demand when an admin logs in</li>
+    <li>Don't replace a standalone &amp; with the HTML escape on save</li>
+</ul>
+<h3>Revision 1161</h3>
+<ul>
+    <li>When loading a stock car, default to the tech level calculated during stock car review</li>
+</ul>
+<h3>Revision 1160</h3>
+<ul>
+    <li>Squeeze some weapon names on the PDF to eliminate extra page splits</li>
+    <li>Prepare to make this the live (non-beta) version</li>
+</ul>
+<h3>Revision 1159</h3>
+<ul>
+    <li>Start work on stock car review</li>
+</ul>
+<h3>Revision 1158</h3>
+<ul>
+    <li>Fix a layout issue with multiple weapons on both sides that caused the design to be wider than necessary</li>
+</ul>
+<h3>Revision 1156</h3>
+<ul>
+    <li>Fix importing sidecars with passengers</li>
+    <li>Fix crew screen options disabled for sidecar crew/passengers</li>
+</ul>
+<h3>Revision 1155</h3>
+<ul>
+    <li>Start work on regenerating all text summaries, PDFs, and thumbnails for public designs</li>
+    <li>A little more space for armor on the PDF of oversize vehicles with composite armor</li>
+</ul>
+<h3>Revision 1154</h3>
+<ul>
+    <li>Last set of fixes for importing old designs (old equipment names, etc.), based on designs up through today</li>
+    <li>Fix sidecar turret description</li>
+    <li>Round the cost/weight of spare tires</li>
+</ul>
+<h3>Revision 1153</h3>
+<ul>
+    <li>More fixes for importing old designs (old equipment names, etc.)</li>
+    <li>Don't blow up for a trailer where the only crew was dragged around then whacked.  Or at least, complain only on moral grounds.</li>
+</ul>
+<h3>Revision 1151</h3>
+<ul>
+    <li>Don't complain about <i>fake</i> lasers with a gas engine and no laser battery</li>
+</ul>
+<h3>Revision 1150</h3>
+<ul>
+    <li>Cycles need cost/weight for TWO wheelhubs on each tire</li>
+    <li>When a big trailer/bus is made small, don't save any now-invisible (location)Back turrets and weapons.</li>
+    <li>Clean up a variety of load issues with older designs (different equipment and ammo names, etc.)</li>
+</ul>
+<h3>Revision 1149</h3>
+<ul>
+    <li>Better link text for links across side turrets</li>
+    <li>Fix adding and removing links for changing between fake and real side turrets</li>
+    <li>Fix adding and removing links for increasing/decreasing weapon count in side turrets</li>
+    <li>Only show single-shot rockets & TLs for Rocket EWPs</li>
+</ul>
+<h3>Revision 1148</h3>
+<ul>
+    <li>Tweak text of linked turreted weapons</li>
+    <li>Shrink text description on summary screen for designs with very long descriptions</li>
+    <li>Validate no radarproof armor for Classic designs</li>
+    <li>On import, massage weapons in oversize locations too</li>
+    <li>Override tech levels for weapons and ammo with latest values on load</li>
+    <li>Some fixes when importing older designs and equipment</li>
+    <li>Fixes to navigating in and out of stock search/browse</li>
+</ul>
+<h3>Revision 1147</h3>
+<ul>
+    <li>Support links to weapons in both left and right EWPs/sponsons separately</li>
+    <li>Don't save <i>every</i> design as a stock car</li>
+</ul>
+<h3>Revision 1146</h3>
+<ul>
+    <li>Popup buttons don't mix with illegal text</li>
+    <li>Mouse over sidecar wheelguard/hubs activates them instead of "sidecar options"</li>
+    <li>Show "Check Engine" when cycle engine can't pull cycle+sidecar combined</li>
+    <li>Fix deselecting tags when submitting a stock car</li>
+    <li>Split cycle/sidecar and cab/carrier text in the stock car text display</li>
+    <li>Make the stock car review screen scroll if needed</li>
+    <li>Make sidecar/carrier color match the cycle/cab color</li>
+    <li>Don't mess up the engine when loading a stock car</li>
+    <li>Carrier space display turns red when carrier spaces wrong, not cab</li>
+</ul>
+<h3>Revision 1145</h3>
+<ul>
+    <li>Screen text updates when sidecar guards/hubs changed</li>
+    <li>Classic validation for sidecar guards/hubs</li>
+    <li>Fix hint cost/weight for cycle and truck tires</li>
+    <li>Un-abbreviate grenade names</li>
+    <li>Bias the engine selector toward showing <i>some</i> choice even if it came up dry</li>
+    <li>Make it possible to deselect engine mods that are illegal for the current tech level</li>
+    <li>Fix dialogs flashing and inobvious link on IE 10</li>
+    <li>Add Cycle+Sidecar combo options to Body popup menu</li>
+</ul>
+<h3>Revision 1143</h3>
+<ul>
+    <li>Cycle spoiler shows on diagram</li>
+    <li>Classic rules for cycles</li>
+    <li>Enforce limit of 50 lbs. armor for cycle windshells</li>
+    <li>Don't offer Zero-space turrets for Classic designs</li>
+</ul>
+<h3>Revision 1142</h3>
+<ul>
+    <li>Finish first pass at Classic cars (not yet cycles, trikes)</li>
+    <li>Don't allow submitting illegal designs as stock cars</li>
+    <li>Confirm before saving illegal designs</li>
+    <li>Include text description when saving stock cars, to show when searching by name</li>
+    <li>Show DP of metal wheelguards &amp; wheelhubs in diagram</li>
+</ul>
+<h3>Revision 1141</h3>
+<ul>
+    <li>For convenience, FE/IFE and Laser Battery appear on Gear screen as well as Engine screen</li>
+    <li>Classic tech level for engine customization</li>
+</ul>
+<h3>Revision 1140</h3>
+<ul>
+    <li>Much more work on Classic tech level. Still need to revisit armor, cycles, and trikes.</li>
+</ul>
+<h3>Revision 1139</h3>
+<ul>
+    <li>Start work on Classic tech level</li>
+</ul>
+<h3>Revision 1138</h3>
+<ul>
+    <li>More iPad tweaks</li>
+</ul>
+<h3>Revision 1137</h3>
+<ul>
+    <li>Fix position of vehicle in diagram on non-Retina displays</li>
+    <li>Fix Heavy Pistol cost</li>
+    <li>Fix iPad layout, especially when changing orientations</li>
+</ul>
+<h3>Revision 1135</h3>
+<ul>
+    <li>Stock car detail view and review</li>
+    <li>Clean up navigation with design name search/browse, review, etc.</li>
+    <li>Tweak text of linking multiple identical dropped weapons</li>
+    <li>Change Login/Logout to Sign In/Sign Out</li>
+    <li>Can fully complete account enrollment with the beta release</li>
+</ul>
+<h3>Revision 1131</h3>
+<ul>
+    <li>Fix design name wrapping on Safari</li>
+    <li>Fix HARM rocket count showing over Laser-Guided checkbox</li>
+    <li>Make stock car results load faster</li>
+</ul>
+<h3>Revision 1130</h3>
+<ul>
+    <li>Can select the armor type for component armor, fifth wheel armor, and windjammer armor</li>
+    <li>Fix validation for crew compartment CA</li>
+</ul>
+<h3>Revision 1129</h3>
+<ul>
+    <li>Navigate between pages of the stock car browse results</li>
+</ul>
+<h3>Revision 1128</h3>
+<ul>
+    <li>Bring back the "Share Design" screen, with URL and design text.</li>
+    <li>Minor tweaks to the tour.</li>
+</ul>
+<h3>Revision 1127</h3>
+<ul>
+    <li>Finish the first pass through the tour.  More to come later.</li>
+</ul>
+<h3>Revision 1126</h3>
+<ul>
+    <li>Automated test for creating/confirming account</li>
+    <li>Add PF and cost to engine screen</li>
+    <li>Start bringing back engine modifier cost/weight/space display</li>
+    <li>Show that something's happening while logout is running</li>
+    <li>Show the name of the current user on the logout command</li>
+    <li>Add log out to the splash menu (when logged in)</li>
+    <li>Make the tour work directly from the splash screen</li>
+</ul>
+<h3>Revision 1125</h3>
+<ul>
+    <li>Now you can create and confirm a new account</li>
+    <li>Put a caption on the vehicle type selector screen</li>
+</ul>
+<h3>Revision 1124</h3>
+<ul>
+    <li>Start work on the tour</li>
+</ul>
+<h3>Revision 1123</h3>
+<ul>
+    <li>Tire screen refreshes the options when you change tech level</li>
+    <li>Gear list refreshes the options when you change tech level</li>
+    <li>Performance gear list refreshes the options when you change tech level</li>
+    <li>Available turret list refreshes the options when you change tech level</li>
+    <li>When changing tech level makes a design illegal, don't immediately hide the
+        reason the design is illegal</li>
+</ul>
+<h3>Revision 1122</h3>
+<ul>
+    <li>Engine selector refreshes the options when you change tech level</li>
+    <li>Add popup options for selecting an engine</li>
+    <li>Don't let the screen expand vertically past the bottom of the controls</li>
+</ul>
+<h3>Revision 1121</h3>
+<ul>
+    <li>Fix going to 3D Print from the main (2D) design diagram</li>
+    <li>Add a pop-up toolbar above the main one for the most common options (presently only body types)</li>
+    <li>Hovering over the "Illegal" text shows the text of the problem again</li>
+</ul>
+<h3>Revision 1120</h3>
+<ul>
+    <li>Cut the main page to the quick to improve time to visibility</li>
+    <li>Use e-mail and search field types for the convenience of tablets</li>
+    <li>Turn the main background grey</li>
+    <li>Keep more of the initial load state private</li>
+</ul>
+<h3>Revision 1119</h3>
+<ul>
+    <li>Cost/weight for full trailer tires applied immediately</li>
+    <li>Hand cursor when over clickable items in diagram</li>
+    <li>Fix a failure to load a saved dual-level flatbed</li>
+    <li>Add automated stock car test</li>
+</ul>
+<h3>Revision 1118</h3>
+<ul>
+    <li>Remove cookies used for basic navigation.  Now only used to track logins.</li>
+    <li>Support URL to view stock cars with a given tag (e.g. /tags/Police)</li>
+    <li>Tag designs with Gas or Electric by default.</li>
+    <li>Spoiler/Airdam should be metal if any metal armor and not CWC tech</li>
+    <li>No sunroof on a cycle</li>
+    <li>When loading a design from a URL, load the correct vehicle type</li>
+</ul>
+<h3>Revision 1117</h3>
+<ul>
+    <li>Submit stock cars</li>
+    <li>Provide a URL to search by name (e.g. /name/Crusher)</li>
+    <li>Only preserve signature and designer comments when loading a saved design if
+      it's the author loading their own design.</li>
+</ul>
+<h3>Revision 1116</h3>
+<ul>
+    <li>Semi Trailers</li>
+    <li>No ramplates, spoiler, airdam, brushbutter, front bumper spikes for car trailers</li>
+    <li>No corner mounts for a flatbed armored box</li>
+    <li>Clearer weapon identifiers in link list</li>
+</ul>
+<h3>Revision 1114</h3>
+<ul>
+    <li>Semi Tractors</li>
+    <li>Better car trailer tire DP display</li>
+    <li>A little breathing room in semi tractor and ten wheeler cab diagrams</li>
+    <li>Fix problem with placing sidecar weapons</li>
+</ul>
+<h3>Revision 1113</h3>
+<ul>
+    <li>Buses, now with ramplates</li>
+    <li>Better weapon location selection for car trailers and oversize vehicles</li>
+    <li>Diagram shifts to accommodate protruding weapon barrels</li>
+</ul>
+<h3>Revision 1111</h3>
+<ul>
+    <li>Automated tests working for oversize vehicles</li>
+    <li>Let you select a subset of rounds to be Laser Guided, etc.</li>
+    <li>Car Trailers looking good</li>
+</ul>
+<h3>Revision 1109</h3>
+<ul>
+    <li>Turrets for oversize vehicles</li>
+    <li>Fix available weapon space in cupolas</li>
+    <li>Don't allow CA on cupola gunner if cupola full of weapons</li>
+    <li>Side doors, wheel ramps, assault ramps, and etc.</li>
+</ul>
+<h3>Revision 1107</h3>
+<ul>
+    <li>Fix flatbed armor</li>
+    <li>Continuing work on car trailers</li>
+</ul>
+<h3>Revision 1106</h3>
+<ul>
+    <li>Ramplates on diagram for reversed trikes</li>
+    <li>Show cargo space in status bar</li>
+    <li>Start on car trailers</li>
+    <li>Streamline car trailer body type selection</li>
+</ul>
+<h3>Revision 1105</h3>
+<ul>
+    <li>Ongoing improvements to automated testing tools</li>
+    <li>Ten wheelers looking good</li>
+</ul>
+<h3>Revision 1104</h3>
+<ul>
+    <li>Finished restoring the automated test recording tool</li>
+    <li>Ten wheelers enabled, but a few remaining layout quirks to address</li>
+</ul>
+<h3>Revision 1102</h3>
+<ul>
+    <li>Bring back the automated test recording tool</li>
+    <li>Work on recording an automated test for ten wheelers</li>
+</ul>
+<h3>Revision 1101</h3>
+<ul>
+    <li>Tweak engine selection to favor a second option with lower cost over a second small option that's more expensive</li>
+    <li>Ten Wheelers</li>
+    <li>Spare Tires and Gear in sidecars</li>
+    <li>Front wheelhubs and wheelguards on trikes are clickable</li>
+</ul>
+<h3>Revision 1099</h3>
+<ul>
+    <li>No airdam or ramplate for cycles</li>
+    <li>Trikes</li>
+    <li>Automated trike tests</li>
+    <li>Change terminology on 2D/3D views</li>
+    <li>Turn off 3D for non-car models.  For now.  Really want to model a trike.  Just sayin'.</li>
+</ul>
+<h3>Revision 1097</h3>
+<ul>
+    <li>Sidecar passengers and gunners</li>
+    <li>Allow Pintle Mounts in sidecars</li>
+    <li>Bring back automated sidecar tests</li>
+</ul>
+<h3>Revision 1096</h3>
+<ul>
+    <li>Support Non-turret weapons in sidecars</li>
+    <li>Add hover areas in diagram for non-turret weapons in sidecars</li>
+</ul>
+<h3>Revision 1095</h3>
+<ul>
+    <li>Overhaul to sidecar drawing</li>
+    <li>Full sidecar turret support, including CTS and 0-sp turrets</li>
+    <li>Fix validation for non-cycle passengers</li>
+</ul>
+<h3>Revision 1093</h3>
+<ul>
+    <li>Sidecar armor</li>
+</ul>
+<h3>Revision 1092</h3>
+<ul>
+    <li>Show sidecar turret in diagram</li>
+    <li>Update cycle engine when sidecar is added/removed</li>
+</ul>
+<h3>Revision 1091</h3>
+<ul>
+    <li>Sidecar selection</li>
+    <li>Sidecar weight/space display</li>
+    <li>Sidecar tire and guard/hub options</li>
+</ul>
+<h3>Revision 1089</h3>
+<ul>
+    <li>Bring back race cars</li>
+    <li>Bring back cycles (not sidecars yet)</li>
+</ul>
+<h3>Revision 1088</h3>
+<ul>
+    <li>Fix adding and removing ammo to weapons in EWPs/Sponsons</li>
+    <li>Add a header button to the weapon location and weapon category screen showing space limits</li>
+</ul>
+<h3>Revision 1087</h3>
+<ul>
+    <li>Designate which version saved a given design</li>
+    <li>Initial stock car browse</li>
+</ul>
+<h3>Revision 1085</h3>
+<ul>
+    <li>Search public designs</li>
+</ul>
+<h3>Revision 1083</h3>
+<ul>
+    <li>Confirmation page with load and PDF links after design is saved</li>
+    <li>Better spacing for info messages</li>
+    <li>Activate the save design link on the main menu</li>
+    <li>Give prominent placing to search stock cars (though not yet implemented)</li>
+</ul>
+<h3>Revision 1082</h3>
+<ul>
+    <li>Download PDFs</li>
+</ul>
+<h3>Revision 1081</h3>
+<ul>
+    <li>Zoom and center the vehicle selector and 2D diagram</li>
+</ul>
+<h3>Revision 1080</h3>
+<ul>
+    <li>Save designs</li>
+    <li>Delete saved designs from list</li>
+    <li>View previous version of a design</li>
+    <li>Fix imports with links to stuff in side turrets</li>
+    <li>Fix imports without a vehicle color specified</li>
+    <li>Indicate when a design is unchanged since last save or load</li>
+</ul>
+<h3>Revision 1079</h3>
+<ul>
+    <li>Log in / log out</li>
+    <li>List your designs / select a design to load</li>
+    <li>Load a given design on startup (from the e-mail URLs)</li>
+</ul>
+<h3>Revision 1078</h3>
+<ul>
+    <li>EWP Armor</li>
+    <li>Rocket Boosters & Jump Jets</li>
+    <li>Allow forward-facing Rocket Boosters in EWPs</li>
+</ul>
+<h3>Revision 1077</h3>
+<ul>
+    <li>Hitches</li>
+</ul>
+<h3>Revision 1076</h3>
+<ul>
+    <li>Better handling for ammo modifiers</li>
+    <li>Big error messages don't overflow illegal indicators</li>
+    <li>Indicate available vehicle types</li>
+</ul>
+<h3>Revision 1075</h3>
+<ul>
+    <li>All hand weapon and personal equipment screens working</li>
+    <li>Update driver DP on diagram immediately when body armor changes</li>
+</ul>
+<h3>Revision 1074</h3>
+<ul>
+    <li>Customize hand weapons</li>
+</ul>
+<h3>Revision 1073</h3>
+<ul>
+    <li>Design notes and warnings</li>
+</ul>
+<h3>Revision 1072</h3>
+<ul>
+    <li>Check engine icon</li>
+    <li>Crew can add hand weapons (but not yet customize them)</li>
+</ul>
+<h3>Revision 1071</h3>
+<ul>
+    <li>Illegal design indicator</li>
+</ul>
+<h3>Revision 1070</h3>
+<ul>
+    <li>Discharger dialog works</li>
+    <li>Some streamlining of the code</li>
+</ul>
+<h3>Revision 1069</h3>
+<ul>
+    <li>Add the personal equipment screen</li>
+    <li>Add the personal item list by category</li>
+</ul>
+<h3>Revision 1068</h3>
+<ul>
+    <li>Add the discharger dialog (visible, not yet functional)</li>
+    <li>All build-a-car automated tests running</li>
+    <li>Fix to linked weapon text under certain circumstances</li>
+</ul>
+<h3>Revision 1064</h3>
+<ul>
+    <li>Bring back the server-side API</li>
+</ul>
+<h3>Revision 1061</h3>
+<ul>
+    <li>Side EWPs and Sponsons (though not in 3D yet)</li>
+    <li>Disable CA controls for weapons in EWPs</li>
+    <li>Disable booster controls for EWPs with no space left</li>
+    <li>Bring back the design name display</li>
+    <li>Initial design config screen</li>
+    <li>Much wider range of color selections</li>
+</ul>
+<h3>Revision 1060</h3>
+<ul>
+    <li>Lint and combine the JavaScript files</li>
+    <li>Pre-load screens</li>
+    <li>Initial work on automated tests for v5</li>
+</ul>
+<h3>Revision 1059</h3>
+<ul>
+    <li>Add links and smart links</li>
+    <li>Change mechanics of linked weapons to use a link like any other instead of getting "special treatment"</li>
+</ul>
+<h3>Revision 1058</h3>
+<ul>
+    <li>Add armor screen</li>
+    <li>Add several of the gear screens</li>
+</ul>
+<h3>Revision 1057</h3>
+<ul>
+    <li>Add body mods screen</li>
+    <li>Add spoiler and airdam to 3D car model</li>
+    <li>Add and remove spoiler and airdam to 3D model as boxes are checked</li>
+</ul>
+<h3>Revision 1056</h3>
+<ul>
+    <li>Fix height of hood weapons on the car model</li>
+</ul>
+<h3>Revision 1055</h3>
+<ul>
+    <li>First car model (now used for everything except pickup/camper)</li>
+    <li>Handle changes to body style while in 3D view</li>
+</ul>
+<h3>Revision 1054</h3>
+<ul>
+    <li>Select tires even when mouse is over the gaps in the hub</li>
+    <li>3D printing lets you move the front weapons up to the hood</li>
+    <li>Disable turret options when insufficient space available</li>
+    <li>Update cost/weight/space when adding a turret</li>
+    <li>Light follows camera in 3D so the bottom/left isn't always dark</li>
+    <li>Try not to leave components highlighted when mouse is outside diagram</li>
+</ul>
+<h3>Revision 1053</h3>
+<ul>
+    <li>Consolidate services</li>
+    <li>Friendly interface for generating, previewing, and downloading 3D print (STL) files</li>
+    <li>Use bigger barrels for weapons on 3D prints, and synchronize front/turret barrel sizes</li>
+</ul>
+<h3>Revision 1052</h3>
+<ul>
+    <li>Initial 3D printing (STL) export code</li>
+    <li>Refactor method for storing supplemental data for 3D models</li>
+</ul>
+<h3>Revision 1051</h3>
+<ul>
+    <li>Show all tire types at once on the tire screen</li>
+    <li>Don't leave the 2D button showing when creating a new design from the 3D view</li>
+    <li>Add turret screens</li>
+    <li>Add 3D turret model (still need work on selecting turret and weapons)</li>
+</ul>
+<h3>Revision 1050</h3>
+<ul>
+    <li>Better small-bore weapon model (currently used for all weapons)</li>
+</ul>
+<h3>Revision 1049</h3>
+<ul>
+    <li>Add performance modifications screen</li>
+</ul>
+<h3>Revision 1048</h3>
+<ul>
+    <li>Add gas tank screen</li>
+    <li>Show DP effects immediately for engine accessories</li>
+</ul>
+<h3>Revision 1047</h3>
+<ul>
+    <li>Finish the engine/power plant screen</li>
+</ul>
+<h3>Revision 1046</h3>
+<ul>
+    <li>Add 3D model for a gas tank</li>
+</ul>
+<h3>Revision 1045</h3>
+<ul>
+    <li>Add engine editing (not quite complete)</li>
+    <li>Improve the logic for switching engines</li>
+    <li>Crew screen loads faster</li>
+    <li>Update vehicle statistics when removing a gunner</li>
+</ul>
+<h3>Revision 1044</h3>
+<ul>
+    <li>First v5 demo release</li>
+    <li>Better loading mechanism</li>
+    <li>New look and feel</li>
+    <li>Completely restructured UI code</li>
+    <li>3D vehicle support (though at present every car type uses a pickup truck model)</li>
+    <li>Many things not yet implemented: vehicle types other than cars,
+        weapons in locations other than front for the 3D model, saving and loading,
+        stock cars, the tour, automated tests, screens including engines, sport, mods,
+        turrets, armor, gear, repair, design</li>
+</ul>
+
+
+<h1>Car Wars Combat Garage Previous (v4) Revision History</h1>
+<h3>Revision 1086</h3>
+<ul>
+    <li>Don't try to load designs created in the beta version (format slightly different)</li>
+    <li>Round cost of streamlining (reversed light trike)</li>
+    <li>Fix navigating between EWP boosters and body boosters</li>
+    <li>Don't omit battle vests from crew description</li>
+</ul>
+<h3>Revision 1043</h3>
+<ul>
+    <li>Fix cost/weight for FRI on 0-space gas tanks on worksheet</li>
+    <li>Fix display of CA on linked single-shot rockets with 2-3 tubes</li>
+    <li>Fix DP for a group of 4+ single-shot rockets when moved via drag and drop</li>
+</ul>
+<h3>Revision 1042</h3>
+<ul>
+    <li>Fix for saving cycles with sidecars</li>
+    <li>Fix for fractional weight of sidecar tires</li>
+    <li>Fix for engine power rating for cycle with sidecar</li>
+    <li>Fix for personal equipment weight of crew in 10-wheel trailer</li>
+    <li>For heavy cycle+heavy sidecar, recommend Med Cycle PP w/PC+SC over Large</li>
+    <li>Don't offer laser scope for a Bowie Knife</li>
+    <li>Rounded corners on hand weapon list</li>
+    <li>Rounded corners on hand weapon ammo list</li>
+    <li>Minor test updates</li>
+</ul>
+<h3>Revision 952</h3>
+<ul>
+    <li>Additional work on game tracker</li>
+</ul>
+<h3>Revision 951</h3>
+<ul>
+    <li>Additional work on game tracker</li>
+</ul>
+<h3>Revision 950</h3>
+<ul>
+    <li>Additional work on game tracker</li>
+</ul>
+<h3>Revision 949</h3>
+<ul>
+    <li>Additional work on game tracker</li>
+</ul>
+<h3>Revision 948</h3>
+<ul>
+    <li>Additional work on game tracker</li>
+</ul>
+<h3>Revision 947</h3>
+<ul>
+    <li>Initial work on game tracker</li>
+</ul>
+<h3>Revision 946</h3>
+<ul>
+    <li>Show correct tow capacity for a 10 Wheeler with a hitch</li>
+    <li>When clicking the hitch on a 10 Wheeler in the diagram, don't add one to the cab</li>
+    <li>When weapons on a 10 Wheeler carrier threaten to exceed 1/3 spaces, don't list the limit for the cab</li>
+</ul>
+<h3>Revision 945</h3>
+<ul>
+    <li>Another minor tweak to link text</li>
+</ul>
+<h3>Revision 944</h3>
+<ul>
+    <li>When updating stock cars, don't include obsolete ones</li>
+</ul>
+<h3>Revision 943</h3>
+<ul>
+    <li>A few more pixels for stock car names on Safari</li>
+    <li>Include ABR/AMF capacity in cargo description</li>
+</ul>
+<h3>Revision 942</h3>
+<ul>
+    <li>Fix description error with EWPs</li>
+</ul>
+<h3>Revision 941</h3>
+<ul>
+    <li>Fix description error with sidecar armor</li>
+    <li>Explicitly list rocket count for single-shot rockets with rocket magazines and unmodified ammo</li>
+    <li>Still better cargo space description for certain safe configurations</li>
+    <li>Make sleeping area available as gear for all vehicles</li>
+    <li>Ready to update stock cars with current images and descriptions</li>
+</ul>
+<h3>Revision 940</h3>
+<ul>
+    <li>Still more work combining weapon descriptions</li>
+    <li>Prepare to update stock cars with current descriptions and design images</li>
+</ul>
+<h3>Revision 939</h3>
+<ul>
+    <li>Show cargo space in description for semi trailers</li>
+    <li>Add space in cargo safes or car-top carriers to cargo space in description</li>
+    <li>Add URL to go directly to the stock cars for a particular tag (/tags/Police, etc.)</li>
+    <li>Provide links to share a design for stock cars or from the design screen</li>
+    <li>Fix for IE 9 so it doesn't cache stock car requests</li>
+</ul>
+<h3>Revision 938</h3>
+<ul>
+    <li>Remove stock cars flagged as replaced from the stock car search results</li>
+</ul>
+<h3>Revision 937</h3>
+<ul>
+    <li>Paginate the stock car search results to avoid looooong load times</li>
+</ul>
+<h3>Revision 936</h3>
+<ul>
+    <li>Incorporate stock car list/search/review/etc. into the main app</li>
+    <li>Fix cost/weight on worksheet for fake weapons with a count greater than one</li>
+    <li>Fix drawing of dropped liquids/gasses on the PDF</li>
+    <li>Don't try to load a user's custom stock car lists unless logged in</li>
+    <li>Fix cost/weight of cycle blades on PDF</li>
+</ul>
+<h3>Revision 935</h3>
+<ul>
+    <li>Fix a diagram wrinkle where left weapons were sometimes unnecessarily doubled up</li>
+    <li>More rounded corners</li>
+    <li>Don't force a layout for a single-click on engine or crew (only drag)</li>
+    <li>Add wheel ramps for semi trailers, replacing ramplates, brushcutters, and front bumper spikes</li>
+</ul>
+<h3>Revision 934</h3>
+<ul>
+    <li>Access to more than 14 linkable items on link screen</li>
+    <li>Show total cost when modifying an engine</li>
+    <li>Show total spaces when modifying a weapon</li>
+    <li>Fit rocket launchers in a 1/3 size slot in the diagram and tweak ammo count positioning</li>
+    <li>Apply any changes to the design name on the save screen even if you click away without saving</li>
+    <li>Update screen immediately when an engine modifier is added or removed</li>
+    <li>Try to avoid cargo forcing rear weapons to more than 3 per slot</li>
+</ul>
+<h3>Revision 933</h3>
+<ul>
+    <li>More work on design layout for large/full designs (esp. trailers)</li>
+    <li>Improve drawing of dropped liquid/gas when smaller than half-size</li>
+    <li>Fix text for combined dischargers on oversize vehicles</li>
+    <li>Better text for identical dischargers in several locations</li>
+    <li>Don't show CA, FRI, or concealment options for dischargers</li>
+    <li>Show up to 5 side dischargers on semi trailers without overlapping tires or EWPs</li>
+</ul>
+<h3>Revision 932</h3>
+<ul>
+    <li>Don't disable the turbocharger option when switching from electric to gas on a full car</li>
+    <li>Better text for links (esp. with complex weapon selections)</li>
+    <li>Better text for multiple identical gunners (e.g. in a semi trailer)</li>
+    <li>Better text for identical weapons in several locations</li>
+    <li>Default to regular plastic if you select both no plastic and no metal armor and then add tire protection</li>
+</ul>
+<h3>Revision 931</h3>
+<ul>
+    <li>Don't show negative overall cargo weight for a ten-wheeler combo.</li>
+    <li>When a discharger is added, prompt to add them everywhere.</li>
+    <li>Allow bumper-triggered weapons on a ten-wheel carrier</li>
+    <li>Recheck legality of design immediately when a weapon is added to or removed from a ten-wheel carrier</li>
+</ul>
+<h3>Revision 930</h3>
+<ul>
+    <li>Change tech levels to radio buttons so you can't select none of them</li>
+    <li>Immediately update statistics when gear is added to the carrier of a 10-wheeler</li>
+</ul>
+<h3>Revision 929</h3>
+<ul>
+    <li>Only combine single-shot rockets into one item on the diagram if using rocket magazines or
+        more than 2 (turret) or 3 (body) parallel launchers</li>
+    <li>When a weapon can't fit in a ten-wheel carrier due to 1/3 spaces, show the carrier 1/3 limit in
+        the error message (not the cab limit)</li>
+</ul>
+<h3>Revision 928</h3>
+<ul>
+    <li>A little more space on the all weapons screen for ten-wheelers</li>
+    <li>Try to avoid name and DP overwriting on dropped liquids/gasses when the draw smaller</li>
+    <li>Improved layout logic for e.g. packed trailers</li>
+    <li>Fix flatbed armor description when no armor used on the flatbed (only the box)</li>
+    <li>Remove extra commas from lightly armored sidecar description</li>
+    <li>Fix back door checkbox for ten wheelers</li>
+    <li>Enable design/worksheet validation for cycles with sidecars and ten wheelers</li>
+    <li>Automatically remove top armor when switching a ten wheeler to a dumper</li>
+    <li>Fix loading of minibuses that had oversize weapons before being downsized</li>
+    <li>Fix loading of vehicles with links to rocket boosters in the body</li>
+</ul>
+<h3>Revision 927</h3>
+<ul>
+    <li>Draw crew compartment CA around multiple gunners (e.g. in a trailer) or driver and multiple gunners (e.g. in a semi tractor)</li>
+    <li>Some more rounded corners</li>
+    <li>Avoid a wide trailer with tire protection overlapping the design name</li>
+    <li>Add Semi-Trailer Emergency Plate</li>
+    <li>Draw front tires in a better place for 40' flatbed</li>
+    <li>Proper rules and placement for ten-wheeler dischargers</li>
+    <li>Engine selector and automatic sizing for buses and ten-wheelers</li>
+</ul>
+<h3>Revision 926</h3>
+<ul>
+    <li>Better stock car display for Ten Wheelers</li>
+    <li>Add note when an Active Suspension itself puts a pickup over 5500 lbs. (thereby appearing to have no effect on HC)</li>
+    <li>Some more rounded corners</li>
+    <li>Better turret screen display for multiple identical weapons</li>
+    <li>Show links for multiple weapons in oversize *-back weapon locations on link screen</li>
+    <li>More validation: anti-theft, computer gunner, autopilot, etc.</li>
+</ul>
+<h3>Revision 925</h3>
+<ul>
+    <li>Fix HC for Ten Wheelers with wheelguards</li>
+    <li>Round overall cargo spaces for Ten Wheelers</li>
+</ul>
+<h3>Revision 924</h3>
+<ul>
+    <li>Fix vehicle type screen on iPad</li>
+    <li>Fix crew option check boxes on iPad</li>
+    <li>Better handling for rotating an iPad</li>
+    <li>More validation for ten wheel carriers</li>
+</ul>
+<h3>Revision 923</h3>
+<ul>
+    <li>10-wheeler gear can be put in the carrier or the cab using a button in the header</li>
+    <li>Cycle gear can be put in a cycle or sidecar using a button in the header</li>
+    <li>10-wheeler items in carriers can be included in links</li>
+    <li>Fix up loading design screen when the previous design was a 10-wheeler</li>
+</ul>
+<h3>Revision 922</h3>
+<ul>
+    <li>Ten wheelers show up for stock cars and other administrative screens</li>
+    <li>Hitches show on diagram for semi trailers and ten wheelers</li>
+    <li>Fix loading ten wheeler designs with tire protection</li>
+</ul>
+<h3>Revision 921</h3>
+<ul>
+    <li>Toolbar weapons screen can show both ten-wheeler cab and carrier weapon locations</li>
+    <li>Dischargers allowed on ten-wheeler carrier</li>
+    <li>Fixes to regular and walkaround descriptions for ten-wheelers</li>
+    <li>Clean up some weapon location references</li>
+    <li>Fix up PDF for ten-wheelers</li>
+</ul>
+<h3>Revision 920</h3>
+<ul>
+    <li>First draft of Ten Wheelers<ul>
+        <li>Add art to vehicle select screen</li>
+        <li>Support hover clicks in both carrier and cab</li>
+        <li>Support top and side turrets on carriers as well as cabs</li>
+        <li>Support crew in carriers as well as cabs</li>
+        <li>Add carrier weight and space to status display instead of performance stats</li>
+    </ul>
+    </li>
+</ul>
+<h3>Revision 919</h3>
+<ul>
+    <li>Fix vehicles with previous design history</li>
+    <li>Initial work on 10-wheelers (not yet available)</li>
+</ul>
+<h3>Revision 918</h3>
+<ul>
+    <li>Update tour to mention new vehicle screen</li>
+    <li>Update scripts for stock car review</li>
+    <li>Update screen for regenerating stock car images and PDFs</li>
+</ul>
+<h3>Revision 917</h3>
+<ul>
+    <li>Split rockets into separate categories</li>
+    <li>Add Super Rocket and Missile Launcher from UACFH</li>
+    <li>Add Foam rocket rounds</li>
+    <li>Fix walkaround description for dischargers</li>
+    <li>Smaller Main Menu</li>
+    <li>New "New Vehicle" selection screen</li>
+    <li>Fix "Assault Ramp" checkbox</li>
+    <li>Add tests for tractors, trailers (both types), buses</li>
+    <li>Fix adding and removing weapons from rear sponsons/EWPs on oversize vehicles</li>
+</ul>
+<h3>Revision 916</h3>
+<ul>
+    <li>Support sidecars in automated design tests</li>
+    <li>Add some checks of the diagram logic to the automated design tests</li>
+    <li>Load more in the background after the main program has started, to improve startup over slow connections</li>
+    <li>Support more than 6 ammo types per weapon</li>
+    <li>Add Anti-Pedestrian, Beacon, and Chemical mines</li>
+    <li>Add more Hot Smoke munitions</li>
+    <li>Add Toxin Gas (GS, TXG, HDTXG)</li>
+    <li>Fix diagram for corner mounts with two weapons</li>
+    <li>Fix weapon screen for weapons with no ammo loaded</li>
+    <li>Fix clicking on gear in diagram after selecting crew gear</li>
+</ul>
+<h3>Revision 915</h3>
+<ul>
+    <li>Conflict detection for multiple stock car reviewers</li>
+</ul>
+<h3>Revision 912</h3>
+<ul>
+    <li>Switch to the larger cycle diagram immediately if a gunner is added</li>
+    <li>Remove sidecar passenger/gunner from diagram when removed from design</li>
+    <li>Allow other stock car reviewers to defer designs</li>
+    <li>Fit more designs on the stock car review screen</li>
+</ul>
+<h3>Revision 911</h3>
+<ul>
+    <li>Don't show a save error if designer notes are provided but the email address is not registered</li>
+    <li>Allow for additional stock car reviewers</li>
+    <li>Don't allow component armor for weapons in EWPs</li>
+    <li>Fix available space calculation when configuring weapon options for weapons in cycle turrets & EWPs</li>
+</ul>
+<h3>Revision 908</h3>
+<ul>
+    <li>Update the price immediately when you remove the link from a set of linked weapons</li>
+    <li>Include the cost of reversing a trike or modifying a trailer in the cost of a CA Frame on the PDF</li>
+</ul>
+<h3>Revision 907</h3>
+<ul>
+    <li>Add initial dropped weapon art</li>
+    <li>Don't show plastic if composite armor is selected but only metal values are entered</li>
+    <li>Don't allow a subcompact or compact to use a six-wheeled chassis</li>
+    <li>If you remove a hand weapon from a crew member with multiple hand weapons, return to that crew member's gear list</li>
+    <li>Update display name when setting the design name from the save screen</li>
+    <li>Redraw the toolbar gas tank button when the engine changes from gas to electric or vice versa</li>
+    <li>Let Safari/iOS users copy the text from the vehicle description</li>
+</ul>
+<h3>Revision 904</h3>
+<ul>
+    <li>Treat an empty armor value as 0 instead of producing an error</li>
+</ul>
+<h3>Revision 901</h3>
+<ul>
+    <li>Fix the tour after recent changes</li>
+</ul>
+<h3>Revision 900</h3>
+<ul>
+    <li>More work on Repair &amp; Salvage -- better armor damage selection, show ammo used, include accessories, etc.</li>
+    <li>Fixes to ammo count placement for some orientations of FTs, RLs</li>
+</ul>
+<h3>Revision 899</h3>
+<ul>
+    <li>Add initial work on Repair &amp; Salvage screen (cars only for the moment)</li>
+    <li>Minor fixes to trailer validation</li>
+</ul>
+<h3>Revision 898</h3>
+<ul>
+    <li>Update the engine hover text when you change the size up or down</li>
+    <li>When changing engines between gas and electric, bias toward small not big</li>
+    <li>Fix drawing of sidecar tires, and hover highlighting of cycle and sidecar wheelguards/hubs</li>
+    <li>When changing cycle/sidecar color, change the connector color too</li>
+</ul>
+<h3>Revision 897</h3>
+<ul>
+    <li>Quick fixes to generating images for stock cars and cars on lists</li>
+</ul>
+<h3>Revision 896</h3>
+<ul>
+    <li>Improve graphics performance</li>
+    <li>Fix armor locations for 40' flatbeds</li>
+    <li>Fix armor screen for non-oversize car trailer flatbeds</li>
+    <li>Add 'Menu' to the menu icon to make it more obvious</li>
+    <li>Immediately show design as illegal if various Sport mods put it over space or weight</li>
+    <li>Save color preference and driver/engine layout location with design (if customized)</li>
+    <li>Add automated car build tests for this and future releases</li>
+    <li>Some abbreviations to help fit more weapons on the PDF</li>
+    <li>Tag text input fields as numeric or email as appropriate</li>
+</ul>
+<h3>Revision 895</h3>
+<ul>
+    <li>Make the +/- buttons bigger on tablets</li>
+    <li>Handle touch events instead of mouse events when appropriate</li>
+    <li>Fix black vehicle color selection</li>
+</ul>
+<h3>Revision 894</h3>
+<ul>
+    <li>Don't draw the default subcompact or previous design while loading another one</li>
+    <li>Make the description text even smaller for very complex designs</li>
+</ul>
+<h3>Revision 893</h3>
+<ul>
+    <li>Fix cycle caption in stock/design list</li>
+</ul>
+<h3>Revision 892</h3>
+<ul>
+    <li>When adding a design to a list and it isn't already a stock car,
+        first make the user generate an image and PDF</li>
+    <li>When using the menu to load an existing design, don't reload the page</li>
+    <li>For semi tractors, show the loaded top speed based on a full tractor not
+        a full tractor plus trailer</li>
+</ul>
+<h3>Revision 891</h3>
+<ul>
+    <li>Add the ability to create custom design lists, view them as stock car lists,
+        and add and remove designs from your lists.</li>
+    <li>Add the ability to change the selected body by dragging left/right from
+        anywhere "Body Basics" is showing</li>
+</ul>
+<h3>Revision 890</h3>
+<ul>
+    <li>Fix stock car reviewing and display for semi trailers</li>
+    <li>Tweak text for power plant accessories</li>
+</ul>
+<h3>Revision 887</h3>
+<ul>
+    <li>Show the new signature field on the stock car list.  Also show a review as "Designer Notes" if by the author.</li>
+    <li>Default to existing division, designer notes, and signature if re-saving a prior stock car</li>
+</ul>
+<h3>Revision 886</h3>
+<ul>
+    <li>Update the design signature cookie every time you change it</li>
+    <li>Show remaining weight over 5lbs as "Gear Allocation" if there's not at least a space available
+        to show it as cargo instead</li>
+    <li>Unbreak sidecar description</li>
+</ul>
+<h3>Revision 885</h3>
+<ul>
+    <li>Don't take stock cars where the name/email/design name aren't specified</li>
+    <li>Let the designer supply the category and initial notes when submitting a stock car</li>
+    <li>Add a tagline/signature that will be applied to each design you create</li>
+</ul>
+<h3>Revision 884</h3>
+<ul>
+    <li>Fix for loading saved semi trailers</li>
+</ul>
+<h3>Revision 883</h3>
+<ul>
+    <li>Include extra oversize turrets in cost/weight/space calculation</li>
+    <li>Add design validation for semi trailers, including front-facing weapons and front-half dropped weapons</li>
+    <li>Take chassis, suspension, and performance values off the PDF for semi trailers</li>
+</ul>
+<h3>Revision 882</h3>
+<ul>
+    <li>More consistent drawing for outer tires on car trailers</li>
+    <li>Add or remove front wheels on semi trailer as body options change</li>
+    <li>Fix wheelguards and hubs on semi trailers</li>
+    <li>Fix initial state of body options for semi trailers</li>
+    <li>Show semi trailers in UI (PDF still needs work)</li>
+</ul>
+<h3>Revision 881</h3>
+<ul>
+    <li>Fix loading of designs with passengers with non-weapon gear</li>
+    <li>When car trailer exceeds available space, make it wider</li>
+    <li>Initial work on semi trailers (not yet visible)</li>
+</ul>
+<h3>Revision 880</h3>
+<ul>
+    <li>Fix turret and discharger placement for oversize car trailers</li>
+    <li>Remove extra space taken when a design has both side turrets and double wheels</li>
+</ul>
+<h3>Revision 879</h3>
+<ul>
+    <li>Fix discharger drawing</li>
+</ul>
+<h3>Revision 878</h3>
+<ul>
+    <li>Show tires for 25'-30' car trailers doubled up, with wheelguards/hubs accordingly</li>
+    <li>Fix display of left back / right back weapons on oversize car trailers</li>
+    <li>Hide all *-back weapons when changing an oversize van trailer to a flatbed</li>
+</ul>
+<h3>Revision 877</h3>
+<ul>
+    <li>Fix for loading saved oversize flatbeds</li>
+</ul>
+<h3>Revision 876</h3>
+<ul>
+    <li>Include cost/weight/space for reefer/tanker/dumper trailer modifications</li>
+    <li>Don't list all sidecar weapons in plural</li>
+    <li>More validation for car trailers, including weapon tech levels</li>
+    <li>Fix checked state of reefer/tanker/dumper trailer options on page load</li>
+    <li>Fix composite flatbed bed armor</li>
+    <li>Add oversize car trailers (20', 25', 30')
+        <ul>
+            <li>Still need work on placing side turrets and dischargers on diagram</li>
+        </ul>
+    </li>
+</ul>
+<h3>Revision 875</h3>
+<ul>
+    <li>Added winch.  Moved winch, tow bar, and hitches to new "towing" category.</li>
+    <li>Rearranged dischargers into two weapon categories to fit them all</li>
+    <li>Changed stock car list to split out cycles</li>
+</ul>
+<h3>Revision 868</h3>
+<ul>
+    <li>Disable dropped weapons on the front half of a bus (disables front corners altogether)</li>
+    <li>Add laser modifications and EWP ejection system to PDF design worksheet</li>
+    <li>Individually round the weight of each type of ammo in a weapon's magazine</li>
+    <li>Don't break when importing a flatbed trailer</li>
+    <li>Include flatbed armored box armor on PDF design worksheet</li>
+    <li>Draw ramplate on a semi tractor</li>
+</ul>
+<h3>Revision 799</h3>
+<ul>
+    <li>Round cost of each set of a distinct ammo type separately (e.g. 5 RR HEAT + 5 RR HESH) in
+        designer to match cost presented in design worksheet</li>
+    <li>Don't let DP of a gas tank spill out of its space even with large CA</li>
+    <li>Don't blow up if you click [-] next to a gear item that you have none of</li>
+    <li>Add 'Back' button to top of hand weapons screens</li>
+    <li>Add remaining CWC personal equipment for crew</li>
+    <li>Make sure entire gunner screen shows on all browsers/platforms</li>
+    <li>PDFs open in a new window/tab</li>
+</ul>
+<h3>Revision 798</h3>
+<ul>
+    <li>Fix enabling/disabling for supercharger, laser battery, and FRI based on available space</li>
+    <li>Fix weight and space for Truck Turbo on design worksheet</li>
+    <li>Fix rounding on design worksheet for bumper spikes, fake ramplate, sidecar armor, convertible hardtop</li>
+</ul>
+<h3>Revision 797</h3>
+<ul>
+    <li>Don't show pop-up turrets/cupolas on walkaround description</li>
+</ul>
+<h3>Revision 796</h3>
+<ul>
+    <li>Show component armor on diagram for a set of front/back single-shot rockets with CA</li>
+    <li>Show component armor on diagram for most linked side weapons with CA</li>
+    <li>Remove extra space from weapon description with magazine switch</li>
+    <li>More space for armor points &amp; StealthKote on PDF</li>
+</ul>
+<h3>Revision 795</h3>
+<ul>
+    <li>Show cupola gunner on diagram</li>
+</ul>
+<h3>Revision 794</h3>
+<ul>
+    <li>Show correct top/underbody front/back location names for those weapons when loading saved design</li>
+    <li>Highlight illegal designs during stock car review</li>
+</ul>
+<h3>Revision 793</h3>
+<ul>
+    <li>Don't allow cargo safe options unless there's a cargo safe (mini-safe doesn't count)</li>
+    <li>Validate accessories for buses and semi tractors</li>
+</ul>
+<h3>Revision 792</h3>
+<ul>
+    <li>Move links to be after accessories in the text description</li>
+</ul>
+<h3>Revision 791</h3>
+<ul>
+    <li>Restore laser batteries to the design worksheet</li>
+</ul>
+<h3>Revision 789</h3>
+<ul>
+    <li>Include top and bottom weapons and dischargers in diagram when loading a saved design</li>
+    <li>Don't let top or bottom dischargers overlap other components in the diagram</li>
+</ul>
+<h3>Revision 788</h3>
+<ul>
+    <li>Better rendering for armored fifth wheel</li>
+    <li>More space for cost on PDF when over $100K</li>
+    <li>More space for cost on stock car list</li>
+    <li>Side dischargers work more reliably for oversize vehicles</li>
+    <li>Show up to 5 top and 5 bottom dischargers in the "cargo" area</li>
+    <li>Design Worksheet doesn't count weight of passenger personal equipment for buses due to 50lb luggage allocation</li>
+</ul>
+<h3>Revision 787</h3>
+<ul>
+    <li>Fix UB armor visibility</li>
+</ul>
+<h3>Revision 786</h3>
+<ul>
+    <li>Fix stock car diagrams</li>
+    <li>Allow Passenger Accommodations for Buses, Semis, and Car Trailers</li>
+    <li>Show armor stats in an info message when changing armor types</li>
+    <li>Make it easier to dismiss an info/error message (click anywhere on it)</li>
+    <li>Make the vehicle description font smaller for large descriptions</li>
+    <li>Add more categories to the list of saved designs</li>
+</ul>
+<h3>Revision 785</h3>
+<ul>
+    <li>Allow up to 9 gunners on diagram</li>
+    <li>New rendering for more than 2 passengers or more than 1 gunner: show all icons in diagram but shrink them
+        and place up to 9 in the space usually taken by 1</li>
+    <li>On the (all) Crew screen, list all gunners separately.  Stay on the screen when adding a gunner or
+        passenger to make it more convenient to add a bunch.</li>
+    <li>On the PDF, don't list skill blanks for more than one gunner</li>
+    <li>Crew compartment CA applies to driver (if any) and <i>all</i> gunners (no way to select a subset yet)</li>
+    <li>Unbreak display for crew compartment CA</li>
+</ul>
+<h3>Revision 784</h3>
+<ul>
+    <li>Add more vehicle types to the stock car list and categories</li>
+</ul>
+<h3>Revision 783</h3>
+<ul>
+    <li>Minor fix to top back armor distribution for oversize vehicles.</li>
+</ul>
+<h3>Revision 782</h3>
+<ul>
+    <li>Gave up on the header font for now due to PDF issues on the server.  Replaced with image.</li>
+    <li>Simplified armor distribution process.  Now works for oversize vehicles.</li>
+    <li>Replace armor point cost/weight display with the armor distribution button to conserve space.</li>
+</ul>
+<h3>Revision 781</h3>
+<ul>
+    <li>Fix saving and loading links to side back weapons/turrets/boosters</li>
+    <li>Fix diagram after loading a design with boosters in non-back EWP</li>
+    <li>Fix for adding top back and underbody back weapons</li>
+    <li>Bus passengers still take extra weight for CA, seats, and other non-personal-equipment</li>
+    <li>The return of the Tank Gun</li>
+    <li>Fix generating PDFs for designs with left back weapons</li>
+    <li>Oversize composite armor shows all 10 locations</li>
+    <li>Armor values shouldn't cause PDF to split onto another page</li>
+</ul>
+<h3>Revision 780</h3>
+<ul>
+    <li>Fix a PDF generating problem</li>
+</ul>
+<h3>Revision 779</h3>
+<ul>
+    <li>Fix changing the size of side back EWPs to affect both sides at once</li>
+    <li>Fix rocket booster minimum needed size calculation for vehicles where the minimum buy is more than one space</li>
+    <li>Add Assault Ramps and distinguish Left and Right Side Doors</li>
+    <li>Hide ramps, doors, amphibious modifications, and convertibles for body types that can't have them</li>
+    <li>Show correct ISC count when you go to the electric engine screen</li>
+    <li>Allow more than one laser battery</li>
+    <li>Unbreak clicking on a driver/gunner/passenger when you're already on another one</li>
+    <li>When there are more than 2 passengers, combine them into one icon
+        (though I still need a way to edit them separately when called for)</li>
+    <li>Allow weapons in side back or back turret locations in links & smart links</li>
+</ul>
+<h3>Revision 778</h3>
+<ul>
+    <li>Quick fix for JavaScript syntax that only works in Firefox</li>
+</ul>
+<h3>Revision 777</h3>
+<ul>
+    <li>30' and 40' Buses:<ul>
+        <li>Master weapon list screen lets you access all 14 locations</li>
+        <li>Include back turrets and weapons in design worksheet</li>
+        <li>Include back turrets and weapons in walkaround description</li>
+        <li>Can save and load buses</li>
+        <li>Validate that each separate facing doesn't violate the 1/3 spaces rule</li>
+        <li>All tires are always the same</li>
+        <li>Expand the weapon and armor spaces on the PDF as needed</li>
+    </ul></li>
+    <li>Cupola gunners included on design worksheet</li>
+    <li>Cupola gunner equipment counted toward Cupola space limit (e.g. CA, cyberlink)</li>
+    <li>Walkaround description includes correct wheelguard/hub counts for axles with 4 wheels</li>
+</ul>
+<h3>Revision 776</h3>
+<ul>
+    <li>30' and 40' Buses:<ul>
+        <li>Can add a back turret</li>
+        <li>Front turrets always appear in front of back turrets in the diagram</li>
+        <li>Can add side back EWP/sponsons</li>
+        <li>Rocket Boosters work in top/side back EWPs</li>
+        <li>Weapons work in all 10 facings</li>
+        <li>Weapon positions change names between e.g. Left Front and Left when changing body to/from Minibus</li>
+        <li>Oversize corner-mount limit is 4 spaces</li>
+    </ul></li>
+    <li>Add oversize vehicle plumbing to Car Trailers in anticipation of adding 20' and larger ones</li>
+    <li>Semi Tractor fifth wheel shows 8 DP plus any armor</li>
+    <li>Don't leave booster icons on the diagram when removing an EWP containing boosters</li>
+    <li>Don't allow adding a rocket booster to an EWP with less than one space remaining (e.g. via MnRs)</li>
+    <li>Don't suggest adding TL or dischargers to a full corner-mount location</li>
+</ul>
+<h3>Revision 775</h3>
+<ul>
+    <li>Included additional icons from <a href="http://glyphicons.com/">Glyphicons</a></li>
+    <li>30' and 40' buses get all 10 armor locations</li>
+    <li>6e Kickstarter forum launches.  Buses hidden in UI due to incompleteness.</li>
+</ul>
+<h3>Revision 774</h3>
+<ul>
+    <li>When bringing up the design screen, begin with focus on the design name field</li>
+    <li>Front wheelguards don't reduce HC on a semi tractor</li>
+    <li>New forum is taking too long.  Initial work on buses.  They draw,
+        but they're not pretty and there's a lot that doesn't work right yet.</li>
+</ul>
+<h3>Revision 773</h3>
+<ul>
+    <li>Semi tractors:<ul>
+        <li>Add design validation</li>
+        <li>Don't allow radial, off-road, or slick truck tires</li>
+        <li>Spare tires now calculated as truck tires</li>
+        <li>Engine modifiers affect top speed</li>
+        <li>Spread out dashboard fields a little to fit larger cost/weight values</li>
+        <li>Fix loading saved truck designs</li>
+        <li>Fix available armor calculation, and reduce back armor distribution</li>
+        <li>Allow 3 dischargers per side</li>
+        <li>Show fifth wheel armor on diagram</li>
+        <li>Only three guards/hubs per side</li>
+        <li>Include windshell and fifth wheel armor on design worksheet</li>
+    </ul></li>
+    <li>Significant update to design validation to cut down on the total size of the code/download</li>
+    <li>Add "Spare" to spare tire on design</li>
+    <li>Fix blue-green laser option</li>
+</ul>
+<h3>Revision 772</h3>
+<ul>
+    <li>Semi tractors:<ul>
+        <li>Small/Medium truck power plants disallowed</li>
+        <li>Show max load when changing engines</li>
+        <li>Disable most obviously invalid plant/engine options</li>
+        <li>Passengers take two spaces</li>
+        <li>Clicking the fifth wheel doesn't blow up</li>
+        <li>Don't allow different tires front to back</li>
+        <li>Add windjammer and sleeping area</li>
+        <li>Add windjammer armor and fifth wheel armor</li>
+    </ul></li>
+    <li>Don't omit windshell weight from cycle top speed/acceleration calculations</li>
+</ul>
+<h3>Revision 771</h3>
+<ul>
+    <li>Initial work on semi tractors.  They draw, but there's a lot that doesn't work right yet.</li>
+</ul>
+<h3>Revision 770</h3>
+<ul>
+    <li>Added missing (mainly Uncle Al's Catalog from Hell) items: chaff rockets and dischargers, HD chaff dispenser,
+        hot smoke ammo and discharger, glow-in-the-dark paint discharger, sand and foam dischargers, cloud bomb,
+        incendiary spikes, compact TV, drag chute.  Some layout issues remaining e.g. with too many ammo types for
+        rockets, too many discharger types.</li>
+    <li>List removed items when changing tech level to CWC</li>
+    <li>Validate UACFH-only accessories</li>
+    <li>Don't allow smoke or tear gas APPR</li>
+</ul>
+<h3>Revision 769</h3>
+<ul>
+    <li>Update the tour to reflect small changes in the designer</li>
+</ul>
+<h3>Revision 766</h3>
+<ul>
+    <li>Sand ammo for JDs</li>
+    <li>Trim some unused data from the ammo types</li>
+</ul>
+<h3>Revision 765</h3>
+<ul>
+    <li>Correct engine description for a gas engine with no accessories except component armor</li>
+</ul>
+<h3>Revision 764</h3>
+<ul>
+    <li>Show top &amp; underbody dischargers on the diagram</li>
+</ul>
+<h3>Revision 763</h3>
+<ul>
+    <li>Add range and cruising speed to the PDF</li>
+</ul>
+<h3>Revision 762</h3>
+<ul>
+    <li>Round corners on various options on the weapon screen</li>
+    <li>Allow applying an ammo modifier (e.g. laser-guided, proximity-fused) to only some of the selected shots</li>
+    <li>List grenades as "10 Foo Grenades" rather than "10 shots Foo" for GLs</li>
+</ul>
+<h3>Revision 761</h3>
+<ul>
+    <li>Properly account for the cost/weight of fake weapons on a fake turret</li>
+    <li>Component armor types for weapons and gas tanks</li>
+    <li>Armor types for Pintle Mount gunshield and EWP armor</li>
+    <li>Squeeze the gas engine screen a little to fit in Firefox/Windows</li>
+</ul>
+<h3>Revision 760</h3>
+<ul>
+    <li>Add component armor type selector</li>
+    <li>Allow choosing component armor type for crew, crew compartment, and engine (more coming)</li>
+</ul>
+<h3>Revision 759</h3>
+<ul>
+    <li>Add Sponson Turrets</li>
+    <li>Don't let side turrets draw over dischargers on compacts and subs</li>
+    <li>When changing body style to Extra-Heavy Trike with engine adjustment, at least pick *some* engine,
+        even if they're all underpowered</li>
+</ul>
+<h3>Revision 758</h3>
+<ul>
+    <li>Add Snow Tires and Tire Chains</li>
+    <li>When changing cycle tires to radial/off-road/slick, make sure to disable the exclusive options
+        on the sidecar tires too</li>
+    <li>Offer a separate tech level for military technology (though at present, there's a very limited selection
+        of military items available)</li>
+</ul>
+<h3>Revision 757</h3>
+<ul>
+    <li>Don't show concealed weapons in the walkaround description (headslap!)</li>
+    <li>Don't automatically draw fake weapons half-size</li>
+    <li>Rename "Rice" icon to "Sport"</li>
+</ul>
+<h3>Revision 756</h3>
+<ul>
+    <li>Don't allow too many dischargers per side (and none for sidecars, turrets, etc.)</li>
+    <li>Allow top and underbody weapons</li>
+    <li>Show HC modifier for cycle windshell in description</li>
+    <li>Show engine/plant type and key accessories in hover text</li>
+    <li>Make curves on PDF identical to curves in UI</li>
+    <li>Highlight the current engine in the engine selector</li>
+    <li>Show pop-up notes with the cost of tire modifications as you add them</li>
+    <li>Show pop-up notes with the cost of turret modifications as you add them</li>
+    <li>Don't break when you add a weapon to a fake turret</li>
+    <li>Adjust weapons in turret to be fake/real when turret it made fake/real</li>
+    <li>Show the saved design ID on the PDF when you load or save a design and immediately generate a PDF</li>
+</ul>
+<h3>Revision 755</h3>
+<ul>
+    <li>Tweak the PDF walkaround text and worksheet text for rocket boosters</li>
+    <li>Put the design name in the PDF file name so they're more easily distinguished</li>
+</ul>
+<h3>Revision 754</h3>
+<ul>
+    <li>First work on the quick start designer</li>
+    <li>Put an asterisk next to spike damage because solid/plasticore take different damage</li>
+    <li>Hide engine messages when you switch to the selector</li>
+</ul>
+<h3>Revision 752</h3>
+<ul>
+    <li>Don't say "both" when linking one weapon to a pair of weapons (e.g. 1 turret to pair front)</li>
+    <li>Don't show a suspension line for a Car Trailer on the PDF</li>
+    <li>Let you narrow the stock car display to a single division</li>
+</ul>
+<h3>Revision 751</h3>
+<ul>
+    <li>Notifications when you change tech levels</li>
+    <li>When changing tech level to CWC, remove HTMs from links</li>
+    <li>Don't break if you change the tech level of a Car Trailer</li>
+    <li>Don't allow publishing a stock design with HTMs at the CWC tech level</li>
+    <li>Include the cost of reversing a trike on the PDF worksheet</li>
+    <li>List the number of wheelguards/hubs in each line on the PDF worksheet</li>
+</ul>
+<h3>Revision 750</h3>
+<ul>
+    <li>Don't omit the ammo modifiers (laser-guided, prox. fused, etc.) from certain lines on the PDF worksheet</li>
+    <li>Better text for individual laser-guided single-shot rockets</li>
+    <li>Show cost/weight for each option on the turret screen</li>
+    <li>When moving/removing a linkable item, remove it from any links that contain it as well</li>
+    <li>Tweak the layout to fit the whole Gunner screen on various browser/OS combinations
+        (Firefox/Windows being the tightest)</li>
+    <li>Move the SfS out from between ID and HDID</li>
+</ul>
+<h3>Revision 749</h3>
+<ul>
+    <li>Abbreviate some ammo modifiers on PDF to avoid weapons overflowing the available space</li>
+    <li>Change the minimum font size to fit longer vehicle descriptions in the available space on the PDF</li>
+</ul>
+<h3>Revision 748</h3>
+<ul>
+    <li>Fix wheelhub count/cost/weight for 4-wheel trailers</li>
+    <li>Show Laser-Guidance Link on PDF</li>
+</ul>
+<h3>Revision 747</h3>
+<ul>
+    <li>Better logic and notifications for manipulating extra clips and extended clips</li>
+    <li>Can now regenerate the PDFs and thumbnails for all stock cars at once</li>
+</ul>
+<h3>Revision 746</h3>
+<ul>
+    <li>Add Battle Vest and Armored Battle Vest and allow for the equipment that will fit inside when in GE mode</li>
+    <li>Add info messages with cost and weight/GE when you add any crew equipment</li>
+    <li>Show GEs more thoroughly for crew equipment on the PDF when in GE mode</li>
+    <li>Don't forget the 1 GE for the Radio Detonator</li>
+    <li>Fix cost for a hand weapon with multiple extra/extended clips, and don't make 1 clip plural, all on the PDF</li>
+    <li>Round up the cost of tires in a given location (front, back, middle)</li>
+    <li>Show cargo space/weight in one of the info boxes on the PDF</li>
+</ul>
+<h3>Revision 744</h3>
+<ul>
+    <li>Nicer description of multiple identical passengers</li>
+</ul>
+<h3>Revision 740</h3>
+<ul>
+    <li>Include weight of hand weapons for passengers when not in GE mode</li>
+    <li>Can edit your own reviews of stock cars</li>
+</ul>
+<h3>Revision 739</h3>
+<ul>
+    <li>Don't allow me to publish a stock car that's illegal</li>
+    <li>Explicit error if you try to save a second design with the same unique ID</li>
+    <li>Fix spurious autopilot error when adding accessories to bikes</li>
+    <li>Correct cost/weight for Stealth for cycles and trikes, hide it for trailers</li>
+    <li>Future stock cars will show tech level "CWC" even if designed with UACFH/etc. options available, so long as
+        they only actually USE equipment from CWC (and the cost/weight/etc. would be the same).</li>
+    <li>PDFs from the 'Download' link on the stock car screen will start to include the unique ID of the car</li>
+</ul>
+<h3>Revision 738</h3>
+<ul>
+    <li>Don't allow drag-and-drop of a passenger, avoiding freeze for car trailers</li>
+    <li>Use linked weapon language for first identical linked weapons on a side, even
+        when the weapons were create and linked separately</li>
+    <li>Combine descriptions of identical EWPs</li>
+    <li>Abbreviate the link description when it contains only multiple weapons amounting to
+        all the weapons of a given type on a vehicle</li>
+    <li>Better language for mines and spikes instead of "shots"</li>
+</ul>
+<h3>Revision 737</h3>
+<ul>
+    <li>Spell out PFE on the crew page</li>
+    <li>Can now add/edit/remove hand weapons for crew & passengers</li>
+    <li>Hand weapons calculate GE for folding stocks correctly</li>
+    <li>Design worksheet shows weight or GE for hand weapons according to design screen selection</li>
+</ul>
+<h3>Revision 736</h3>
+<ul>
+    <li>Massage the imported designs so that weapon damage populates correctly on the PDF</li>
+</ul>
+<h3>Revision 735</h3>
+<ul>
+    <li>Include EWP armor on the design worksheet</li>
+</ul>
+<h3>Revision 734</h3>
+<ul>
+    <li>Old designs imported</li>
+    <li>Correct for some bad tech levels on the import</li>
+</ul>
+<h3>Revision 733</h3>
+<ul>
+    <li>Add support for Laser-Reactive Web</li>
+    <li>Add support for StealthKote Shield (but no UI yet)</li>
+    <li>More prep for importing designs from the old designer</li>
+</ul>
+<h3>Revision 732</h3>
+<ul>
+    <li>Spell out crew equipment on the design worksheet</li>
+    <li>Don't let the text of the design name overwrite the cost on the PDF</li>
+    <li>All plumbing in place for designs with hand weapons -- except the UI to edit them</li>
+    <li>Fix error when you have both back weapons and a back-facing rocket booster (or ditto front)</li>
+    <li>Prepare to import designs from the old designer</li>
+</ul>
+<h3>Revision 731</h3>
+<ul>
+    <li>Add the ability for any logged-in user to rate and comment on stock car designs.
+        Here's hoping I won't regret it.</li>
+</ul>
+<h3>Revision 730</h3>
+<ul>
+    <li>'Medium Cycle' doesn't overflow the available space in the stock car list</li>
+</ul>
+<h3>Revision 729</h3>
+<ul>
+    <li>Sort the "Other" designs to the end of the stock car list</li>
+    <li>Add brief explanation to the end of the stock car list</li>
+    <li>Fix stock car images for cycles</li>
+</ul>
+<h3>Revision 728</h3>
+<ul>
+    <li>'Medium Trike' doesn't overflow the available space in the stock car list</li>
+</ul>
+<h3>Revision 727</h3>
+<ul>
+    <li>Layout fix for stock cars page</li>
+</ul>
+<h3>Revision 726</h3>
+<ul>
+    <li>Fix an error when loading some old designs that used links to weapons in a sidecar</li>
+</ul>
+<h3>Revision 725</h3>
+<ul>
+    <li>Don't say "Added a Light Laser with 0 shots"</li>
+    <li>Add a stock car database.  Any designs marked as stock cars when saving may be added to this list.</li>
+</ul>
+<h3>Revision 723</h3>
+<ul>
+    <li>Don't overwrite important design error messages with "helpful" info messages</li>
+</ul>
+<h3>Revision 722</h3>
+<ul>
+    <li>Tweak the message text when you add a copy of a weapon or add ammo</li>
+    <li>Disable magazine switch option when no extra magazine</li>
+    <li>Tweak layout when mixing full-height weapons and half-height weapons in front/back</li>
+    <li>New art for Lasers</li>
+    <li>New art for Flamethrowers</li>
+</ul>
+<h3>Revision 721</h3>
+<ul>
+    <li>After drag &amp; drop of crew or engine, always force a regular layout so if the size is going
+        to change it will do it then and not after the next layout-inducing change</li>
+</ul>
+<h3>Revision 720</h3>
+<ul>
+    <li>Now you can drag and drop crew and/or engine into a different column in the diagram</li>
+    <li>Don't pile up a bunch of messages if you switch repeatedly to and away from the engine screen</li>
+    <li>Fix the appearance of dischargers while you drag and drop them</li>
+</ul>
+<h3>Revision 719</h3>
+<ul>
+    <li>Update the design name on the diagram when you set the design name during the save process
+        (not just when you set it on the design screen)</li>
+    <li>Don't show an ammo area for searchlights and cameras by default (pending better art for them anyway)</li>
+</ul>
+<h3>Revision 718</h3>
+<ul>
+    <li>When hovering the mouse over a weapon in a turret, show the turret type not turret location</li>
+    <li>When hovering the mouse over a weapon or discharger, show the name instead of the abbreviation</li>
+    <li>If the Web page version in use is older than the PDF generator requires, produce a PDF with an
+        explanation instead of trying to generate the real PDF and failing</li>
+    <li>Fix error when adding extra magazine to weapon in sidecar turret</li>
+    <li>Remove enforcement of 1/3 spaces for cycle EWPs or sidecar turrets</li>
+    <li>Cost on the PDF is total for cycle/sidecar combo</li>
+    <li>Cost associated with a saved cycle/sidecar will be the total of the two</li>
+</ul>
+<h3>Revision 717</h3>
+<ul>
+    <li>Change Vehicular Camera to be a weapon not an accessory due to placement rules</li>
+    <li>Don't show magazine accessories for weapons with no ammo (laser, camera, etc.)</li>
+    <li>PDF shows full name for all weapons (not just those with ammo)</li>
+</ul>
+<h3>Revision 716</h3>
+<ul>
+    <li>Major overhaul to PDF</li>
+    <li>Fix layout error with turrets on reversed trikes</li>
+    <li>Add flatbed (non-box) armor to vehicle description</li>
+    <li>Don't list multiple passengers separately on walkaround</li>
+</ul>
+<h3>Revision 715</h3>
+<ul>
+    <li>Fix the position of cars and cycles on the PDF</li>
+    <li>Fix generating a PDF of a Car Trailer</li>
+    <li>Update walkaround description to include sunroof, streamlining, racing slicks, off-road suspension</li>
+</ul>
+<h3>Revision 714</h3>
+<ul>
+    <li>Add searchlights to the weapon list, so they can be placed/treated as weapons</li>
+    <li>Change "Engine Underpowered" message to state by how many pounds</li>
+    <li>Added pop-up messages when adding the rest of the items in the "Rice" list</li>
+    <li>Squeeze widest car design a little so toolbar border isn't cut off</li>
+</ul>
+<h3>Revision 713</h3>
+<ul>
+    <li>Don't omit 3rd set of tires from diagram when loading a saved 6-wheel design</li>
+    <li>Adjust design name text positioning in diagram</li>
+    <li>Pop-up messages when adding a spoiler or airdam</li>
+</ul>
+<h3>Revision 711</h3>
+<ul>
+    <li>Hitch, spoiler, airdam, ramplate, and bumper spikes are all clickable to go to the appropriate screen.</li>
+    <li>Hovering over the space where a hitch, spoiler, airdam, or ramplate would go lets you click to add one.</li>
+    <li>Add a little more space for the text for the name of thing your mouse is hovering over</li>
+</ul>
+<h3>Revision 709</h3>
+<ul>
+    <li>Add design name to diagram, clickable to bring up edit screen</li>
+    <li>Fix drawing for tongue for Car Trailer when shifted to wide diagram</li>
+    <li>Don't let a trailer design put any components in cargo space for a flatbed</li>
+</ul>
+<h3>Revision 708</h3>
+<ul>
+    <li>Add pop-up notes when you go to the engine screen and/or modify the engine, including stats for the selected
+        modifier and the total current PF.</li>
+</ul>
+<h3>Revision 707</h3>
+<ul>
+    <li>Remove some weapon-related console messages left in last build accidentally</li>
+    <li>Add pop-up notes when you add or remove weapons or ammo</li>
+    <li>Fix the add clip/remove ammo icons when you use the -/+ buttons</li>
+</ul>
+<h3>Revision 706</h3>
+<ul>
+    <li>Fix adding Rocket Boosters to an EWP when the vehicle has no interior spaces left</li>
+    <li>Trikes and Reversed Trikes use new layout system, can fit more cargo and etc.</li>
+    <li>Change some error messages for trikes to say "Trikes" instead of "Cars"</li>
+    <li>Change drawing of weapons to make more space for DP when weapon is roughly 2/3 normal size</li>
+    <li>Change drawing for rocket weapons so DP doesn't overlap weapon border</li>
+    <li>When removing a rocket booster from an EWP, return to the EWP screen</li>
+    <li>Change "Car Armor Distribution" caption for trikes, trailers, etc.</li>
+    <li>Fix flatbed armor field to hide again for bodies other than flatbeds</li>
+    <li>Flag an error if a flatbed trailer has EWPs</li>
+    <li>Disable turret button for flatbed trailers</li>
+    <li>Remove some engine-related console messages left in last build accidentally</li>
+</ul>
+<h3>Revision 705</h3>
+<ul>
+    <li>Fix selection logic for electric engines, that would propose the same engine twice in the list
+        for certain configurations (e.g. Heavy Trike)</li>
+    <li>Fix selection logic for smallest engines, so it prioritizes ones that can move the full chassis weight
+        (e.g. Compact w/Extra-Heavy Chassis should see 100cid w/MB Carb &amp; TC not 100cid w/Carb &amp; TC)</li>
+    <li>Don't show "Front Tires" link on all tires screen for a Car Trailer</li>
+</ul>
+<h3>Revision 704</h3>
+<ul>
+    <li>Unbreak EWPs for cycles</li>
+    <li>Cycles use new layout system</li>
+    <li>Dischargers positioned correctly for Car Trailers</li>
+</ul>
+<h3>Revision 703</h3>
+<ul>
+    <li>Rocket Boosters working in side &amp; top EWPs for cars, car trailers (no diagram support yet for cycles, trikes)</li>
+</ul>
+<h3>Revision 702</h3>
+<ul>
+    <li>Fix cost/weight of Fake Dischargers</li>
+    <li>Set first click on a Rocket Booster/Jump Jet to go to 10mph (the minimum allowed)</li>
+    <li>Fix links for equipment on car trailers</li>
+    <li>Partial support for Rocket Boosters in EWPs</li>
+</ul>
+<h3>Revision 701</h3>
+<ul>
+    <li>Rocket Boosters allowed in links</li>
+    <li>Changing Booster type or location re-runs design validation</li>
+    <li>Bias left/right side dropped weapons toward the left (back) of the diagram</li>
+    <li>Fix layout problem with wide-open trailer and 2 weapons per side</li>
+</ul>
+<h3>Revision 700</h3>
+<ul>
+    <li>Adjust sizes of weapon list and gear list to fit for Firefox on Windows</li>
+    <li>Change message icon to be different for notifications and errors</li>
+    <li>Fix problem with increasing ammo count on a weapon that was copied</li>
+</ul>
+<h3>Revision 699</h3>
+<ul>
+    <li>Car Trailers can add a Laser Battery or Fire Extinguisher from the Gear / Combat & Weapons screen</li>
+    <li>Can add a second gunner to a Car Trailer</li>
+    <li>Can configure a van trailer as a reefer, tanker, or dumper</li>
+    <li>Draw all flatbeds as an empty bed with a small-ish weapon box</li>
+</ul>
+<h3>Revision 698</h3>
+<ul>
+    <li>Add validation for car trailer designs</li>
+    <li>Don't enforce 1/3 spaces for Mini-Van trailers or Flatbed trailer armored boxes</li>
+    <li>Squeeze the armor screen a little so all the fields fit in Safari</li>
+    <li>Fix load failure for designs with a hitch</li>
+</ul>
+<h3>Revision 697</h3>
+<ul>
+    <li>Wheelguards and hubs don't cause problems when changing trailer tire count (10'/15')</li>
+    <li>Price flatbed armor correctly</li>
+    <li>Show flatbed armor fields for weapon box vs. flatbed underbody (still overflows in Safari)</li>
+    <li>Don't show "Crew Compartment CA" option for a trailer with a single gunner</li>
+    <li>Don't show "Keep Tires Same" checkbox for trailers (where all tires are always the same)</li>
+</ul>
+<h3>Revision 696</h3>
+<ul>
+    <li>Fix weights for Cyberlink and Ejection Seat</li>
+    <li>Show messages when crew body armor, seat, or computer is changed</li>
+    <li>Driver and Gunner links work right for Car Trailers</li>
+    <li>Add basic weight and space validation for Car Trailers</li>
+</ul>
+<h3>Revision 695</h3>
+<ul>
+    <li>Fix error when you have wheelguards/hubs and set the vehicle's plastic armor to "none"</li>
+</ul>
+<h3>Revision 694</h3>
+<ul>
+    <li>Preliminary support for car trailers < 20' (don't try to go to the "driver" and flatbed armor is still wrong)</li>
+</ul>
+<h3>Revision 693</h3>
+<ul>
+    <li>If on a weapon category list (e.g. for a Rocket Platform) and click another weapon/weapon area in the
+        diagram, process the click correctly</li>
+    <li>Show standard ammo as "normal" not blank when listing several types and on the PDF</li>
+</ul>
+<h3>Revision 692</h3>
+<ul>
+    <li>Add Hitches to available Gear and to diagram</li>
+    <li>Add Laser Battery as an electric engine option</li>
+    <li>Add an additional DP to the engine if a Laser Battery is selected</li>
+</ul>
+<h3>Revision 691</h3>
+<ul>
+    <li>Design view shows spoiler, airdam, front bumper spikes, ramplate</li>
+    <li>Turret list screen spells out External Weapon Pod/Rocket Pod</li>
+    <li>Adjust placement of widest designs on PDF</li>
+</ul>
+<h3>Revision 690</h3>
+<ul>
+    <li>Widest vehicles (3 slots wide with 6 wheels and guards/hubs) no longer cut off toolbar</li>
+    <li>Show "Check Engine" indicator if engine weight limit is under chassis weight limit</li>
+    <li>Recast PF to "Power %" and show it with weight/space on engine screen</li>
+    <li>Show full weapon name (and damage) in weapon list, replacing # of shots</li>
+    <li>Better hover text and link names for turreted/sidecar weapons</li>
+    <li>Fix for saving designs with links that include sidecar right/left/back weapons</li>
+    <li>Fix for loading a design and immediately clicking on and incrementing a turreted weapon</li>
+    <li>Links (added by default) between identical weapons now included in link count on gear screen</li>
+    <li>Combine identical passengers in text description</li>
+</ul>
+<h3>Revision 689</h3>
+<ul>
+    <li>Smaller body for Sprint cars by default</li>
+    <li>Unbreak default race car suspension</li>
+    <li>When using the new design links from the menu, reset the acceleration/top speed/range goals to default</li>
+    <li>Walkaround no longer missing if you download a PDF from the "design saved" screen</li>
+    <li>If design weight over engine capacity and chassis limit, only complain about the lower of the two</li>
+</ul>
+<h3>Revision 687</h3>
+<ul>
+    <li>New layout system to arrange items in cars (not yet cycles/trikes)</li>
+    <li>Smaller body for compacts and subcompacts by default</li>
+    <li>Fix mouse hover for multiple side-facing weapons that are combined into one space in the diagram</li>
+    <li>Fix for rocket booster drawing over top of a cargo item</li>
+    <li>Fix for turreted RR drawing</li>
+</ul>
+<h3>Revision 685</h3>
+<ul>
+    <li>When increasing the count of single-shot rockets, only draw one in the diagram, just add more DP</li>
+    <li>Default to heavy suspension and extra-heavy chassis</li>
+    <li>When clicking on a weapon location with no weapons, go directly to weapon selection</li>
+    <li>New art for single-shot and multi-shot rocket weapons</li>
+    <li>Fix for component armor around multiple under-one-space rockets</li>
+</ul>
+<h3>Revision 684</h3>
+<ul>
+    <li>Initial stab at drag-and-drop: for moving and copying weapons</li>
+    <li>Can click on a weapon in a turret to go straight to that weapon
+        (though, it makes it a little trickier to click on the turret itself)</li>
+</ul>
+<h3>Revision 683</h3>
+<ul>
+    <li>PDF worksheet uses correct metal armor point value</li>
+    <li>PDF worksheet properly accounts for metal spoiler and airdam</li>
+    <li>When deciding how much weight/space is available for a replacement engine, include the current gas tank cost/weight if currently gas</li>
+    <li>Show the "working on it" pop-up while saving a design, in case the server is slow at the time</li>
+    <li>Tweak the cargo display so it doesn't show a bogus value when the current engine can't move the full chassis weight</li>
+    <li>Change the "load previous version" link to use the new-form URL</li>
+</ul>
+<h3>Revision 681</h3>
+<ul>
+    <li>Removing a link updates the status display</li>
+    <li>Magazine switch included in text description</li>
+    <li>Reformat cargo description and loaded top speed/accel description</li>
+    <li>Include weight cutoff for current accel in cargo description</li>
+</ul>
+<h3>Revision 680</h3>
+<ul>
+    <li>Automatically hide previous designs by the same user with the same name</li>
+    <li>Add a link to the prior version of a design, below the description</li>
+    <li>Fix bug where sloped/streamlined wasn't applied to cargo spaces</li>
+</ul>
+<h3>Revision 678</h3>
+<ul>
+    <li>Show the engine weight limit in the top weight status display if it's less than the chassis weight limit</li>
+    <li>Show cargo capacity in the vehicle description (if at least one space and 20lbs,
+        or more than no space and 10lbs for sidecars)</li>
+    <li>Limit sidecar cargo capacity if the cycle engine can't handle the full sidecar chassis limit</li>
+    <li>Don't show the cargo spaces status display if the vehicle has no cargo spaces</li>
+    <li>Fix problem when clicking on a spare tire in the design view</li>
+    <li>At least round the corners on spare tires and accessories (pending better art)</li>
+    <li>Minor adjustment to avoid cutting off status area labels in Safari</li>
+    <li>Fix error message for overweight cycle+sidecar combination</li>
+</ul>
+<h3>Revision 677</h3>
+<ul>
+    <li>Finished the first pass through the UI tour.</li>
+</ul>
+<h3>Revision 676</h3>
+<ul>
+    <li>More work on the UI tour</li>
+</ul>
+<h3>Revision 675</h3>
+<ul>
+    <li>Fire-Retardant Insulators treat 0-space gas tanks as 1-space items for cost/weight purposes</li>
+    <li>More work on the UI tour</li>
+</ul>
+<h3>Revision 671</h3>
+<ul>
+    <li>A little more validation on design name, user name, etc.</li>
+    <li>Add the first draft of the UI tour</li>
+    <li>Fix Safari problem that after you log in, the design list doesn't come up</li>
+    <li>When hovering, highlight the 4th side of the current toolbar button</li>
+    <li>Quick test of speeding up the initial page load: validation logic comes down separately</li>
+</ul>
+<h3>Revision 669</h3>
+<ul>
+    <li>Better (but still not perfect) algorithm for armor auto-distribution with a Ramplate</li>
+    <li>Cargo space shows in status display, and appropriate items go there</li>
+    <li>Passenger accommodations are only enabled for vans & removed if you change the body</li>
+    <li>Weapons list shows "1 shot" instead of "1 shots" for single-shot items</li>
+    <li>Cycle passenger does not take up space</li>
+</ul>
+<h3>Revision 667</h3>
+<ul>
+    <li>Fix problem loading designs with a spare tire</li>
+</ul>
+<h3>Revision 666</h3>
+<ul>
+    <li>When changing sidecar armor, change the type of any wheelguards/hubs as well</li>
+    <li>Added design validation for cycles and sidecars</li>
+    <li>Fix problem when clicking a sidecar weapon location with a weapon on the all weapons list</li>
+    <li>Fix problem when adding CA to a sidecar weapon</li>
+    <li>For cycles & sidecars, enable the weapon CA controls if there's 1/2 space left (not 1)</li>
+    <li>When clicking directly between weapons, enable/disable the space-taking options appropriately</li>
+    <li>Draw multiple weapons (or etc.) per spot in a sidecar</li>
+    <li>Round up spaces on the sidecar space status display</li>
+    <li>Fix title when viewing a list of weapons in a sidecar location</li>
+    <li>Fix schematic problem when removing a sidecar that has contents</li>
+</ul>
+<h3>Revision 664</h3>
+<ul>
+    <li>Discharger drawing improved on IE</li>
+    <li>Reversed trike discharger positioning fixed</li>
+    <li>Small tweaks to the distribute armor calculation (including full top armor for trikes)</li>
+    <li>Add walkaround description for sidecars to PDF</li>
+    <li>Remove zero-space turret option from cycles</li>
+    <li>Added design validation for trikes</li>
+    <li>Correct front/rear wheel count for reversed trikes</li>
+    <li>Change wheelguard/hub type to/from motorcycle when trike is changed between regular and reversed</li>
+    <li>When going to the body basics screen on a design with a sidecar, show the correct sidecar type as selected</li>
+    <li>Add amphibious modifications and side door to walkaround description</li>
+</ul>
+<h3>Revision 663</h3>
+<ul>
+    <li>Remove all (X) ammo button changes to add full clip button when none of that ammo is selected</li>
+    <li>Car side dischargers positioned to avoid EWPs</li>
+    <li>Cycle dischargers positioned to avoid tires and weapons</li>
+    <li>Hide cycle weapon barrels that would overlap wheels/wheelhubs</li>
+    <li>Add rocket boosters to cycle schematic</li>
+    <li>Improve positioning for EWPs for forward and reversed trikes</li>
+</ul>
+<h3>Revision 661</h3>
+<ul>
+    <li>Add spare tire options from the tire link in the toolbar</li>
+    <li>Reversed trikes show a better schematic</li>
+    <li>Saved trikes can be loaded</li>
+    <li>Remove corner-mounted weapons from trikes</li>
+</ul>
+<h3>Revision 658</h3>
+<ul>
+    <li>Side door removed automatically if you change the body to be smaller than a Van</li>
+    <li>Fix a bug in revised cargo layout/no rear weapons</li>
+    <li>First stab at trikes (good progress on forward, maybe stay away from reversed)</li>
+</ul>
+<h3>Revision 656</h3>
+<ul>
+    <li>Engine selector doesn't propose engines that are too big/heavy to fit</li>
+    <li>Disable engine modifiers that take space if no space remaining</li>
+    <li>If many cargo items but no rear weapons, use the rearmost space for cargo</li>
+    <li>Fix rounded corners on the turret screen</li>
+    <li>EWP armor and Pintle Mount Tripod Gunshield work now</li>
+    <li>Accessories on schematic link to correct screen when clicked</li>
+    <li>Added Amphibious Modifications, Side Door, and Tinted Windows to body mods</li>
+</ul>
+<h3>Revision 651</h3>
+<ul>
+    <li>Fix registration process for confirmation keys containing a slash</li>
+    <li>Rocket Boosters / Jump Jets show in schematic</li>
+</ul>
+<h3>Revision 649</h3>
+<ul>
+    <li>Upgrade to JQuery 1.7.2 to avoid a bug with the "checked" status of some widgets</li>
+</ul>
+<h3>Revision 647</h3>
+<ul>
+    <li>Car description includes CA on crew compartment</li>
+    <li>Added rocket boosters / jump jets (not on schematic yet)</li>
+</ul>
+<h3>Revision 646</h3>
+<ul>
+    <li>Side EWPs work now (not EWP armor yet, though)</li>
+    <li>Add missing bump on non-rocket weapons on PDF</li>
+    <li>Clicking directly from one turret to another works</li>
+</ul>
+<h3>Revision 645</h3>
+<ul>
+    <li>Don't complain that fake guards/hubs don't match armor type</li>
+    <li>Add racing cars</li>
+    <li>When adding a gunner from the all crew list, edit the new gunner immediately</li>
+    <li>Change default car suspension to Light (free)</li>
+    <li>Disable component armor for weapons in corner mounts</li>
+    <li>When applying component armor to a weapon, remove it from other weapons in the same location</li>
+    <li>Round off the space taken by e.g. Mini Rockets in current weapon lists</li>
+</ul>
+<h3>Revision 642</h3>
+<ul>
+    <li>Finished adding curves to the PDF</li>
+    <li>Added background colors to the PDF (avoids lines showing through and also colors DP boxes & etc.)</li>
+</ul>
+<h3>Revision 641</h3>
+<ul>
+    <li>Add some curves to the PDF</li>
+</ul>
+<h3>Revision 638</h3>
+<ul>
+    <li>Now design list has a delete icon on the far right</li>
+    <li>Added 1/3 spaces validation for turreted weapons (includes magazine spaces)</li>
+    <li>Improved layout for cargo items for cycles</li>
+    <li>Disable car top carriers for cycles and cars that either have a top turret or are too small</li>
+    <li>Factor in top speed reduction for car top carriers</li>
+    <li>When removing a gunner and there's crew compartment CA, turn it into driver CA</li>
+    <li>Don't show acceleration "or 0 at max weight" in the vehicle description if the engine doesn't have enough PF to pull the max chassis weight</li>
+    <li>Added walkaround description to PDF (doesn't yet include sidecars)</li>
+    <li>Moved speed/handling above weapons chart in PDF to avoid overlap with large vehicle drawings</li>
+</ul>
+<h3>Revision 637</h3>
+<ul>
+    <li>Fix component armor spaces for various cycle components</li>
+    <li>No 1/3 spaces limit for cycles</li>
+</ul>
+<h3>Revision 636</h3>
+<ul>
+    <li>Fix for IE cycle wheelguards</li>
+</ul>
+<h3>Revision 634</h3>
+<ul>
+    <li>Fix for Chrome failing to load existing designs</li>
+    <li>Change URL for saved designs to avoid similar problems</li>
+</ul>
+<h3>Revision 633</h3>
+<ul>
+    <li>Cycle wheelhubs change weight according to CWC (4lbs/pt) or All (2lbs/pt) selection
+        (based on Pyramid Uncle Al 2051 update)</li>
+    <li>Cycles with sidecars or windshells and etc. can be saved and loaded successfully</li>
+    <li>Armor screen squeezed a little to fit in Safari</li>
+    <li>Links and Smart Links entries on the Gear page show count of existing ones</li>
+    <li>Cycles pretty much done other than layout improvements when you have a gunner
+        or multiple cargo-area items and PDF layout improvements when the cycle+sidecar
+        text gets particularly long</li>
+</ul>
+<h3>Revision 632</h3>
+<ul>
+    <li>Cycle wheelguards and wheelhubs now fully working in schematic</li>
+</ul>
+<h3>Revision 631</h3>
+<ul>
+    <li>Tire modifiers are applied to sidecar tires as well</li>
+    <li>Can select sidecar tires and add sidecar wheelguards/wheelhubs</li>
+    <li>Tires link in the toolbar shows a link to sidecar tires when appropriate</li>
+    <li>Fix some more rounding errors</li>
+    <li>Cycle wheelguards show on schematic (no hubs yet, and they don't remove yet)</li>
+</ul>
+<h3>Revision 630</h3>
+<ul>
+    <li>Cycle windshell gives top speed bonus</li>
+    <li>Sidecar weight included in cycle top speed/accleration calculation</li>
+    <li>Can properly edit cycle and sidecar armor</li>
+    <li>Body Blades become Cycle Blades for cycles</li>
+    <li>No airdam for cycles (use spoiler + windshell)</li>
+    <li>Design Worksheet on PDF more complete for sidecars</li>
+    <li>Can save cycle and cycle/sidecar designs (but they don't load right yet)</li>
+    <li>Fix some rounding errors</li>
+</ul>
+<h3>Revision 628</h3>
+<ul>
+    <li>Fix display of the sidecar weight/space over top of menus and after going to a new design</li>
+    <li>Fix menu transitions and design list menu in general in Safari</li>
+</ul>
+<h3>Revision 626</h3>
+<ul>
+    <li>Cycle sidecar cost, weight, and space are calculated</li>
+    <li>Schematic shows sidecar weight and space</li>
+    <li>Sidecar turret shows and is editable (can add weapons)</li>
+    <li>Can add weapons to sidecar via weapons button in the toolbar</li>
+    <li>Weapon location list for cycles doesn't show left, right, corners</li>
+    <li>Can add passengers or gunners to sidecar</li>
+    <li>Added weight and space readouts for sidecars (cost included in main cost display)</li>
+    <li>Still more to go on cycles, but it's getting closer...</li>
+</ul>
+<h3>Revision 625</h3>
+<ul>
+    <li>Cycle fix: electric power plant next/previous</li>
+    <li>Cycle windshell controls work and it draws on schematic</li>
+    <li>Cycle sidecar controls work and it draws on schematic (but no contents)</li>
+    <li>Better layout for cycle front/back weapons</li>
+    <li>Cycle, sidecar, windshell all show up on PDF</li>
+    <li>Sidecar tires are changed when cycle (front) tires are changed</li>
+    <li>Still many known issues with cycles</li>
+</ul>
+<h3>Revision 623</h3>
+<ul>
+    <li><i>Very</i> preliminary cycle support -- still lots of stuff known to not work for cycles, but
+        you can try creating a light cycle with a gas or electric engine and a 1-sp weapon front or back.</li>
+    <li>Many changes to support non-car vehicle types (starting with cycles for now), so
+        <a href="mailto:ammulder@alumni.princeton.edu">let me know</a> if I broke anything.</li>
+    <li>Change name everywhere to "Car Wars Combat Garage" to be consistent</li>
+</ul>
+<h3>Revision 620</h3>
+<ul>
+    <li>Small cleanup to process of loading existing designs</li>
+    <li>On engine finder, start with gas and electric buttons deselected so you can click the one you want</li>
+    <li>Fix layout when there are corner-mounted weapons in only one front/rear corner</li>
+    <li>Show loading message/spinner while loading an existing design</li>
+    <li>Make loading message/spinner more prominent in all cases</li>
+    <li>Proposed amount of armor to distribute now respects engine power factors as well as chassis max weight</li>
+    <li>Illegal design highlighting added/removed immediately as armor values change</li>
+</ul>
+<h3>Revision 618</h3>
+<ul>
+    <li>Add user accounts, sign-up, login, logout, etc.</li>
+    <li>Add menu to save design, create new design, create account / login, logout, list designs</li>
+    <li>Add screen to list a user's existing designs in the UI (if they're logged in) and load them</li>
+    <li>Fix a problem loading designs with multiple crew members and CA around them all</li>
+    <li>Reorganize back-end code</li>
+</ul>
+<h3>Revision 615</h3>
+<ul>
+    <li>Validate wheelguards and hubs</li>
+    <li>If toolbar images don't load right away, redraw when they load</li>
+    <li>More accurate calculations for spaces remaining for weapons as you select them</li>
+    <li>Works now when you're on e.g. Left Weapons list screen and click on e.g. Right Weapons in the schematic</li>
+    <li>Disables weapon options for CA, FRI, and possibly concealment if there's no remaining space (1/3 per side or total)</li>
+    <li>When you change the body type or chassis, the engine is adjusted to match (until you manually select an engine)</li>
+</ul>
+<h3>Revision 614</h3>
+<ul>
+    <li>Added programmable mines (pyramid)</li>
+    <li>Added weapon, ammo, engine, gas tank, turret validation</li>
+    <li>Making a weapon fake clears and hides most other weapon/ammo options</li>
+    <li>Changing the size of a turret shows/hides the Add TL/Add Weapon buttons accordingly</li>
+    <li>Add cupolas and pintle mounts</li>
+    <li>Hide turret types that the current body can't mount</li>
+    <li>When selecting body mods, deselect mutually exclusive ones</li>
+    <li>Replace useless CA toolbar button with body mods button</li>
+</ul>
+<h3>Revision 613</h3>
+<ul>
+    <li>Added tire validation</li>
+    <li>When selecting Plasticore tires, most options are deselected and disabled</li>
+    <li>Radial, off-road, and slick are now mutually exclusive</li>
+    <li>PDF puts a big "Illegal Design" watermark behind the text description for illegal designs</li>
+    <li>Description no longer shows "or XYZ at max weight" if over max weight</li>
+    <li>When changing engine size manually, schematic updates immediately</li>
+</ul>
+<h3>Revision 611</h3>
+<ul>
+    <li>Started this revision tracking file</li>
+    <li>Fix layout errors on screen and PDF for large designs (6-wheel + WG/WH + wide body)</li>
+    <li>Add software version and generation date to PDF</li>
+    <li>Hide part of the tires under the body in the PDF</li>
+    <li>Fix tire rendering in IE 9</li>
+    <li>Move disclaimers down so they don't overlap the bottom of the schematic</li>
+</ul>
+</body>
+</html>

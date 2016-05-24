@@ -1,0 +1,47 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <button class="button button-dark icon ion-arrow-expand" ng-show="oversize && trailerOverflow"
+                ng-click="toggleTopUnder()">{{topUnderAbbv}}</button>
+        <h1 class="title">All Weapons</h1>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <div class="item item-divider">{{bodyTitle}} Mounts</div>
+            <a class="item item-icon-right" ng-class="{'slim': tenWheeler || oversize}"
+               ng-repeat="place in bodyMounts" ng-click="showWeapons(place.location)">
+                <span ng-show="place.contents === ''" class="{{place.tag}}">Add {{place.location}} Weapon</span>
+                <span ng-show="place.contents !== ''" class="{{place.tag}}">{{place.location}} Weapons<br />{{place.contents}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <div class="item item-divider" ng-show="cornerMounts.length > 0">{{cornerTitle}}Corner Mounts</div>
+            <a class="item item-icon-right" ng-class="{'slim': tenWheeler || oversize, 'link-disabled': classicTech && !place.contents}"
+               ng-repeat="place in cornerMounts" ng-click="showWeapons(place.location)">
+                <span ng-show="!place.contents" class="{{place.tag}}">Add {{place.location}} Weapon</span>
+                <span ng-show="place.contents" class="{{place.tag}}">{{place.location}} Weapons<br />{{place.contents}}</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <div ng-show="sidecarMounts">
+                <div class="item item-divider">Sidecar Mounts</div>
+                <a class="item item-icon-right"
+                   ng-repeat="place in sidecarMounts" ng-click="showWeapons(place.location)">
+                    <span ng-show="place.contents === ''" class="{{place.tag}}">Add {{place.location}} Weapon</span>
+                    <span ng-show="place.contents !== ''" class="{{place.tag}}">{{place.location}} Weapons<br />{{place.contents}}</span>
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+            </div>
+        </div>
+        <div class="list" ng-show="tenWheeler">
+            <a class="item item-icon-right slim" ng-click="toggleCarrier()">
+                {{tenWheeler}} Weapons
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+        <div class="list" ng-show="oversize && !trailerOverflow">
+            <a class="item item-icon-left item-icon-right slim" ng-click="toggleTopUnder()">
+                <i class="icon" ng-class="{'ion-arrow-move': topUnderName !== 'Corner Mounts','ion-arrow-expand': topUnderName === 'Corner Mounts'}"></i>
+                Show {{topUnderName}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</div>

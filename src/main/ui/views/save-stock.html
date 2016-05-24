@@ -1,0 +1,57 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Save Stock Car</h1>
+        <button class="button button-dark icon ion-ios7-undo" ng-click="openScreen('save')"
+                ng-hide="tagging">Back</button>
+    </div>
+    <div class="content has-header">
+        <div class="card">
+            <div class="item narrow" style="text-align: center;"><b>"{{designName}}"<br />by {{authorName}}</b></div>
+            <div class="item item-image verynarrow">
+                <img ng-src="{{thumbnail}}" alt="Design Thumbnail" width="233" height="200" style="width: 233px;"/>
+            </div>
+        </div>
+
+        <div class="list">
+            <div ng-hide="tagging">
+                <checkbox-item class="slim" ng-model="arena" ng-disabled="!division">Arena Design<span ng-show="division"> (Div {{division}})</span></checkbox-item>
+                <a class="item item-icon-left item-icon-right slim" ng-click="toggleTagging()">
+                    <i class="icon ion-pricetags"></i>
+                    Tags: {{tags}}
+                    <span ng-hide="tags" class="italic">none yet</span>
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+                <label class="item item-input item-stacked-label verynarrow">
+                    <span class="input-label" style="width: 70%"><i class="ion-edit"></i> Designer Notes:</span>
+                    <textarea placeholder="The idea behind this design is..." style="height: 103px;" ng-model="designerNotes"></textarea>
+                </label>
+                <label class="item item-input item-stacked-label verynarrow">
+                    <span class="input-label" style="width: 70%"><i class="ion-edit"></i> Designer Signature:</span>
+                    <input type="text" placeholder="Fnord: where Firepower is Job #1" ng-model="designerSignature"/>
+                </label>
+            </div>
+            <div ng-show="tagging">
+                <div class="item" style="padding: 0;">
+                    <div class="row" ng-repeat="option in tagOptions">
+                        <div class="col"><button class="button button-block GridButton" style="min-height: 37px; line-height: 32px;" ng-class="{'button-positive': selectedTags[option[0]]}"  ng-click="selectTag(option[0])">{{option[0]}}</button></div>
+                        <div class="col"><button class="button button-block GridButton" style="min-height: 37px; line-height: 32px;" ng-class="{'button-positive': selectedTags[option[1]]}"  ng-click="selectTag(option[1])">{{option[1]}}</button></div>
+                        <div class="col"><button class="button button-block GridButton" style="min-height: 37px; line-height: 32px;" ng-class="{'button-positive': selectedTags[option[2]]}"  ng-click="selectTag(option[2])">{{option[2]}}</button></div>
+                    </div>
+                </div>
+                <a class="item item-icon-left slim" ng-click="toggleTagging()">
+                    <i class="icon ion-ios7-undo"></i>
+                    Done tagging
+                </a>
+            </div>
+        </div>
+
+        <div class="list">
+            <a class="item item-icon-left item-icon-right narrow" ng-click="submitDesign()">
+                <i class="icon ion-archive"></i>
+                <b>Save Design</b><br />
+                <span class="italic">and submit for stock review</span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</div>

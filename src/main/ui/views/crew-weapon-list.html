@@ -1,0 +1,18 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Hand Weapons</h1>
+        <button class="button button-dark icon ion-ios7-undo" ng-click="goBack()">Back</button>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <a ng-repeat="weapon in weapons" class="item item-icon-right {{weapon.weapon.abbv.replace(' ', '')}}"
+               ng-click="createWeapon(weapon.weapon)"
+               ng-class="{'link-disabled':!weapon.enabled, narrow:weapons.length<11, verynarrow:weapons.length>10}">
+                {{weapon.weapon.name}}<br />
+                ${{weapon.loadedCost}},
+                {{weapon.loadedWeight}}{{weapon.toHit ? ", TH " : ""}}{{weapon.toHit}}{{weapon.damage ? ", " : ""}}{{weapon.damage}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">{{caption}}</h1>
+        <button class="button button-dark icon ion-ios7-undo" ng-click="openScreen('gearTypes')">Back</button>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <a class="item item-icon-left item-icon-right"
+               ng-repeat="link in links" ng-click="editLink(link)">
+                <i class="icon ion-network"></i>
+                {{link.displayName()}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="addLink()">
+                <i class="icon ion-network"></i>
+                Add New Link
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title ng-bind="'Combat Garage' + $root.showTitle()">Car Wars Combat Garage</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1110, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="css/garage.css">
+</head>
+<body ng-controller="CarWarsCtrl">
+<div id="Loading">
+    <canvas id="LoadingScreen" width="800" height="400"></canvas>
+    <div ng-include="'views/loaded-menu.html'"></div>
+</div>
+<div id="Running" ng-show="started" ng-cloak>
+    <div id="Controls" ng-view ng-mouseenter="mouseNotify('mouse-in-controls')"
+         ng-mouseleave="mouseNotify('mouse-out-controls')" ng-class="{EnableSelect: !touchEnabled}"></div>
+    <div ng-switch="mainDisplay" ng-style="{'overflow':'hidden', 'position':'relative', 'width':mainDimensions.width+'px', 'height':mainDimensions.height+'px'}">
+        <div ng-switch-when="2d">
+            <carwars-canvas2d style="top: 55px;" base-width="700" base-height="600" bottom="47" reserve-top="38" reserve-bottom="57"
+                              ng-controller="Schematic2dCtrl"></carwars-canvas2d>
+        </div>
+        <div ng-switch-when="3d">
+            <carwars-canvas3d style="top: 55px;" bottom="47" ng-controller="Schematic3dCtrl"></carwars-canvas3d>
+        </div>
+        <div ng-switch-when="stl">
+            <carwars-canvas3d style="top: 0;" bottom="-8" ng-controller="STLCtrl"></carwars-canvas3d>
+        </div>
+        <div ng-switch-when="selector">
+            <div style="position: absolute; left: 0; top: 5px; text-align: center; width: 100%; font-size: 26px;">Create a New Design</div>
+            <carwars-canvas2d style="top: 30px;" base-width="700" base-height="600" ng-controller="VehicleSelectorCtrl"></carwars-canvas2d>
+        </div>
+        <div id="StockListScroll" ng-switch-when="stockList" style="overflow-y: scroll; width: 100%; height: 100%;">
+            <div ng-include="'views/stock-list-entry.html'"></div>
+        </div>
+        <!-- Maybe change icon class to ion-ios7-paper-outline when ionicons 1.5.0 available? -->
+        <!--<button class="button icon-left ion-clipboard" style="position: absolute; right:10px; top: 60px; z-index: 1;" ng-show="mainDisplay === '2d'">Menu</button>-->
+        <div class="widgets" ng-show="mainDisplay === '2d' || mainDisplay === '3d'"
+             style="width: 100%; text-align: center;">
+            <div ng-include="'views/diagram-widgets.html'"></div>
+        </div>
+    </div>
+    <div ng-include="'views/license.html'"></div>
+    <modal-dialog ng-show="loadingMessage" force>
+        <i class="icon ion-loading-a"></i>
+        {{loadingMessage}}
+    </modal-dialog>
+    <div garage-tour ng-show="tourRunning"></div>
+</div>
+<script src="lib/lazyload.js" ></script>
+<script src="js/boot.js"></script>
+<script>
+(function() {
+    var startup;
+    if ("ontouchstart" in window) {
+        startup = function() {
+            CWD.orientationChange = function () {
+                var content_width, screen_dimension, aspect;
+
+                if (window.orientation === 0 || window.orientation === 180) { // portrait
+                    content_width = 1110; // was 1024 and 0.75, but iOS 8 doesn't seem to handle changes to this well
+                    aspect = 0.75;
+                    screen_dimension = screen.width;
+                } else if (window.orientation === 90 || window.orientation === -90) { // landscape
+                    content_width = 1110; // was 1110 shrinks a little so the bottom of the screen is visible
+                    aspect = 0.66;
+                    screen_dimension = screen.height;
+                }
+
+                // resize viewport
+//                var viewport_scale = screen_dimension / content_width;
+//                document.querySelector('meta[name=viewport]').content =
+//                        'width=' + content_width + ',' +
+//                        'minimum-scale=' + viewport_scale + ', maximum-scale=' + viewport_scale + ', user-scalable=no';
+                var setup = false;
+                if (window.angular) {
+                    var $rootScope = window.angular.element(document).injector().get('$rootScope');
+                    if ($rootScope && $rootScope.started) {
+                        setup = true;
+                        window.angular.element(document.querySelector('body')).scope().layoutWindow(content_width, content_width * aspect);
+                    }
+                }
+                if (!setup) {
+                    CWD.setupFullScreenCanvas(document.getElementById("LoadingScreen"), 'loadingCtx', content_width, content_width * aspect).drawLoadingScreen();
+                }
+            };
+            window.onorientationchange = function() {
+                if(window.angular) {
+                    window.angular.element(document.querySelector('body')).scope().$apply(CWD.orientationChange);
+                } else CWD.orientationChange();
+            };
+            window.onorientationchange();
+        };
+    } else {
+        window.onresize = function () {
+            CWD.setupFullScreenCanvas(document.getElementById("LoadingScreen"), 'loadingCtx').drawLoadingScreen();
+        };
+        startup = window.onresize;
+    }
+    window.onload = function () {
+        startup();
+        CWD.boot();
+    };
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Armor</h1>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <div class="item narrow">
+              <span class="button-group PlasticArmor">
+                <button class="button button-small icon ion-minus-circled" ng-click="previousPlasticType()"></button>
+                <button class="button button-small icon ion-plus-circled" ng-click="nextPlasticType()"></button>
+                {{plasticName}}
+              </span>
+            </div>
+            <div class="item narrow">
+              <span class="button-group MetalArmor">
+                <button class="button button-small icon ion-minus-circled" ng-click="previousMetalType()"></button>
+                <button class="button button-small icon ion-plus-circled" ng-click="nextMetalType()"></button>
+                {{metalName}}
+              </span>
+            </div>
+            <checkbox-item class="narrow" ng-model="sloped" ng-disabled="classicTech && !sloped">Sloped Armor</checkbox-item>
+            <a class="item item-icon-left item-icon-right" ng-click="distributeArmor()" ng-hide="autoHide"
+                    ng-class="{'link-disabled': autoPoints === 0}">
+                <i class="icon ion-wand"></i>
+                Add {{autoPoints}}pts {{autoType}} armor
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <div class="item item-divider">{{vehicle}}</div>
+            <div class="item mednarrow item-input-inset" ng-hide="composite || noArmor">
+                F:
+                <label class="item-input-wrapper" style="width: 20%">
+                    <input type="text" ng-model="frontSingle">
+                </label>
+                <input type="range" min="0" max="100" ng-model="frontSingle" style="width: 70%">
+            </div>
+            <div class="item mednarrow item-input-inset" ng-hide="composite || noArmor || cycle">
+                L{{oversize && !flatbed ? "F" : ""}}:
+                <label class="item-input-wrapper" style="width: 20%">
+                    <input type="text" ng-model="leftSingle">
+                </label>
+                <input type="range" min="0" max="100" ng-model="leftSingle" style="width: 70%">
+            </div>
+            <div class="item mednarrow item-input-inset" ng-show="oversize && !flatbed && !composite && !noArmor">
+                LB:
+                <label class="item-input-wrapper" style="width: 20%">
+                    <input type="text" ng-model="leftBackSingle">
+                </label>
+                <input type="range" min="0" max="100" ng-model="leftBackSingle" style="width: 70%">
+            </div>
+            <div class="item mednarrow item-input-inset" ng-hide="composite || noArmor || cycle">
+                R{{oversize && !flatbed ? "F" : ""}}:
+                <label class="item-input-wrapper" style="width: 20%">
+                    <input type="text" ng-model="rightSingle">
+                </label>
+                <input type="range" min="0" max="100" ng-model="rightSingle" style="width: 70%">
+            </div>
+            <div class="item mednarrow item-input-inset" ng-show="oversize && !flatbed && !composite && !noArmor">
+                RB:
+                <label class="item-input-wrapper" style="width: 20%">
+                    <input type="text" ng-model="rightBackSingle">
+                </label>
+                <input type="range" min="0" max="100" ng-model="rightBackSingle" style="width: 70%">
+            </div>
+            <div class="item mednarrow item-input-inset" ng-hide="composite || noArmor">
+                B:
+                <label class="item-input-wrapper" style="width: 20%">
+                    <input type="text" ng-model="backSingle">
+                </label>
+                <input type="range" min="0" max="100" ng-model="backSingle" style="width: 70%">
+            </div>
+            <div class="item mednarrow item-input-inset" ng-hide="composite || noArmor || cycle">
+                T{{oversize && !flatbed ? "F" : ""}}:
+                <label class="item-input-wrapper" style="width: 20%">
+                    <input type="text" ng-model="topSingle">
+                </label>
+                <input type="range" min="0" max="100" ng-model="topSingle" style="width: 70%">
+            </div>
+            <div class="item mednarrow item-input-inset" ng-show="oversize && !flatbed && !composite && !noArmor">
+                TB:
+                <label class="item-input-wrapper" style="width: 20%">
+                    <input type="text" ng-model="topBackSingle">
+                </label>
+                <input type="range" min="0" max="100" ng-model="topBackSingle" style="width: 70%">
+            </div>
+            <div class="item mednarrow item-input-inset" ng-hide="composite || noArmor || cycle">
+                U{{oversize && !flatbed ? "F" : ""}}:
+                <label class="item-input-wrapper" style="width: 20%">
+                    <input type="text" ng-model="underbodySingle">
+                </label>
+                <input type="range" min="0" max="100" ng-model="underbodySingle" style="width: 70%">
+            </div>
+            <div class="item mednarrow item-input-inset" ng-show="oversize && !flatbed && !composite && !noArmor">
+                UB:
+                <label class="item-input-wrapper" style="width: 20%">
+                    <input type="text" ng-model="underbodyBackSingle">
+                </label>
+                <input type="range" min="0" max="100" ng-model="underbodyBackSingle" style="width: 70%">
+            </div>
+            <div class="item mednarrow item-input-inset" ng-show="composite && !noArmor">
+                F(M):
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="frontMetal">
+                </label>
+                F(P):
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="frontPlastic">
+                </label>
+            </div>
+            <div class="item mednarrow item-input-inset" ng-show="composite && !noArmor && !cycle">
+                L{{oversize && !flatbed ? "F" : ""}}(M):
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="leftMetal">
+                </label>
+                L{{oversize && !flatbed ? "F" : ""}}(P):
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="leftPlastic">
+                </label>
+            </div>
+            <div class="item mednarrow item-input-inset" ng-show="composite && oversize && !flatbed && !noArmor">
+                LB(M):
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="leftBackMetal">
+                </label>
+                LB(P):
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="leftBackPlastic">
+                </label>
+            </div>
+            <div class="item mednarrow item-input-inset" ng-show="composite && !noArmor && !cycle">
+                R{{oversize && !flatbed ? "F" : ""}}(M):
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="rightMetal">
+                </label>
+                R{{oversize && !flatbed ? "F" : ""}}(P):
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="rightPlastic">
+                </label>
+            </div>
+            <div class="item mednarrow item-input-inset" ng-show="composite && oversize && !flatbed && !noArmor">
+                RB(M):
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="rightBackMetal">
+                </label>
+                RB(P):
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="rightBackPlastic">
+                </label>
+            </div>
+            <div class="item mednarrow item-input-inset" ng-show="composite && !noArmor">
+                B(M):
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="backMetal">
+                </label>
+                B(P):
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="backPlastic">
+                </label>
+            </div>
+            <div class="item mednarrow item-input-inset" ng-show="composite && !noArmor && !cycle">
+                T{{oversize && !flatbed ? "F" : ""}}(M):
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="topMetal">
+                </label>
+                T{{oversize && !flatbed ? "F" : ""}}(P):
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="topPlastic">
+                </label>
+            </div>
+            <div class="item mednarrow item-input-inset" ng-show="composite && oversize && !flatbed && !noArmor">
+                TB(M):
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="topBackMetal">
+                </label>
+                TB(P):
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="topBackPlastic">
+                </label>
+            </div>
+            <div class="item mednarrow item-input-inset" ng-show="composite && !noArmor && !cycle">
+                U{{oversize && !flatbed ? "F" : ""}}(M):
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="underbodyMetal">
+                </label>
+                U{{oversize && !flatbed ? "F" : ""}}(P):
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="underbodyPlastic">
+                </label>
+            </div>
+            <div class="item mednarrow item-input-inset" ng-show="composite && oversize && !flatbed && !noArmor">
+                UB(M):
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="underbodyBackMetal">
+                </label>
+                UB(P):
+                <label class="item-input-wrapper">
+                    <input type="text" ng-model="underbodyBackPlastic">
+                </label>
+            </div>
+            <div ng-show="flatbed">
+                <div class="item item-divider">Flatbed Armor</div>
+                <div class="item mednarrow item-input-inset" ng-hide="composite || noArmor">
+                    {{oversize ? "F:" : ""}}
+                    <label class="item-input-wrapper" style="width: 20%">
+                        <input type="text" ng-model="flatbedSingle">
+                    </label>
+                    <input type="range" min="0" max="100" ng-model="flatbedSingle" style="width: 70%">
+                </div>
+                <div class="item mednarrow item-input-inset" ng-show="oversize && !composite && !noArmor">
+                    B:
+                    <label class="item-input-wrapper" style="width: 20%">
+                        <input type="text" ng-model="flatbedBackSingle">
+                    </label>
+                    <input type="range" min="0" max="100" ng-model="flatbedBackSingle" style="width: 70%">
+                </div>
+                <div class="item mednarrow item-input-inset" ng-show="composite && !noArmor">
+                    {{oversize ? "F" : ""}}(M):
+                    <label class="item-input-wrapper">
+                        <input type="text" ng-model="flatbedMetal">
+                    </label>
+                    {{oversize ? "F" : ""}}(P):
+                    <label class="item-input-wrapper">
+                        <input type="text" ng-model="flatbedPlastic">
+                    </label>
+                </div>
+                <div class="item mednarrow item-input-inset" ng-show="composite && oversize && !noArmor">
+                    B(M):
+                    <label class="item-input-wrapper">
+                        <input type="text" ng-model="flatbedBackMetal">
+                    </label>
+                    B(P):
+                    <label class="item-input-wrapper">
+                        <input type="text" ng-model="flatbedBackPlastic">
+                    </label>
+                </div>
+                <div class="item mednarrow item-input-inset" ng-hide="composite || noArmor || !dual">
+                    UpF:
+                    <label class="item-input-wrapper" style="width: 20%">
+                        <input type="text" ng-model="upperFlatbedSingle">
+                    </label>
+                    <input type="range" min="0" max="100" ng-model="upperFlatbedSingle" style="width: 70%">
+                </div>
+                <div class="item mednarrow item-input-inset" ng-hide="composite || noArmor || !dual">
+                    UpB:
+                    <label class="item-input-wrapper" style="width: 20%">
+                        <input type="text" ng-model="upperFlatbedBackSingle">
+                    </label>
+                    <input type="range" min="0" max="100" ng-model="upperFlatbedBackSingle" style="width: 70%">
+                </div>
+                <div class="item mednarrow item-input-inset" ng-show="composite && dual && !noArmor">
+                    UpF(M):
+                    <label class="item-input-wrapper">
+                        <input type="text" ng-model="upperFlatbedMetal">
+                    </label>
+                    UpF(P):
+                    <label class="item-input-wrapper">
+                        <input type="text" ng-model="upperFlatbedPlastic">
+                    </label>
+                </div>
+                <div class="item mednarrow item-input-inset" ng-show="composite && dual && !noArmor">
+                    UpB(M):
+                    <label class="item-input-wrapper">
+                        <input type="text" ng-model="upperFlatbedBackMetal">
+                    </label>
+                    UpB(P):
+                    <label class="item-input-wrapper">
+                        <input type="text" ng-model="upperFlatbedBackPlastic">
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="list" ng-show="alternate">
+            <a class="item item-icon-left item-icon-right" ng-click="toggleAlternate()">
+                <i class="icon" ng-class="{'ion-model-s':alternate === 'Cab' || alternate === 'Cycle','ion-play': alternate === 'Sidecar','ion-stop': alternate === 'Carrier'}"></i>
+                {{alternate}} Armor
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</div>

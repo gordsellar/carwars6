@@ -1,0 +1,27 @@
+<modal-dialog ng-show="visible" class="ionic-ng-modal" on-close="saveDischargers()">
+        <div class="bar bar-header bar-positive">
+            <h1 class="title">Configure Dischargers</h1>
+        </div>
+        <div class="content dialog-header">
+            <div class="list">
+                <p class="item tip">This is a shortcut to place dischargers all over your vehicle.  You can skip it if you'd rather
+                    add dischargers one by one.</p>
+                <div class="item">Add {{dischargerName}} all around?</div>
+                <checkbox-item class="narrow" ng-model="front">1 Front</checkbox-item>
+                <checkbox-item class="narrow" ng-model="back">1 Back</checkbox-item>
+                <checkbox-item class="narrow" ng-model="left">{{sideCount}} Left</checkbox-item>
+                <checkbox-item class="narrow" ng-model="right">{{sideCount}} Right</checkbox-item>
+                <checkbox-item class="narrow" ng-model="top">{{sideCount}} Top</checkbox-item>
+                <checkbox-item class="narrow" ng-model="underbody">{{sideCount}} Underbody</checkbox-item>
+                <div class="item item-divider">Discharger Options</div>
+                <checkbox-item class="narrow" ng-model="bumperTrigger">Bumper Triggered ($50/side)</checkbox-item>
+                <checkbox-item class="narrow" ng-model="antiTheft">Linked to Anti-Theft System ($1050)</checkbox-item>
+            </div>
+            <div class="list">
+                <a class="item item-icon-right" ng-click="visible=false">
+                    Done
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+            </div>
+        </div>
+</modal-dialog>

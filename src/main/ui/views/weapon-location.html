@@ -1,0 +1,35 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <button class="button" ng-click="showSpaces()">{{spacesText}}</button>
+        <h1 class="title">{{caption}}</h1>
+    </div>
+    <div class="content has-header WeaponLocationPage">
+        <div class="list">
+            <a class="item item-icon-left item-icon-right"
+               ng-repeat="weapon in weapons" ng-click="editWeapon(weapon)">
+                <i class="icon ion-pinpoint"></i>
+                {{weapon.count > 1 ? weapon.count+' ' : ''}}{{weapon.abbv}} --
+                {{weapon.roundedTotalSpace()}}sp{{weapon.totalCapacity() > 0 ? ", "+weapon.ammoTotal()+" shot"+(weapon.ammoTotal() !== 1 ? "s" : "") : ""}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="addWeapon()" ng-show="spaces > 0"
+                    ng-class="{'link-disabled': classicTech && corner}">
+                <i class="icon ion-pinpoint"></i>
+                Add Weapon
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="addTL()" ng-show="spaces === 0 && tl"
+                    ng-class="{'link-disabled': classicTech}">
+                <i class="icon ion-pinpoint"></i>
+                Add TL
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="addWeapon()" ng-show="spaces === 0 && discharger"
+                   ng-class="{'link-disabled': classicTech}">
+                <i class="icon ion-pinpoint"></i>
+                Add Discharger
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive CrewGearList">
+        <h1 class="title">{{category}}</h1>
+        <button class="button button-dark icon ion-ios7-undo" ng-click="openScreen('crewGear')">Back</button>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <div class="item narrow" ng-repeat="item in multis">
+              <span class="button-group {{item.tag}}">
+                <button class="button button-small icon ion-minus-circled" ng-click="fewerItems(item)"
+                        ng-disabled="item.disabled && item.count == 'No'"></button>
+                <button class="button button-small icon ion-plus-circled" ng-click="moreItems(item)"
+                        ng-disabled="item.disabled"></button>
+              </span>
+                <span ng-class="{'text-disabled': item.disabled}">{{item.count}} {{item.name}}{{item.count > 1 ? "s" : ""}}</span>
+            </div>
+            <checkbox-item class="narrow" ng-repeat="item in singles" ng-model="item.present"
+                           ng-change="checkbox(item)" ng-disabled="item.disabled && !item.present">{{item.name}}</checkbox-item>
+        </div>
+    </div>
+</div>

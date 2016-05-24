@@ -1,0 +1,45 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Engine List</h1>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <div class="item item-divider">Performance Goals</div>
+            <div class="item narrow">
+              <span class="button-group Acceleration">
+                <button class="button button-small icon ion-minus-circled" ng-click="lowerAcceleration()"></button>
+                <button class="button button-small icon ion-plus-circled" ng-click="higherAcceleration()"></button>
+                Acceleration {{acceleration}}
+              </span>
+            </div>
+            <div class="item narrow">
+              <span class="button-group TopSpeed">
+                <button class="button button-small icon ion-minus-circled" ng-click="lowerTopSpeed()"></button>
+                <button class="button button-small icon ion-plus-circled" ng-click="higherTopSpeed()"></button>
+                Top Speed {{topSpeed}}
+              </span>
+            </div>
+            <div class="item narrow">
+              <span class="button-group MaxRange">
+                <button class="button button-small icon ion-minus-circled" ng-click="lowerRange()"></button>
+                <button class="button button-small icon ion-plus-circled" ng-click="higherRange()"></button>
+                Max Range {{range}}
+              </span>
+            </div>
+            <div ng-hide="classicTech">
+                <checkbox-item class="narrow" ng-model="electric">Show Electric Power Plants</checkbox-item>
+                <checkbox-item class="narrow" ng-model="gas">Show Gas Engines</checkbox-item>
+            </div>
+
+            <div class="item item-divider">Available Engines</div>
+            <a class="item item-icon-right Engine{{$index}}" ng-repeat="engine in engines" ng-class="{'item-energized':engine.current}"
+               ng-click="editEngine(engine)" style="font-size: 0.9em; line-height: 1.2em;">
+                <b><span style="font-size: 1.5em;">{{engine.name}}{{truck && !engine.electric ? " Gas" : ""}}</span></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{engine.powerFactors}} PF<br />
+                <span class="EngineMods">{{engine.mods}}</span><br ng-if="engine.mods && engine.mods.length > 0"/>
+                <b>${{engine.cost}}, {{engine.weight}} lbs, {{engine.space}} sp</b><br />
+                <span ng-show="engine.acceleration">Acc {{engine.acceleration}}, TS {{engine.topSpeed}}mph<b>{{engine.weightSuffix}}</b></span>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</div>

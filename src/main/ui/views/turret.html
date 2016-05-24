@@ -1,0 +1,75 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">{{name}}</h1>
+    </div>
+    <div class="content has-header TurretPage">
+        <div class="list">
+            <div class="item item-divider">Size</div>
+            <div class="item narrow">
+              <span class="button-group TurretSize">
+                <button class="button button-small icon ion-minus-circled" ng-click="smallerTurret()"></button>
+                <button class="button button-small icon ion-plus-circled" ng-click="biggerTurret()"></button>
+                {{size}} space {{size === 0 ? "(TL only)" : ""}}
+              </span>
+            </div>
+
+            <div class="item item-divider">Contents</div>
+            <a class="item item-icon-left item-icon-right" ng-repeat="weapon in weapons"
+               ng-click="editWeapon(weapon)">
+                <i class="icon ion-pinpoint"></i>
+                {{weapon.fake ? "Fake" : ""}}
+                {{weapon.abbv}} -- {{weapon.spaceInsideTurret()}}sp{{!weapon.fake && weapon.shots > 0 ? +", "+weapon.ammoTotal()+" shots" : ""}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="addWeapon()" ng-show="spaces > 0">
+                <i class="icon ion-pinpoint"></i>
+                Add Weapon
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="addTL()" ng-show="spaces === 0 && !laser"
+                    ng-class="{'link-disabled': classicTech}">
+                <i class="icon ion-pinpoint"></i>
+                Add TL
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+
+            <a class="item item-icon-left item-icon-right" ng-repeat="booster in boosters"
+               ng-click="editBooster(booster)">
+                <i class="icon ion-nuclear"></i>
+                {{booster.accelerationForWeight(totalWeight)}}mph {{booster.boosterName()}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="addBooster()" ng-show="boosterAllowed"
+               ng-class="{'link-disabled': spaces < 1 || classicTech}">
+                <i class="icon ion-nuclear"></i>
+                Add Rocket Booster
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+
+            <div class="item item-divider">Options</div>
+            <div class="item">
+                <div class="list list-inset">
+                    <checkbox-item class="narrow" ng-model="fake" ng-disabled="classicTech && !fake">Fake</checkbox-item>
+                    <checkbox-item class="narrow" ng-model="universal">Universal</checkbox-item>
+                    <checkbox-item class="narrow" ng-model="ejection" ng-show="ewp">EWP Ejection System</checkbox-item>
+                </div>
+            </div>
+            <div class="item narrow" ng-show="name === 'EWP'">
+              <span class="button-group Armor">
+                <button class="button button-small icon ion-minus-circled" ng-click="lessArmor()"></button>
+                <button class="button button-small icon ion-plus-circled" ng-click="moreArmor()"></button>
+                {{ewpArmor}}
+              </span>
+            </div>
+
+            <div ng-show="canRemove">
+                <div class="item item-divider">Reconfigure</div>
+                <a class="item item-icon-left item-icon-right" ng-click="removeTurret()">
+                    <i class="icon ion-close"></i>
+                    Remove {{name}}
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

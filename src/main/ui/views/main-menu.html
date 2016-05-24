@@ -1,0 +1,60 @@
+<modal-dialog ng-show="visible" class="ionic-ng-modal" on-close="closeMenu()">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Main Menu</h1>
+    </div>
+    <div class="content dialog-header">
+        <div class="list">
+            <a class="item item-icon-left item-icon-right" href ng-click="menuSaveDesign()">
+                <i class="icon ion-archive"></i>
+                Save This Design
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" href ng-click="menuNewDesign()">
+                <i class="icon ion-model-s"></i>
+                Create a New Design
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" href ng-click="menuListDesigns()">
+                <i class="icon ion-ios7-bookmarks"></i>
+                <span ng-hide="loggedIn">Sign In and </span>View Your Designs
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" href ng-click="menuSearchStock()">
+                <i class="icon ion-android-search"></i>
+                Search Designs by Name
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" href ng-click="menuBrowseStock()">
+                <i class="icon ion-images"></i>
+                Browse Stock Cars
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+
+            <a class="item item-icon-left item-icon-right" href ng-click="openScreen('adminMenu')" ng-if="admin">
+                <i class="icon ion-compose"></i>
+                Admin Menu
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" href ng-click="openScreen('adminReview')" ng-if="reviewer">
+                <i class="icon ion-compose"></i>
+                Review Pending Stock Cars
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" href ng-click="startTour()" ng-hide="admin || reviewer">
+                <i class="icon ion-map"></i>
+                Take the Tour
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" href ng-click="menuLogout()" ng-show="loggedIn">
+                <i class="icon" ng-class="{'ion-loading-a': working, 'ion-log-out': !working}"></i>
+                Sign Out {{userName}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" href ng-click="menuCreateAccount()" ng-hide="loggedIn">
+                <i class="icon ion-paper-airplane"></i>
+                Create an Account
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</modal-dialog>

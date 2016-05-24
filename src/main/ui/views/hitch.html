@@ -1,0 +1,50 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Hitches</h1>
+    </div>
+    <div class="content has-header">
+        <div class="item">Engine tow capacity: {{engine}}</div>
+        <div class="item">Total tow capacity: {{total}}</div>
+        <div class="list">
+            <div class="item item-divider">Configure Hitch</div>
+            <label class="item item-radio radio-narrow">
+                <input type="radio" ng-model="hitch" value="None" name="hitch">
+                <i class="radio-icon ion-checkmark"></i>
+                <div class="item-content">No hitch</div>
+            </label>
+            <label class="item item-radio radio-narrow">
+                <input type="radio" ng-model="hitch" value="Light" name="hitch">
+                <i class="radio-icon ion-checkmark"></i>
+                <div class="item-content">Light Hitch (2,000 lbs. tow)</div>
+            </label>
+            <label class="item item-radio radio-narrow">
+                <input type="radio" ng-model="hitch" value="Standard" name="hitch">
+                <i class="radio-icon ion-checkmark"></i>
+                <div class="item-content">Standard Hitch (6,000 lbs. tow)</div>
+            </label>
+            <label class="item item-radio radio-narrow">
+                <input type="radio" ng-model="hitch" value="Heavy" name="hitch">
+                <i class="radio-icon ion-checkmark"></i>
+                <div class="item-content">Heavy Hitch (12,000 lbs. tow)</div>
+            </label>
+            <label class="item item-radio radio-narrow">
+                <input type="radio" ng-model="hitch" value="Extra_Heavy" name="hitch">
+                <i class="radio-icon ion-checkmark"></i>
+                <div class="item-content">Extra-Heavy Hitch (20,000 lbs. tow)</div>
+            </label>
+
+            <checkbox-item class="narrow" ng-model="explosive" ng-disabled="hitch === 'None'">Explosive Hitch</checkbox-item>
+            <checkbox-item class="narrow" ng-model="quickRelease" ng-disabled="hitch === 'None'">Quick-Release Hitch</checkbox-item>
+
+            <div class="item narrow">
+                <span class="button-group Armor">
+                    <button class="button button-small icon ion-minus-circled" ng-click="lessArmor()"
+                            ng-disabled="hitch === 'None'"></button>
+                    <button class="button button-small icon ion-plus-circled" ng-click="moreArmor()"
+                            ng-disabled="hitch === 'None'"></button>
+                </span>
+                <span ng-class="{'text-disabled': hitch === 'None'}">{{hitchArmor}}</span>
+            </div>
+        </div>
+    </div>
+</div>

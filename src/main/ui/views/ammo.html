@@ -1,0 +1,27 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive Ammo">
+        <h1 class="title">{{modifierName}} Ammo</h1>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <div class="item item-divider">{{weapon}}</div>
+            <p class="item">How many shots should be {{modifierName}}?</p>
+
+            <div class="item narrow" ng-repeat="type in ammo">
+                  <span class="button-group AmmoCount {{type.tag}}" style="vertical-align: top;">
+                    <button class="button button-small icon ion-minus-circled" ng-click="decreaseShots(type.ammo)"
+                            ng-disabled="type.count < 1" title="Fewer Shots"></button>
+                    <button class="button button-small icon ion-plus-circled" ng-click="increaseShots(type.ammo)"
+                            ng-disabled="type.count >= type.total" title="More Shots"></button>
+                  </span>
+                <span style="display: inline-block; text-overflow: clip;">{{type.count}}/{{type.total}} {{type.ammo.name}}</span>
+            </div>
+
+            <a class="item item-icon-left item-icon-right" ng-click="openScreen('weapon')">
+                <i class="icon ion-pinpoint"></i>
+                Back to {{weapon}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</div>

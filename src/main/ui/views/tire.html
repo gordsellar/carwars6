@@ -1,0 +1,64 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">{{location}} Tires</h1>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <label class="item item-radio radio-narrow">
+                <input type="radio" ng-model="name" value="Standard" name="style">
+                <i class="radio-icon ion-checkmark"></i>
+                <div class="item-content">Standard ({{truck ? 8 : 4}} DP)</div>
+            </label>
+            <label class="item item-radio radio-narrow">
+                <input type="radio" ng-model="name" value="Heavy-Duty" name="style">
+                <i class="radio-icon ion-checkmark"></i>
+                <div class="item-content">Heavy-Duty ({{truck ? 12 : 6}} DP)</div>
+            </label>
+            <label class="item item-radio radio-narrow">
+                <input type="radio" ng-model="name" value="Puncture-Resistant" name="style">
+                <i class="radio-icon ion-checkmark"></i>
+                <div class="item-content">Puncture-Resistant ({{truck ? 18 : 9}} DP)</div>
+            </label>
+            <label class="item item-radio radio-narrow">
+                <input type="radio" ng-model="name" value="Solid" name="style">
+                <i class="radio-icon ion-checkmark"></i>
+                <div class="item-content">Solid ({{truck ? 24 : 12}} DP)</div>
+            </label>
+            <label class="item item-radio radio-narrow" ng-class="{'text-disabled':classicTech}">
+                <input type="radio" ng-model="name" value="Plasticore" name="style" ng-disabled="classicTech">
+                <i class="radio-icon ion-checkmark"></i>
+                <div class="item-content">Plasticore ({{truck ? 40 : 25}} DP)</div>
+            </label>
+
+            <div class="item">
+                <div class="list list-inset">
+                    <checkbox-item class="narrow" ng-model="steelbelted" ng-disabled="steelbeltedDisabled">Steelbelted</checkbox-item>
+                    <checkbox-item class="narrow" ng-model="radial" ng-disabled="radialDisabled">Radial</checkbox-item>
+                    <checkbox-item class="narrow" ng-model="slick" ng-disabled="slickDisabled">Slick</checkbox-item>
+                    <checkbox-item class="narrow" ng-model="offRoad" ng-disabled="offRoadDisabled">Off-Road</checkbox-item>
+                    <checkbox-item class="narrow" ng-model="snowTires" ng-disabled="snowTiresDisabled && !snowTires">Snow Tires</checkbox-item>
+                    <checkbox-item class="narrow" ng-model="fireproof">Fireproof</checkbox-item>
+                    <checkbox-item class="narrow" ng-model="tireChains" ng-disabled="tireChainsDisabled && !tireChains">Tire Chains</checkbox-item>
+                </div>
+            </div>
+
+            <checkbox-item class="narrow" ng-model="same" ng-disabled="sameDisabled" ng-show="sameVisible">{{allText}} Tires the Same</checkbox-item>
+
+            <div class="item item-divider">{{location}} Tire Protection</div>
+            <div class="item narrow">
+                <span class="button-group Wheelguard">
+                    <button class="button button-small icon ion-minus-circled" ng-click="previousGuard()" ng-disabled="wheelguardDisabled"></button>
+                    <button class="button button-small icon ion-plus-circled" ng-click="nextGuard()" ng-disabled="wheelguardDisabled"></button>
+                </span>
+                <span style="display: inline-block; text-overflow: clip;" ng-class="{'text-disabled':wheelguardDisabled}">{{wheelguards}}</span>
+            </div>
+            <div class="item narrow">
+                <span class="button-group Wheelhub">
+                    <button class="button button-small icon ion-minus-circled" ng-click="previousHub()" ng-disabled="classicTech && noHubs"></button>
+                    <button class="button button-small icon ion-plus-circled" ng-click="nextHub()" ng-disabled="classicTech"></button>
+                </span>
+                <span style="display: inline-block; text-overflow: clip;" ng-class="{'text-disabled':classicTech}">{{wheelhubs}}</span>
+            </div>
+        </div>
+    </div>
+</div>

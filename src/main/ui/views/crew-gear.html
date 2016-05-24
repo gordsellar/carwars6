@@ -1,0 +1,51 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">{{name}} Gear</h1>
+        <button class="button button-dark icon ion-ios7-undo" ng-click="openScreen('crew')">Back</button>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <div class="item" ng-class="{'narrow': weapons.length > 8}">Equipment: {{equipmentWeight}}</div>
+            <checkbox-item ng-model="handWeaponWeight" ng-class="{'narrow': weapons.length > 8}" ng-hide="weapons.length > 11"
+                    ng-disabled="classicTech">Weight for Personal Equipment</checkbox-item>
+
+            <div class="item item-divider">Hand Weapons</div>
+            <a class="item item-icon-left item-icon-right" ng-if="weapons.length === 0"
+               ng-repeat="category in weaponCategories" ng-click="selectWeaponCategory(category)">
+                <i class="icon ion-pinpoint"></i>
+                {{category}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-if="weapons.length > 0"
+               ng-repeat="weapon in weapons" ng-click="editWeapon(weapon)" ng-class="{'narrow': weapons.length > 5}">
+                <i class="icon ion-pinpoint"></i>
+                {{weapon.count > 1 ? weapon.count+' '+weapon.name+'s' : weapon.name}}{{weapon.totalCapacity() > 0 ? " -- "+weapon.ammoTotal()+" shot"+(weapon.ammoTotal() !== 1 ? "s" : "") : ""}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-if="weapons.length > 0"
+               ng-click="openScreen('handWeaponCategories')" ng-class="{'narrow': weapons.length > 5}">
+                <i class="icon ion-pinpoint"></i>
+                Add Weapon
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+
+            <div class="item item-divider">Personal Equipment</div>
+            <a class="item item-icon-left item-icon-right" ng-click="selectGearCategory('Explosives')"
+               ng-class="{narrow: weapons.length > 8, 'link-disabled': classicTech}">
+                <i class="icon ion-android-stopwatch"></i>
+                Explosives
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="selectGearCategory('Backpacks')" ng-class="{'narrow': weapons.length > 8}">
+                <i class="icon ion-medkit"></i>
+                Backpack Items
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="selectGearCategory('Other')" ng-class="{'narrow': weapons.length > 8}">
+                <i class="icon ion-settings"></i>
+                Goggles, Tools, & Other
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,140 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">{{browseMode ? 'Browse Stock Cars' : 'Search Public Designs'}}</h1>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <div ng-show="browseMode">
+                <a class="item item-icon-left item-icon-right" ng-click="toggle('body')"
+                   style="font-weight: normal;">
+                    <i class="icon icon-accessory" ng-class="{'ion-chevron-down': !body, 'ion-chevron-up': body}"></i>
+                    <b>Body:</b> {{bodyText}}<i ng-show="!bodyText">any</i>
+                    <i class="icon icon-accessory" ng-class="{'ion-chevron-down': !body, 'ion-chevron-up': body}"></i>
+                </a>
+                <div class="item" ng-show="body">
+                    <div class="row" ng-repeat="option in bodyOptions">
+                        <div class="col"><button class="button button-block GridButton" ng-class="{'button-positive': searchParams.body[option[0]]}" ng-click="selectBody(option[0])">{{option[0]}}</button></div>
+                        <div class="col"><button class="button button-block GridButton" ng-class="{'button-positive': searchParams.body[option[1]]}" ng-click="selectBody(option[1])">{{option[1]}}</button></div>
+                    </div>
+                </div>
+
+                <a class="item item-icon-left item-icon-right" ng-click="toggle('aada')"
+                   style="font-weight: normal;">
+                    <i class="icon icon-accessory" ng-class="{'ion-chevron-down': !aada, 'ion-chevron-up': aada}"></i>
+                    <b>Arena Designs:</b> {{divText}}
+                    <i class="icon icon-accessory" ng-class="{'ion-chevron-down': !aada, 'ion-chevron-up': aada}"></i>
+                </a>
+                <div class="item" ng-show="aada" style="padding: 0;">
+                    <div class="row" ng-repeat="option in aadaOptions">
+                        <div class="col"><button class="button button-block GridButton" ng-class="{'button-positive': searchParams.tags[option[0]]}" ng-click="selectTag(option[0])">{{option[0]}}</button></div>
+                        <div class="col"><button class="button button-block GridButton" ng-class="{'button-positive': searchParams.tags[option[1]]}" ng-click="selectTag(option[1])">{{option[1]}}</button></div>
+                        <div class="col"><button class="button button-block GridButton" ng-class="{'button-positive': searchParams.tags[option[2]]}" ng-click="selectTag(option[2])" ng-show="option.length > 2">{{option[2]}}</button></div>
+                    </div>
+                </div>
+
+                <a class="item item-icon-left item-icon-right" ng-click="toggle('tags')"
+                   style="font-weight: normal;">
+                    <i class="icon icon-accessory" ng-class="{'ion-chevron-down': !tags, 'ion-chevron-up': tags}"></i>
+                    <b>Tags:</b> {{tagText}}
+                    <i class="icon icon-accessory" ng-class="{'ion-chevron-down': !tags, 'ion-chevron-up': tags}"></i>
+                </a>
+                <div class="item" ng-show="tags" style="padding: 0;">
+                    <div class="row" ng-repeat="option in tagOptions"> <!--  style="min-height: 37px; line-height: 30px;" -->
+                        <div class="col"><button class="button button-block GridButton" style="min-height: 37px; line-height: 32px;" ng-class="{'button-positive': searchParams.tags[option[0]]}"  ng-click="selectTag(option[0])">{{option[0]}}</button></div>
+                        <div class="col"><button class="button button-block GridButton" style="min-height: 37px; line-height: 32px;" ng-class="{'button-positive': searchParams.tags[option[1]]}"  ng-click="selectTag(option[1])">{{option[1]}}</button></div>
+                        <div class="col"><button class="button button-block GridButton" style="min-height: 37px; line-height: 32px;" ng-class="{'button-positive': searchParams.tags[option[2]]}"  ng-click="selectTag(option[2])">{{option[2]}}</button></div>
+                    </div>
+                </div>
+                <!--<a class="item item-icon-left item-icon-right" ng-click="toggle('cost')"-->
+                   <!--style="font-weight: normal;">-->
+                    <!--<i class="icon icon-accessory" ng-class="{'ion-chevron-down': !cost, 'ion-chevron-up': cost}"></i>-->
+                    <!--<b>Cost:</b> <i>any</i>-->
+                    <!--<i class="icon icon-accessory" ng-class="{'ion-chevron-down': !cost, 'ion-chevron-up': cost}"></i>-->
+                <!--</a>-->
+                <a class="item item-icon-left item-icon-right" ng-click="toggle('encumbrance')"
+                   style="font-weight: normal;">
+                    <i class="icon icon-accessory" ng-class="{'ion-chevron-down': !encumbrance, 'ion-chevron-up': encumbrance}"></i>
+                    <b>Rule Set:</b> {{searchParams.encumbrance}} {{searchParams.techLevel}}
+                    <i class="icon icon-accessory" ng-class="{'ion-chevron-down': !encumbrance, 'ion-chevron-up': encumbrance}"></i>
+                </a>
+                <div class="item" ng-show="encumbrance">
+                    <b>Tech Level</b>
+                    <div class="row">
+                        <div class="col"><button class="button button-block GridButton" ng-class="{'button-positive': searchParams.techLevel === 'Classic'}" ng-click="selectTechLevel('Classic')">Classic</button></div>
+                        <div class="col"><button class="button button-block GridButton" ng-class="{'button-positive': searchParams.techLevel === 'CWC'}" ng-click="selectTechLevel('CWC')">CWC</button></div>
+                        <div class="col"><button class="button button-block GridButton" ng-class="{'button-positive': searchParams.techLevel === 'UACFH'}" ng-click="selectTechLevel('UACFH')">UACFH</button></div>
+                    </div>
+                    <b>Encumbrance</b>
+                    <div class="row">
+                        <div class="col"><button class="button button-block GridButton" ng-class="{'button-positive': searchParams.encumbrance === 'GE'}" ng-click="selectEncumbrance('GE')">GE</button></div>
+                        <div class="col"><button class="button button-block GridButton" ng-class="{'button-positive': searchParams.encumbrance === 'Weight'}" ng-click="selectEncumbrance('Weight')">Weight</button></div>
+                        <div class="col"><button class="button button-block GridButton" ng-class="{'button-positive': !searchParams.encumbrance}" ng-click="selectEncumbrance('Any')">Any</button></div>
+                    </div>
+                    <div class="row"><div class="col" style="white-space: normal;"><i>Note that designs with no personal equipment will appear under
+                        either encumbrance setting</i></div></div>
+                </div>
+            </div>
+            <div ng-hide="browseMode">
+                <p class="item">
+                    Click a design name/image to review it in detail or load it in the designer.
+                </p>
+                <a class="item item-icon-left item-icon-right" ng-click="newNameSearch()">
+                    <i class="icon ion-android-search"></i>
+                    New Name Search
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+                <a class="item item-icon-left item-icon-right" ng-click="toggleMode()">
+                    <i class="icon ion-images"></i>
+                    Browse Stock Cars
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+            </div>
+            <div class="item item-icon-left narrow" ng-show="working">
+                <i class="icon ion-loading-a"></i>
+                Searching for designs...
+            </div>
+            <div class="item item-divider">Return to Designer</div>
+            <a class="item item-icon-left item-icon-right" ng-click="toDesigner()" ng-show="car">
+                <i class="icon ion-model-s"></i>
+                Return to Current Design
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="createNewDesign()" ng-show="!car">
+                <i class="icon ion-model-s"></i>
+                Create New Design
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<modal-dialog ng-show="nameSearchVisible" class="ionic-ng-modal" on-close="nameSearchClosing()">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Search By Name</h1>
+    </div>
+    <div class="content dialog-header">
+        <form method="post" onsubmit="return false;">
+            <button style="position: absolute; left: -9999px;" tabindex="1000" data-role="none"
+                    ng-disabled="!nameReady" ng-click="searchByName()"></button>
+            <div class="list">
+                <p class="item">This will search all designs that were submitted as stock cars (public designs).
+                    Enter a design name to search for:</p>
+                <label class="item item-input">
+                    <input type="search" placeholder="Design Name" ng-model="name"
+                           ng-change="nameReady = !!name" name="name" focus-by-default>
+                </label>
+
+                <div class="item item-icon-left" ng-show="working">
+                    <i class="icon ion-loading-a"></i>
+                    Searching...
+                </div>
+            </div>
+            <div class="list">
+                <a class="item item-icon-right" ng-click="searchByName()"
+                   ng-class="{'link-disabled': !nameReady}">
+                    Search
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+            </div>
+        </form>
+    </div>
+</modal-dialog>

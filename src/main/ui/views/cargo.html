@@ -1,0 +1,68 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Reserved Cargo</h1>
+        <button class="button button-dark icon ion-ios7-undo" ng-click="openScreen('gearTypes')">Back</button>
+    </div>
+    <div class="content has-header">
+        <p class="item">The weight and space you indicate on this screen will be set aside for cargo.
+          Your design won't be marked as illegal if you cross into that, but the
+          available space and weight along the top will turn red.</p>
+        <div class="list">
+            <div class="item item-divider">Cargo Allocation</div>
+            <label class="item item-input">
+                <span class="input-label" style="max-width: 120px;">Weight (lbs):</span>
+                <input type="number" placeholder="0" ng-model="weight">
+            </label>
+            <label class="item item-input">
+                <span class="input-label" style="max-width: 120px;">Space:</span>
+                <input type="number" placeholder="0" ng-model="space">
+            </label>
+        </div>
+        <div class="list">
+            <div class="item item-divider">Vehicles as Cargo</div>
+            <div class="item mednarrow">
+                <span style="font-style: italic">(for reference)</span><br />
+                <span class="VCargo Col1"><b>Space</b></span>
+                <span class="VCargo Col2"><b>Weight</b></span>
+                <span><b>Vehicle</b></span><br />
+                <span class="VCargo Col1">8</span>
+                <span class="VCargo Col2">800</span>
+                <span>Light Cycle</span><br />
+                <span class="VCargo Col1">11</span>
+                <span class="VCargo Col2">1300</span>
+                <span>Heavy Cycle</span><br />
+                <span class="VCargo Col1">16</span>
+                <span class="VCargo Col2">2050</span>
+                <span>Hvy Cycle/Hvy Sidecar</span><br />
+                <span class="VCargo Col1">12-18</span>
+                <span class="VCargo Col2">1920</span>
+                <span>Light Trike</span><br />
+                <span class="VCargo Col1">18-24</span>
+                <span class="VCargo Col2">4200</span>
+                <span>Extra-Heavy Trike</span><br />
+                <span class="VCargo Col1">17</span>
+                <span class="VCargo Col2">2760</span>
+                <span>Subcompact</span><br />
+                <span class="VCargo Col1">23</span>
+                <span class="VCargo Col2">5760</span>
+                <span>Midsize</span><br />
+                <span class="VCargo Col1">29</span>
+                <span class="VCargo Col2">6600</span>
+                <span>Luxury</span><br />
+                <span class="VCargo Col1">34</span>
+                <span class="VCargo Col2">7800</span>
+                <span>Pickup</span><br />
+                <span class="VCargo Col1">40</span>
+                <span class="VCargo Col2">7200</span>
+                <span>Van</span><br />
+            </div>
+        </div>
+        <div class="list" ng-show="switch">
+            <a class="item item-icon-left item-icon-right" ng-click="toggleCarrier()">
+                <i class="icon" ng-class="{'ion-model-s':switch === 'Cab' || switch === 'Cycle','ion-play': switch === 'Sidecar','ion-stop': switch === 'Carrier'}"></i>
+                Reserved Cargo in {{switch}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</div>

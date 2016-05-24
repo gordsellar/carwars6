@@ -1,0 +1,58 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">{{name === 'Booster' && !turret ? "Rocket " : ''}}{{name}}{{turret ? ' in EWP' : ''}}</h1>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <div class="item narrow">
+              <span class="button-group Thrust">
+                <button class="button button-small icon ion-minus-circled" ng-click="lowerThrust()"></button>
+                <button class="button button-small icon ion-plus-circled" ng-click="higherThrust()"></button>
+                {{boosterThrust}}
+              </span>
+            </div>
+            <div class="item" ng-show="thrust === 0">No booster installed</div>
+            <div class="item" ng-show="thrust > 0">${{cost}}, {{weight}} lbs., {{space}} sp., {{dp}} DP</div>
+
+            <div class="Weight">
+                <div class="item item-divider">Calculate Thrust</div>
+                <label class="item item-radio radio-narrow">
+                    <input type="radio" ng-model="calculate" value="Maximum" name="calculate">
+                    <i class="radio-icon ion-checkmark"></i>
+                    <div class="item-content">Maximum Weight ({{maxWeight}} lbs)</div>
+                </label>
+                <label class="item item-radio radio-narrow">
+                    <input type="radio" ng-model="calculate" value="Current" name="calculate">
+                    <i class="radio-icon ion-checkmark"></i>
+                    <div class="item-content">Current Weight ({{currentWeight}} lbs)</div>
+                </label>
+            </div>
+
+            <div ng-hide="turret">
+                <div class="item item-divider">Booster Type</div>
+                <label class="item item-radio radio-narrow">
+                    <input type="radio" ng-model="type" value="Booster" name="type">
+                    <i class="radio-icon ion-checkmark"></i>
+                    <div class="item-content">Rocket Booster</div>
+                </label>
+                <label class="item item-radio radio-narrow">
+                    <input type="radio" ng-model="type" value="Jet" name="type">
+                    <i class="radio-icon ion-checkmark"></i>
+                    <div class="item-content">Jump Jets</div>
+                </label>
+            </div>
+
+            <div class="item item-divider">{{name}} Facing</div>
+            <label class="item item-radio radio-narrow">
+                <input type="radio" ng-model="location" value="Back" name="location">
+                <i class="radio-icon ion-checkmark"></i>
+                <div class="item-content">{{type === 'Booster' ? "Rear-facing" : "Bottom-facing"}}</div>
+            </label>
+            <label class="item item-radio radio-narrow">
+                <input type="radio" ng-model="location" value="Front" name="location">
+                <i class="radio-icon ion-checkmark"></i>
+                <div class="item-content">{{type === 'Booster' ? "Front-facing" : "Top-facing"}}</div>
+            </label>
+        </div>
+    </div>
+</div>

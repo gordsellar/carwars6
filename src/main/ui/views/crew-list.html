@@ -1,0 +1,64 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">All Crew</h1>
+    </div>
+    <div class="content has-header">
+        <div class="list" ng-init="max = carrier ? 6 : 8">
+            <div class="item item-divider">Crew on Board</div>
+            <a class="item item-icon-left item-icon-right"
+               ng-repeat="person in crew" ng-click="editCrew(person)" ng-hide="$index >= max">
+                <i class="icon"
+                   ng-class="person.name === 'Driver' || person.name === 'Cyclist' ? 'ion-android-contact' : person.name === 'Gunner' ? 'ion-android-user-menu' : 'ion-android-social-user'"></i>
+                {{person.fullName()}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <p class="item tip" ng-class="{bold: crew.length > max}">Tip: Click on the crew member in the vehicle design to edit</p>
+            <div class="item item-divider">Add Crew</div>
+            <a class="item item-icon-left item-icon-right" ng-click="addGunner()" ng-class="{'link-disabled': spaces<2}">
+                <i class="icon ion-android-user-menu"></i>
+                Add Gunner
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="addPassenger()" ng-class="{'link-disabled': cargoSpaces<passengerSize}">
+                <i class="icon ion-android-social-user"></i>
+                Add Passenger
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <div ng-show="sidecar">
+                <div class="item item-divider">Sidecar Crew</div>
+                <a class="item item-icon-left item-icon-right" ng-click="addGunner(true)" ng-class="{'link-disabled': sidecarSpace<2 || !sidecarCrew}">
+                    <i class="icon ion-android-user-menu"></i>
+                    Add Sidecar Gunner
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+                <a class="item item-icon-left item-icon-right" ng-click="addPassenger(true)" ng-class="{'link-disabled': sidecarSpace<1 || !sidecarCrew}">
+                    <i class="icon ion-android-social-user"></i>
+                    Add Sidecar Passenger
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+            </div>
+            <div ng-show="carrier">
+                <div class="item item-divider">Carrier Crew</div>
+                <a class="item item-icon-left item-icon-right" ng-click="addGunner(false, true)" ng-class="{'link-disabled': carrierSpace<2}">
+                    <i class="icon ion-android-user-menu"></i>
+                    Add Carrier Gunner
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+                <a class="item item-icon-left item-icon-right" ng-click="addPassenger(false, true)" ng-class="{'link-disabled': carrierSpace<1}">
+                    <i class="icon ion-android-social-user"></i>
+                    Add Carrier Passenger
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- TODO: sidecar peeps
+        <ul data-role="listview" data-inset="true" id="CarCrewOutsideList">
+            <li><a href="#" id="CarCrewOutsidePassenger">Add Sidecar Gunner</a></li>
+            <li><a href="#" id="CarCrewOutsideGunner">Add Sidecar Passenger</a></li>
+        </ul>
+    </div>
+</div>
+-->

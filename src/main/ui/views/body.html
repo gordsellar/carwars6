@@ -1,0 +1,170 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Body Options</h1>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <div class="item item-divider" ng-hide="cycleVisible || trailer">Body</div>
+
+            <div checkradios="bodyTypes" ng-model="bodyType" ng-show="bodyTypes"></div>
+
+            <checkbox-item ng-model="reversed" ng-show="trike">Reversed Trike</checkbox-item>
+            <div class="item narrow">
+                <b>{{spaces}} spaces<span ng-show="oneThird">, {{oneThird}}sp weapons/side</span></b><br ng-hide="semiTrailer"/>
+                <span ng-hide="semiTrailer">Max weight {{maxWeight}} (base)</span>
+            </div>
+
+            <div ng-show="chassisVisible">
+                <div class="item item-divider">Chassis</div>
+                <div class="item narrow">
+                  <span class="button-group ChassisType">
+                    <button class="button button-small icon ion-minus-circled" ng-click="previousChassis()"></button>
+                    <button class="button button-small icon ion-plus-circled" ng-click="nextChassis()"></button>
+                    {{chassisName}} {{chassisName === 'Extra-Heavy' ? '' : 'Chassis'}} ({{chassisMaxWeight}} lbs)
+                  </span>
+                </div>
+                <checkbox-item class="narrow" ng-model="sixWheel" ng-disabled="sixWheelDisabled"
+                               ng-show="sixWheelVisible">6-wheeled chassis</checkbox-item>
+            </div>
+
+            <div ng-show="suspensionVisible">
+                <div class="item item-divider"><span ng-show="cycleVisible">Cycle </span>Suspension</div>
+                <div class="item narrow">
+                  <span class="button-group SuspensionType">
+                    <button class="button button-small icon ion-minus-circled" ng-click="previousSuspension()"></button>
+                    <button class="button button-small icon ion-plus-circled" ng-click="nextSuspension()"></button>
+                    {{suspensionName}} (HC {{suspensionHC}})
+                  </span>
+                </div>
+            </div>
+
+            <div ng-show="cycleVisible">
+                <div class="item item-divider">Cycle Options</div>
+                <label class="item item-radio radio-narrow">
+                    <input type="radio" ng-model="sidecar" value="None" name="sidecar">
+                    <i class="radio-icon ion-checkmark"></i>
+                    <div class="item-content">No Sidecar or Windshell</div>
+                </label>
+                <label class="item item-radio radio-narrow" ng-class="{'text-disabled':classicTech}">
+                    <input type="radio" ng-model="sidecar" value="Windshell" name="sidecar" ng-disabled="classicTech">
+                    <i class="radio-icon ion-checkmark"></i>
+                    <div class="item-content">Cycle Windshell</div>
+                </label>
+                <label class="item item-radio radio-narrow" ng-class="{'text-disabled':sidecarDisabled}">
+                    <input type="radio" ng-model="sidecar" value="Light Sidecar" name="sidecar" ng-disabled="sidecarDisabled">
+                    <i class="radio-icon ion-checkmark"></i>
+                    <div class="item-content">Light Sidecar</div>
+                </label>
+                <label class="item item-radio radio-narrow" ng-class="{'text-disabled':sidecarDisabled || classicTech}">
+                    <input type="radio" ng-model="sidecar" value="1-Space Turret Sidecar" name="sidecar" ng-disabled="sidecarDisabled">
+                    <i class="radio-icon ion-checkmark"></i>
+                    <div class="item-content">1-Space Turret Sidecar</div>
+                </label>
+                <label class="item item-radio radio-narrow" ng-class="{'text-disabled':sidecarDisabled}">
+                    <input type="radio" ng-model="sidecar" value="Heavy Sidecar" name="sidecar" ng-disabled="sidecarDisabled">
+                    <i class="radio-icon ion-checkmark"></i>
+                    <div class="item-content">Heavy Sidecar</div>
+                </label>
+                <label class="item item-radio radio-narrow" ng-class="{'text-disabled':sidecarDisabled || classicTech}">
+                    <input type="radio" ng-model="sidecar" value="2-Space Turret Sidecar" name="sidecar" ng-disabled="sidecarDisabled">
+                    <i class="radio-icon ion-checkmark"></i>
+                    <div class="item-content">2-Space Turret Sidecar</div>
+                </label>
+                <div class="item narrow" ng-show="sidecar === 'Windshell'">
+                    <span class="button-group WindshellArmor">
+                        <button class="button button-small icon ion-minus-circled" ng-click="lessWindshellArmor()"></button>
+                        <button class="button button-small icon ion-plus-circled" ng-click="moreWindshellArmor()"></button>
+                        {{windshellArmor}}
+                    </span>
+                </div>
+                <div ng-show="sidecar !== 'None' && sidecar !== 'Windshell'">
+                    <div class="item narrow">
+                      <span class="button-group SidecarSuspension">
+                        <button class="button button-small icon ion-minus-circled" ng-click="previousSidecarSuspension()"></button>
+                        <button class="button button-small icon ion-plus-circled" ng-click="nextSidecarSuspension()"></button>
+                        {{sidecarSuspension}}
+                      </span>
+                    </div>
+                    <checkbox-item class="narrow" ng-model="sidecarTwoTire" ng-disabled="classicTech && !sidecarTwoTire">Two Tires on Sidecar</checkbox-item>
+                    <checkbox-item class="narrow" ng-model="jettisonJoinings">Jettison Joinings</checkbox-item>
+                </div>
+            </div>
+
+            <div ng-show="carrier">
+                <div class="item item-divider" ng-show="tenWheeler">Carrier Options</div>
+                <div class="item item-divider" ng-show="trailer">Trailer Type</div>
+                <label class="item item-radio radio-narrow">
+                    <input type="radio" ng-model="carrier" value="Van" name="carrier">
+                    <i class="radio-icon ion-checkmark"></i>
+                    <div class="item-content">Van</div>
+                </label>
+                <label class="item item-radio radio-narrow" ng-class="{'text-disabled':bodyName === 'Mini-Van'}">
+                    <input type="radio" ng-model="carrier" value="Flatbed" name="carrier" ng-disabled="bodyName === 'Mini-Van'">
+                    <i class="radio-icon ion-checkmark"></i>
+                    <div class="item-content">Flatbed</div>
+                </label>
+                <label class="item item-radio radio-narrow" ng-show="semiTrailer">
+                    <input type="radio" ng-model="carrier" value="Dual-Level Flatbed" name="carrier">
+                    <i class="radio-icon ion-checkmark"></i>
+                    <div class="item-content">Dual-Level Flatbed</div>
+                </label>
+                <label class="item item-radio radio-narrow">
+                    <input type="radio" ng-model="carrier" value="Reefer" name="carrier">
+                    <i class="radio-icon ion-checkmark"></i>
+                    <div class="item-content">Reefer</div>
+                </label>
+                <label class="item item-radio radio-narrow">
+                    <input type="radio" ng-model="carrier" value="Tanker" name="carrier">
+                    <i class="radio-icon ion-checkmark"></i>
+                    <div class="item-content">Tanker</div>
+                </label>
+                <label class="item item-radio radio-narrow">
+                    <input type="radio" ng-model="carrier" value="Dumper" name="carrier">
+                    <i class="radio-icon ion-checkmark"></i>
+                    <div class="item-content">Dumper</div>
+                </label>
+                <checkbox-item class="narrow" ng-model="cabBackDoor" ng-show="tenWheeler"
+                               ng-disabled="carrier === 'Tanker' || carrier === 'Dumper'">Back Door in Cab (to Carrier)</checkbox-item>
+            </div>
+
+            <div ng-show="tractor">
+                <div class="item item-divider">Fifth Wheel</div>
+                <div class="customize-wrapper">
+                    <div class="item narrow">
+                        <span class="button-group FifthWheel">
+                            <button class="button button-small icon ion-minus-circled" ng-click="lessFifthWheelArmor()"></button>
+                            <button class="button button-small icon ion-plus-circled" ng-click="moreFifthWheelArmor()"></button>
+                            {{fifthWheelArmor}}
+                        </span>
+                    </div>
+                    <span ng-show="hasFifthWheelArmor" ng-click="changeFifthWheelArmorType()" class="badge badge-positive customize">{{fifthWheelArmorAbbv}}</span>
+                </div>
+                <div class="item item-divider">Windjammer</div>
+                <checkbox-item class="narrow" ng-model="windjammer">Windjammer</checkbox-item>
+                <checkbox-item class="narrow" ng-model="windjammerRetractor" ng-disabled="!windjammer">Windjammer Retractor</checkbox-item>
+                <div class="customize-wrapper">
+                    <div class="item narrow">
+                        <span class="button-group Windjammer">
+                            <button class="button button-small icon ion-minus-circled" ng-click="lessWindjammerArmor()"
+                                    ng-disabled="!windjammer"></button>
+                            <button class="button button-small icon ion-plus-circled" ng-click="moreWindjammerArmor()"
+                                    ng-disabled="!windjammer"></button>
+                        </span>
+                        <span ng-class="{'text-disabled': !windjammer}">{{windjammerArmor}}</span>
+                    </div>
+                    <span ng-show="hasWindjammerArmor" ng-click="changeWindjammerArmorType()" class="badge badge-positive customize">{{windjammerArmorAbbv}}</span>
+                </div>
+            </div>
+
+            <div ng-show="semiTrailer">
+                <div class="item item-divider">Kingpin Options</div>
+                <checkbox-item class="narrow" ng-model="explosiveKingpin" ng-disabled="qrKingpin" ng-change="setKingpin(explosiveKingpin, false)">Explosive Kingpin</checkbox-item>
+                <checkbox-item class="narrow" ng-model="qrKingpin" ng-disabled="explosiveKingpin" ng-change="setKingpin(false, qrKingpin)">Quick-Release Kingpin</checkbox-item>
+                <div class="item item-divider">Loose Trailer Options</div>
+                <checkbox-item class="narrow" ng-model="step" ng-disabled="trailerTires2 || trailerTires4" ng-change="setSTEP(step)">Semi Trailer Emergency Plate</checkbox-item>
+                <checkbox-item class="narrow" ng-model="trailerTires2" ng-disabled="step || trailerTires4" ng-change="setTrailerTires(trailerTires2 ? 2 : 0)">Full Trailer (2 front wheels)</checkbox-item>
+                <checkbox-item class="narrow" ng-model="trailerTires4" ng-disabled="step || trailerTires2" ng-change="setTrailerTires(trailerTires4 ? 4 : 0)">Full Trailer (4 front wheels)</checkbox-item>
+            </div>
+        </div>
+    </div>
+</div>

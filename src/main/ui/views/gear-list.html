@@ -1,0 +1,38 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive GearList">
+        <h1 class="title">{{category}}</h1>
+        <button class="button button-dark icon ion-ios7-undo" ng-click="openScreen('gearTypes')">Back</button>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <div class="item item-divider" ng-show="location">{{location}} Items</div>
+            <div class="item" ng-repeat="item in multis"
+                 ng-class="{'slim': singles.length+multis.length < 12, 'narrow': singles.length+multis.length >= 12}">
+              <span class="button-group {{item.tag}}">
+                <button class="button button-small icon ion-minus-circled" ng-click="fewerItems(item)"
+                        ng-disabled="item.disabled && item.count === 'No'"></button>
+                <button class="button button-small icon ion-plus-circled" ng-click="moreItems(item)"
+                        ng-disabled="item.disabled"></button>
+              </span>
+                <span ng-class="{'text-disabled': item.disabled}">{{item.count}} {{item.name === 'Laser Battery' && item.count > 1 ? 'Laser Batterie' : item.name}}{{item.count > 1 ? item.suffix : ""}}</span>
+            </div>
+            <checkbox-item ng-class="{'slim': singles.length+multis.length <= 12, 'narrow': singles.length+multis.length > 12}"
+                           ng-repeat="item in singles" ng-model="item.present" ng-change="checkbox(item)"
+                           ng-disabled="item.disabled && !item.present">{{item.name}}</checkbox-item>
+            <a class="item item-icon-left item-icon-right" ng-click="openScreen('hitch')" ng-show="category === 'Towing & Salvage'"
+               ng-class="{'link-disabled': classicTech}">
+                <i class="icon ion-link"></i>
+                Hitches
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+
+        <div class="list" ng-show="switch">
+            <a class="item item-icon-left item-icon-right" ng-click="toggleCarrier()">
+                <i class="icon" ng-class="{'ion-model-s':switch === 'Cab' || switch === 'Cycle','ion-play': switch === 'Sidecar','ion-stop': switch === 'Carrier'}"></i>
+                Show Gear in {{switch}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+    </div>
+</div>

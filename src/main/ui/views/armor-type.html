@@ -1,0 +1,22 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive Ammo">
+        <h1 class="title">Armor Type</h1>
+    </div>
+    <div class="content has-header">
+        <form method="post" onsubmit="return false;">
+        <div class="list">
+            <label class="item item-radio radio-narrow" ng-repeat="type in available">
+                <input type="radio" ng-model="$parent.armorType" value="{{type.name}}" name="armorType">
+                <i class="radio-icon ion-checkmark"></i>
+                <div class="item-content"><b>{{type.armor.name}}</b><br />${{type.costPerPoint}}, {{type.weightPerPoint}} lbs. per point</div>
+            </label>
+
+            <a class="item item-icon-left item-icon-right" ng-click="goBack()">
+                <i class="icon ion-pinpoint"></i>
+                Back to {{itemName}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
+        </form>
+    </div>
+</div>

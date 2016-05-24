@@ -1,0 +1,97 @@
+<div class="ionic-body">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">{{gas ? "Engine" : "Power Plant"}}</h1>
+    </div>
+    <div class="content has-header">
+        <div class="list">
+            <div class="item narrow">
+              <span class="button-group EngineSize">
+                <button class="button button-small icon ion-minus-circled" ng-click="smallerEngine()"></button>
+                <button class="button button-small icon ion-plus-circled" ng-click="biggerEngine()"></button>
+                {{name}}
+              </span>
+            </div>
+            <a class="item item-icon-left item-icon-right" ng-click="changeToGas()" ng-hide="gas" ng-class="{'link-disabled': classicTech}">
+                <i class="icon ion-ios7-speedometer"></i>
+                Change to Gas
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="changeToElectric()" ng-show="gas">
+                <i class="icon ion-ios7-speedometer-outline"></i>
+                Change to Electric
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="useSelector()">
+                <i class="icon ion-wand"></i>
+                Use Engine Selector
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+            <div class="item item-divider mednarrow"><span ng-show="power">Power {{power}}% - </span>{{space}}sp - {{weight}} lbs.<br />
+              <span ng-show="pf">{{pf}} PF -</span><span ng-show="maxLoad">Max Load {{maxLoad}} lbs -</span> ${{cost}}</div>
+            <div ng-hide="gas">
+                <checkbox-item class="narrow" ng-model="platCats" ng-disabled="classicTech && !platCats">Platinum Catalysts</checkbox-item>
+                <checkbox-item class="narrow" ng-model="superCons" ng-disabled="classicTech && !superCons">Superconductors</checkbox-item>
+                <checkbox-item class="narrow" ng-model="HTMs" ng-disabled="cwcClassicTech && !HTMs">High-Torque Motors</checkbox-item>
+                <checkbox-item class="narrow" ng-model="hdHTMs" ng-disabled="cwcClassicTech && !hdHTMs">HD High-Torque Motors</checkbox-item>
+                <checkbox-item class="narrow" ng-model="fri" ng-disabled="((spaces < 1 || classicTech) && !fri) || hasCA">Fire-Retardant Insulator</checkbox-item>
+            </div>
+            <div ng-show="gas">
+                <checkbox-item class="narrow" ng-model="carb">Carburetor</checkbox-item>
+                <checkbox-item class="narrow" ng-model="mbCarb">Multibarrel Carburetor</checkbox-item>
+                <checkbox-item class="narrow" ng-model="tubes">Tubular Headers</checkbox-item>
+                <checkbox-item class="narrow" ng-model="bp">Blueprinted</checkbox-item>
+                <checkbox-item class="narrow" ng-model="turbo">Turbocharger</checkbox-item>
+                <checkbox-item class="narrow" ng-model="vpTurbo">V.P. Turbocharger</checkbox-item>
+                <checkbox-item class="narrow" ng-model="super" ng-disabled="(spaces < 1 && !super) || superTooSmall">Supercharger</checkbox-item>
+            </div>
+            <checkbox-item class="narrow" ng-model="fe" ng-disabled="spaces < 1 && !fe && !ife">Fire Extinguisher</checkbox-item>
+            <checkbox-item class="narrow" ng-model="ife" ng-disabled="spaces < 1 && !fe && !ife">Improved Fire Extinguisher</checkbox-item>
+            <div class="item narrow" ng-hide="gas">
+              <span class="button-group EPC">
+                <button class="button button-small icon ion-minus-circled" ng-click="fewerPowerCells()" ng-disabled="classicTech && !hasEPCs"></button>
+                <button class="button button-small icon ion-plus-circled" ng-click="morePowerCells()" ng-disabled="classicTech"></button>
+              </span>
+                <span ng-class="{'text-disabled':classicTech}">{{extraPowerCells}} Extra Power Cells</span>
+            </div>
+            <div class="item narrow" ng-hide="gas">
+              <span class="button-group ISC">
+                <button class="button button-small icon ion-minus-circled" ng-click="fewerISCs()"
+                        ng-disabled="(spaces < 1 || classicTech) && !hasISCs"></button>
+                <button class="button button-small icon ion-plus-circled" ng-click="moreISCs()"
+                        ng-disabled="spaces < 1 || classicTech"></button>
+              </span>
+                <span ng-class="{'text-disabled': spaces < 1 || classicTech}">{{ISCs}} Imp. Sup. Capacitors</span>
+            </div>
+            <div class="item narrow" ng-show="gas">
+              <span class="button-group NO2">
+                <button class="button button-small icon ion-minus-circled" ng-click="fewerNitrous()"
+                        ng-disabled="spaces < 1 && !hasNitrous"></button>
+                <button class="button button-small icon ion-plus-circled" ng-click="moreNitrous()"
+                        ng-disabled="spaces < 1"></button>
+              </span>
+                <span ng-class="{'text-disabled': spaces < 1 && !hasNitrous}">{{nitrousOxide}} Nitrous Oxide</span>
+            </div>
+            <div class="item narrow">
+              <span class="button-group LB">
+                <button class="button button-small icon ion-minus-circled" ng-click="fewerLaserBatteries()"
+                        ng-disabled="(spaces < 1 || classicTech) && !hasBattery"></button>
+                <button class="button button-small icon ion-plus-circled" ng-click="moreLaserBatteries()"
+                        ng-disabled="spaces < 1 || classicTech"></button>
+              </span>
+                <span ng-class="{'text-disabled': spaces < 1 || classicTech}">{{laserBattery}} Laser Battery</span>
+            </div>
+            <div class="customize-wrapper">
+                <div class="item narrow">
+                    <span class="button-group CA">
+                        <button class="button button-small icon ion-minus-circled" ng-click="lessComponentArmor()"
+                                ng-disabled="(spaces < caSize || classicTech || fri) && !hasCA"></button>
+                        <button class="button button-small icon ion-plus-circled" ng-click="moreComponentArmor()"
+                                ng-disabled="(spaces < caSize  && !hasCA) || classicTech || fri"></button>
+                    </span>
+                    <span ng-class="{'text-disabled': (spaces < caSize || classicTech || fri) && !hasCA}">{{componentArmor}}</span>
+                </div>
+                <span ng-show="hasCA" ng-click="changeCAType()" class="badge badge-positive customize">{{caAbbv}}</span>
+            </div>
+        </div>
+    </div>
+</div>

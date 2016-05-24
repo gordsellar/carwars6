@@ -1,0 +1,105 @@
+<div class="ionic-body">
+    <div class="content WeaponPage">
+        <div class="list">
+            <div class="item narrow">
+              <span class="button-group WeaponCount" style="vertical-align: top;">
+                <button class="button button-small icon ion-minus-circled" ng-click="decreaseCount()"
+                        title="Remove a {{abbv}}"></button>
+                <button class="button button-small icon ion-plus-circled" ng-click="increaseCount()"
+                        title="Add a {{abbv}}"></button>
+              </span>
+                <div style="width: 225px; display: inline-block; overflow: hidden; font-size: 14px; line-height: 16px;">
+                    <span><b>{{count}} {{fake ? "Fake" : ""}} {{abbv}} {{location}}</b>{{shots > 0 ? " -- "+shots+" shots" : ""}}<br />
+                ${{totalCost}}, {{totalWeight}} lbs., {{totalSpace}} sp.</span>
+                </div>
+            </div>
+            <div ng-show="ammo.length > 0 && !fake">
+                <div class="item item-divider">Ammunition</div>
+                <div class="item" style='text-overflow: clip;' ng-class="{'narrow': ammo.length < 11, 'verynarrow': ammo.length >= 11}" ng-repeat="type in ammo">
+                  <span class="button-group AmmoCount {{type.tag}}" style="vertical-align: top;">
+                    <button class="button button-small icon ion-minus-circled" ng-click="decreaseAmmo(type.ammo)"
+                            ng-disabled="type.count < 1" title="Fewer Shots"></button>
+                    <button class="button button-small icon ion-close-circled" ng-click="removeAmmo(type.ammo)"
+                            ng-disabled="type.count < 1" title="Remove All"></button>
+                    <button class="button button-small icon ion-android-storage" ng-click="addClip(type.ammo)"
+                            ng-disabled="(type.requiredTech === 'CWC' && classicTech) || (type.requiredTech === 'All' && cwcClassicTech) || (type.requiredTech === 'Military' && techLevel !== 'Military')"
+                            title="Add Clip"></button>
+                    <button class="button button-small icon ion-plus-circled" ng-click="increaseAmmo(type.ammo)"
+                            ng-disabled="(type.requiredTech === 'CWC' && classicTech) || (type.requiredTech === 'All' && cwcClassicTech) || (type.requiredTech === 'Military' && techLevel !== 'Military')"
+                            title="More Shots"></button>
+                  </span>
+                  <span ng-class="{'text-disabled':(type.requiredTech === 'CWC' && classicTech) || (type.requiredTech === 'All' && cwcClassicTech) || (type.requiredTech === 'Military' && techLevel !== 'Military')}"
+                        style="line-height: 28px;">{{type.count}} {{noGrenades(type.ammo.name)}}</span>
+                </div>
+                <a class="item item-icon-left item-icon-right item-divider narrow" ng-click="showAllAmmo()"
+                   ng-show="ammo.length <= 5 && allAmmo" style="font-weight: normal;">
+                    <i class="icon ion-search icon-accessory"></i>
+                    Show extra ammo types
+                    <i class="icon ion-search icon-accessory"></i>
+                </a>
+                <a class="item item-icon-left item-icon-right item-divider narrow" ng-click="hideAllAmmo()"
+                   ng-show="ammo.length > 5 && allAmmo"  style="font-weight: normal;">
+                    <i class="icon ion-chevron-up icon-accessory"></i>
+                    Hide extra ammo types
+                    <i class="icon ion-chevron-up icon-accessory"></i>
+                </a>
+            </div>
+            <div class="customize-wrapper">
+                <checkbox-item class="narrow" ng-model="harm" ng-change="updateAmmo('harm')" ng-show="isRocket && ammo.length > 5" ng-disabled="classicTech && !harm">Anti-Radar (HARM)</checkbox-item>
+                <span ng-show="harm && ammo.length > 5" ng-click="adjustAmmoCount('harm')" class="badge badge-positive customize">{{harmCount}}</span>
+            </div>
+            <div ng-show="ammo.length < 6">
+                <div class="customize-wrapper">
+                    <checkbox-item class="narrow" ng-model="laserGuided" ng-change="updateAmmo('laserGuided')" ng-show="isRocket" ng-disabled="classicTech && !laserGuided">Laser-Guided</checkbox-item>
+                    <span ng-show="laserGuided" ng-click="adjustAmmoCount('laserGuided')" class="badge badge-positive customize">{{lgCount}}</span>
+                </div>
+                <div class="customize-wrapper">
+                    <checkbox-item class="narrow" ng-model="tracer" ng-change="updateAmmo('tracer')" ng-show="isBullet" ng-disabled="classicTech && !tracer">Tracer</checkbox-item>
+                    <span ng-show="tracer" ng-click="adjustAmmoCount('tracer')" class="badge badge-positive customize">{{tracerCount}}</span>
+                </div>
+                <div class="customize-wrapper">
+                    <checkbox-item class="narrow" ng-model="proximityFused" ng-change="updateAmmo('proximityFused')" ng-show="isMine" ng-disabled="classicTech && !proximityFused">Proximity Fused</checkbox-item>
+                    <span ng-show="proximityFused" ng-click="adjustAmmoCount('proximityFused')" class="badge badge-positive customize">{{proxCount}}</span>
+                </div>
+                <div class="customize-wrapper">
+                    <checkbox-item class="narrow" ng-model="radioDetonated" ng-change="updateAmmo('radioDetonated')" ng-show="isMine">Radio Detonated</checkbox-item>
+                    <span ng-show="radioDetonated" ng-click="adjustAmmoCount('radioDetonated')" class="badge badge-positive customize">{{radioCount}}</span>
+                </div>
+                <div class="customize-wrapper">
+                    <checkbox-item class="narrow" ng-model="programmable" ng-change="updateAmmo('programmable')" ng-show="isMine" ng-disabled="(classicTech || techLevel === 'CWC') && !programmable">Programmable</checkbox-item>
+                    <span ng-show="programmable" ng-click="adjustAmmoCount('programmable')" class="badge badge-positive customize">{{programCount}}</span>
+                </div>
+                <div class="customize-wrapper">
+                    <checkbox-item class="narrow" ng-model="impactFused" ng-change="updateAmmo('impactFused')" ng-show="isGrenade">Impact Fused</checkbox-item>
+                    <span ng-show="impactFused" ng-click="adjustAmmoCount('impactFused')" class="badge badge-positive customize">{{impactCount}}</span>
+                </div>
+                <div class="customize-wrapper">
+                    <checkbox-item class="narrow" ng-model="highVelocity" ng-change="updateAmmo('highVelocity')" ng-show="abbv === 'AGL'">High-Velocity Grenades</checkbox-item>
+                    <span ng-show="highVelocity" ng-click="adjustAmmoCount('highVelocity')" class="badge badge-positive customize">{{highVelCount}}</span>
+                </div>
+                <div class="item item-divider">Weapon Options</div>
+                <checkbox-item class="narrow" ng-model="fake" ng-change="setFake()" ng-disabled="classicTech && !fake">Fake</checkbox-item>
+                <checkbox-item class="narrow" ng-model="laserGuidanceLink" ng-change="updateWeapon('laserGuidanceLink')" ng-show="isLaser && !fake" ng-disabled="classicTech && !laserGuidanceLink">Laser Guidance Link</checkbox-item>
+                <checkbox-item class="narrow" ng-model="pulse" ng-change="updateWeapon('pulse')" ng-show="isLaser && !fake" ng-disabled="classicTech && !pulse">Pulse Laser</checkbox-item>
+                <checkbox-item class="narrow" ng-model="infrared" ng-change="updateWeapon('infrared')" ng-show="isLaser && !fake">Infrared Laser</checkbox-item>
+                <checkbox-item class="narrow" ng-model="bluegreen" ng-change="updateWeapon('bluegreen')" ng-show="isLaser && !fake" ng-disabled="classicTech && !bluegreen">Bluegreen Laser</checkbox-item>
+                <checkbox-item class="narrow" ng-model="bumperTrigger" ng-change="updateWeapon('bumperTrigger')" ng-show="!fake" ng-disabled="classicTech && !bumperTrigger">Bumper Trigger</checkbox-item>
+                <checkbox-item class="narrow" ng-model="rotaryMagazine" ng-change="updateWeapon('rotaryMagazine')" ng-show="!fake" ng-disabled="(!multipleAmmo || classicTech) && !rotaryMagazine">Rotary Magazine</checkbox-item>
+                <checkbox-item class="narrow" ng-model="magazineSwitch" ng-change="updateWeapon('magazineSwitch')" ng-show="!fake" ng-disabled="(noAmmo || noMagazine) && !magazineSwitch">Magazine Switch</checkbox-item>
+                <checkbox-item class="narrow" ng-model="fireRetardantInsulator" ng-change="updateWeapon('fireRetardantInsulator')" ng-show="!fake" ng-disabled="classicTech && !fireRetardantInsulator">Fire Retardant Insulator</checkbox-item>
+                <checkbox-item class="narrow" ng-model="concealment" ng-change="updateWeapon('concealment')" ng-disabled="classicTech && !concealment">Concealment</checkbox-item>
+                <checkbox-item class="narrow" ng-model="blowThroughConcealment" ng-change="updateWeapon('blowThroughConcealment')" ng-disabled="classicTech && !blowThroughConcealment">Blow-Through Concealment</checkbox-item>
+                <div class="customize-wrapper">
+                    <div class="item narrow" ng-show="!fake">
+                        <span class="button-group CA">
+                            <button class="button button-small icon ion-minus-circled" ng-disabled="(caDisabled || classicTech) && !caPresent" ng-click="previousComponentArmor()"></button>
+                            <button class="button button-small icon ion-plus-circled" ng-disabled="caDisabled || classicTech" ng-click="nextComponentArmor()"></button>
+                        </span>
+                        <span style="display: inline-block;" ng-class="{'text-disabled': caDisabled || classicTech}">{{componentArmor}}</span>
+                    </div>
+                    <span ng-show="caPresent" ng-click="changeCAType()" class="badge badge-positive customize">{{caAbbv}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
