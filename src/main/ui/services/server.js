@@ -42,8 +42,14 @@ angular.module('carwars').
                 $http.post('/resetPassword', {email: email}).success(success).error(error);
             },
             login: function(email, password, success, error) {
-                var data = {email: email, password: password};
-                $http.post('/login', data).success(function() {
+                var data = "username=" + encodeURIComponent(email) +
+                     "&password=" + encodeURIComponent(password);
+                $http({
+                    method: 'POST',
+                    url: '/login',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    data: data
+                }).success(function() {
                     if(CW.readCookie('author_email')) {
                         success();
                     }
