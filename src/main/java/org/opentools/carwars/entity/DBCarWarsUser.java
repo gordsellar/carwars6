@@ -20,6 +20,7 @@ public class DBCarWarsUser {
     private boolean confirmed;
     @Column(name = "design_signature")
     private String designSignature;
+    private String role;
 
     public String getEmail() {
         return email;
@@ -67,5 +68,13 @@ public class DBCarWarsUser {
 
     public void setDesignSignature(String designSignature) {
         this.designSignature = designSignature;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

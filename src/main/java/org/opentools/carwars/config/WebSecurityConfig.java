@@ -1,12 +1,14 @@
 package org.opentools.carwars.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
@@ -18,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import java.io.IOException;
 
 /**
@@ -37,6 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
                 .antMatchers("/api/secure/**/*").authenticated()
+                .antMatchers("/api/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll()
                 .and()
             .formLogin()
@@ -62,13 +66,38 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf()
 				.csrfTokenRepository(csrf)
                 .and()
-            .exceptionHandling().authenticationEntryPoint(new Http403ForbiddenEntryPoint());
+            .exceptionHandling()
+                .authenticationEntryPoint(new Http403ForbiddenEntryPoint());
     }
 
     @Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth
 			.inMemoryAuthentication()
-				.withUser("ammulder@gmail.com").password("password").roles("USER");
+				.withUser("ammulder@alumni.princeton.edu").password("password").roles("USER");
+    }
+
+    @Autowired
+    public void configAuthentication(AuthenticationManagerBuilder auth, DataSource dataSource) throws Exception {
+        final ShaPasswordEncoder sha = new ShaPasswordEncoder(256);
+        sha.setEncodeHashAsBase64(true);
+        PasswordEncoder passwordEncoder = new PasswordEncoder() {
+            @Override
+            public String encode(CharSequence charSequence) {
+                return sha.encodePassword("Car Wars Garage Secure Password "+charSequence, null);
+            }
+
+            @Override
+            public boolean matches(CharSequence enteredPassword, String storedHash) {
+                return encode(enteredPassword).equals(storedHash);
+            }
+        };
+        auth.jdbcAuthentication()
+                .dataSource(dataSource)
+                .passwordEncoder(passwordEncoder)
+                .usersByUsernameQuery(
+                        "select email, password, confirmed from car_wars_users where email=?")
+                .authoritiesByUsernameQuery(
+                        "select email, role from car_wars_users where email=?");
     }
 }

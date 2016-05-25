@@ -34,6 +34,9 @@ angular.module('carwars').
             $scope.data[10].designs.push.apply($scope.data[10].designs, result.carTrailer);
             $scope.data[11].designs.push.apply($scope.data[11].designs, result.other);
             $scope.working = false;
+        }, function() {
+            alert("Unable to load designs!\nPlease log out and log back in and try again.");
+            $scope.visible = false;
         });
         $scope.loadDesign = function(design) {
             success = true;

@@ -62,7 +62,8 @@ angular.module('carwars').
                 $http.post('/logout').success(success).error(error);
             },
             listDesigns: function(success, error) {
-                $http.get('/user/designs').success(function(data) {
+                $http.get('/api/secure/designs').success(function(data) {
+                    console.log(data);
                     var result = {
                         div5: [],
                         div10: [],
@@ -104,11 +105,12 @@ angular.module('carwars').
                             result.other.push(data[i]);
                         }
                     }
+                    console.log(result);
                     success(result);
                 }).error(error);
             },
             loadDesign: function(designId, success, error) {
-                $http.get('/designs/'+designId).success(success).error(error);
+                $http.get('/api/designs/'+designId).success(success).error(error);
             },
             loadDesignAdmin: function(designId, success, error) {
                 $http.get('/admin/designs/'+designId).success(success).error(error);
