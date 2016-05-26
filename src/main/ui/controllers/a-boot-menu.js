@@ -492,9 +492,8 @@
                     processDesignToLoad(data);
                 }, function () {
                     $scope.hideLoadingMessage();
-                    $timeout(function () {
-                        alert("Unable to load design.  Please report this.");
-                    });
+                    alert("Unable to load design.  Please report this.");
+                    $scope.createNewDesign();
                 });
             };
 

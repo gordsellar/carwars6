@@ -1,7 +1,10 @@
 package org.opentools.carwars.entity;
 
+import org.opentools.carwars.data.DesignHistory;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -9,7 +12,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "designs")
-public class DBCarDesign {
+public class DBCarDesign implements DesignHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -57,6 +60,10 @@ public class DBCarDesign {
     @Column(name = "stock_update_date")
     private Date stockUpdateDate;
     private Integer passengers;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "design")
+    private Collection<DBDesignRating> ratings;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "design")
+    private Collection<DBDesignTag> tags;
 
     public int getId() {
         return id;
@@ -296,5 +303,21 @@ public class DBCarDesign {
 
     public void setPassengers(Integer passengers) {
         this.passengers = passengers;
+    }
+
+    public Collection<DBDesignRating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Collection<DBDesignRating> ratings) {
+        this.ratings = ratings;
+    }
+
+    public Collection<DBDesignTag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Collection<DBDesignTag> tags) {
+        this.tags = tags;
     }
 }

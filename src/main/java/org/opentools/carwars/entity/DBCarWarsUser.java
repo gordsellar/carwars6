@@ -1,9 +1,7 @@
 package org.opentools.carwars.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * The DB user records
@@ -21,6 +19,10 @@ public class DBCarWarsUser {
     @Column(name = "design_signature")
     private String designSignature;
     private String role;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private Collection<DBDesignRating> ratings;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private Collection<DBDesignTag> tags;
 
     public String getEmail() {
         return email;
@@ -76,5 +78,21 @@ public class DBCarWarsUser {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Collection<DBDesignRating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Collection<DBDesignRating> ratings) {
+        this.ratings = ratings;
+    }
+
+    public Collection<DBDesignTag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Collection<DBDesignTag> tags) {
+        this.tags = tags;
     }
 }

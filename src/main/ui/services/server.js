@@ -63,7 +63,6 @@ angular.module('carwars').
             },
             listDesigns: function(success, error) {
                 $http.get('/api/secure/designs').success(function(data) {
-                    console.log(data);
                     var result = {
                         div5: [],
                         div10: [],
@@ -105,7 +104,6 @@ angular.module('carwars').
                             result.other.push(data[i]);
                         }
                     }
-                    console.log(result);
                     success(result);
                 }).error(error);
             },

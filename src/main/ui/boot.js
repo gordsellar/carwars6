@@ -148,7 +148,7 @@ var CW = {}, CWD = {};
                             showLoadProgress();
                         }
                     };
-                    request.open("GET", "/designs/"+id, true);
+                    request.open("GET", "/api/designs/"+id, true);
                     request.send(null);
                 }
             } else if(/^list\//.test(hash)) {
