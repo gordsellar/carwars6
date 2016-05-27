@@ -10,14 +10,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
@@ -32,6 +29,8 @@ import java.io.IOException;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private WebLoginSuccess loginSuccess;
+    @Autowired
+    private PasswordConfig password;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -71,20 +70,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth
-			.inMemoryAuthentication()
-				.withUser("ammulder@alumni.princeton.edu").password("password").roles("USER");
-    }
-
-    @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth, DataSource dataSource) throws Exception {
         final ShaPasswordEncoder sha = new ShaPasswordEncoder(256);
         sha.setEncodeHashAsBase64(true);
         PasswordEncoder passwordEncoder = new PasswordEncoder() {
             @Override
             public String encode(CharSequence charSequence) {
-                return sha.encodePassword("Car Wars Garage Secure Password "+charSequence, null);
+                return sha.encodePassword(password.getPrefix()+charSequence, null);
             }
 
             @Override
