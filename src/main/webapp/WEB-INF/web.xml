@@ -12,15 +12,20 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
         <load-on-startup>1</load-on-startup>
     </servlet>
 
-    <servlet-mapping>
-        <servlet-name>carwars</servlet-name>
-        <url-pattern>/api/*</url-pattern>
-    </servlet-mapping>
-    
     <servlet>
         <servlet-name>redirector</servlet-name>
         <servlet-class>org.opentools.carwars.servlet.Redirector</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>content-server</servlet-name>
+        <servlet-class>org.opentools.carwars.servlet.ContentServer</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>carwars</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
     
     <servlet-mapping>
         <servlet-name>redirector</servlet-name>
@@ -29,6 +34,11 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
         <url-pattern>/tags/*</url-pattern>
         <url-pattern>/name/*</url-pattern>
         <url-pattern>/stock</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>content-server</servlet-name>
+        <url-pattern>/content/*</url-pattern>
     </servlet-mapping>
 
     <filter>
