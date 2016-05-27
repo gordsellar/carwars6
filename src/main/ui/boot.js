@@ -14,7 +14,7 @@ var CW = {}, CWD = {};
     "use strict";
 
     CW.preload = {
-        present: function() {return this.design || this.name || this.list || this.tag || this.confirm;}
+        present: function() {return this.design || this.name || this.list || this.tag || this.confirm || this.stock;}
     };
     CW.readCookie = function(name) {
         if(!document.cookie) return null;
@@ -157,6 +157,8 @@ var CW = {}, CWD = {};
                 CW.preload.tag = hash.substr(4);
             } else if(/^search\//.test(hash)) {
                 CW.preload.name = hash.substr(7);
+            } else if(/^stock$/.test(hash)) {
+                CW.preload.stock = true;
             } else if(/^confirm\//.test(hash)) {
                 CW.preload.confirm = hash.substr(8);
                 if(CW.preload.confirm.indexOf('%') > -1) CW.preload.confirm = decodeURIComponent(CW.preload.confirm);

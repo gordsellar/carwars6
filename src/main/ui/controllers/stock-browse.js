@@ -268,6 +268,7 @@ angular.module('carwars').
             delete CW.preload.name;
             $scope.searchByName();
         } else {
+            if(CW.preload.stock) delete CW.preload.stock;
             // If currently on Name Search
             // Case 1: here for the first time
             // Case 2: returning from Zoom

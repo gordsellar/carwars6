@@ -223,7 +223,7 @@ angular.module('carwars').
             },
             recentStockCars: function(success, error) {
                 var cancel = $q.defer();
-                $http.get('/latest', {timeout: cancel.promise}).success(success).error(error);
+                $http.get('/api/latest', {timeout: cancel.promise}).success(success).error(error);
                 return cancel;
             },
             searchStockCars: function(list, offset, vehicle, tags, tech, minCost, maxCost, encumbrance, success, error) {

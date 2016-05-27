@@ -16,6 +16,20 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
         <servlet-name>carwars</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>redirector</servlet-name>
+        <servlet-class>org.opentools.carwars.servlet.Redirector</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>redirector</servlet-name>
+        <url-pattern>/load/*</url-pattern>
+        <url-pattern>/lists/*</url-pattern>
+        <url-pattern>/tags/*</url-pattern>
+        <url-pattern>/name/*</url-pattern>
+        <url-pattern>/stock</url-pattern>
+    </servlet-mapping>
 
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>

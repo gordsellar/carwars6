@@ -12,6 +12,10 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "designs")
+@NamedQueries({
+        @NamedQuery(name = "Design.latestStock", query = "select d from DBCarDesign d where d.stockCar=true " +
+                "and d.reviewed=true and d.hidden=false order by d.stockUpdateDate desc")
+})
 public class DBCarDesign implements DesignHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

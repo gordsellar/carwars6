@@ -642,7 +642,7 @@
                     });
                 } else if (CW.preload.name) {
                     executePreload($scope.searchDesigns);
-                } else if (CW.preload.tag || CW.preload.list) {
+                } else if (CW.preload.tag || CW.preload.list || CW.preload.stock) {
                     executePreload($scope.browseStock);
                 } else if (CW.preload.confirm) {
                     executePreload(function () {
