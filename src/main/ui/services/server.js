@@ -223,22 +223,23 @@ angular.module('carwars').
             },
             recentStockCars: function(success, error) {
                 var cancel = $q.defer();
-                $http.get('/api/latest', {timeout: cancel.promise}).success(success).error(error);
+                $http.get('/api/stock/latest', {timeout: cancel.promise}).success(success).error(error);
                 return cancel;
             },
             searchStockCars: function(list, offset, vehicle, tags, tech, minCost, maxCost, encumbrance, success, error) {
                 var request = {
                     vehicle: vehicle || [],
                     tags: tags || [],
-                    minCost: minCost || [],
-                    maxCost: maxCost || [],
-                    offset: offset
+                    offset: offset,
+                    list: null,
+                    encumbrance: null,
+                    techLevel: null
                 };
                 if(list) request.list = list;
                 if(encumbrance) request.encumbrance = encumbrance === 'Weight' ? 'Alternate' : encumbrance;
                 if(tech) request.techLevel = tech === 'UACFH' ? 'All' : tech;
                 var cancel = $q.defer();
-                $http.post('/search', request, {timeout: cancel.promise}).success(success).error(error);
+                $http.post('/api/stock/search', request, {timeout: cancel.promise}).success(success).error(error);
                 return cancel;
             },
             countPendingStockCars: function(success, error) {

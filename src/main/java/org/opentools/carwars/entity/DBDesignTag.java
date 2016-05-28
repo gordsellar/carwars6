@@ -10,11 +10,11 @@ import java.io.Serializable;
 @Table(name = "design_tags")
 public class DBDesignTag implements Serializable {
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "design_id")
     private DBCarDesign design;
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "email")
     private DBCarWarsUser user;
     @Id

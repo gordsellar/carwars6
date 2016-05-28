@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * A car design as stored in the database
@@ -68,6 +69,11 @@ public class DBCarDesign implements DesignHistory {
     private Collection<DBDesignRating> ratings;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "design")
     private Collection<DBDesignTag> tags;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "design_list_designs",
+            joinColumns = @JoinColumn(name = "design_id"),
+            inverseJoinColumns = @JoinColumn(name = "design_list_id"))
+    private List<DBDesignList> onLists;
 
     public int getId() {
         return id;

@@ -23,6 +23,8 @@ public class DBCarWarsUser {
     private Collection<DBDesignRating> ratings;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Collection<DBDesignTag> tags;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
+    private Collection<DBDesignList> lists;
 
     public String getEmail() {
         return email;
@@ -94,5 +96,13 @@ public class DBCarWarsUser {
 
     public void setTags(Collection<DBDesignTag> tags) {
         this.tags = tags;
+    }
+
+    public Collection<DBDesignList> getLists() {
+        return lists;
+    }
+
+    public void setLists(Collection<DBDesignList> lists) {
+        this.lists = lists;
     }
 }
