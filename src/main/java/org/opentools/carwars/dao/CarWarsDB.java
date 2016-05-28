@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.opentools.carwars.config.AllowedText.limitSize;
+
 /**
  * Database access for the Car Wars DB
  */
@@ -32,13 +34,21 @@ public class CarWarsDB {
         return populateCarData(designs, currentUser);
     }
 
+    public List<Map> getPublicCarsByName(String name, int offset, String currentUser) {
+        TypedQuery<DBCarDesign> query = mgr.createNamedQuery("Design.publicByName", DBCarDesign.class)
+                .setParameter(1, "%"+name+"%").setMaxResults(21);
+        if(offset > 0) query.setFirstResult(offset);
+        List<DBCarDesign> designs = query.getResultList();
+        return populateCarData(designs, currentUser);
+    }
+
     public List<Map> searchStockCars(SearchStockCarRequest request, String currentUser) {
         StringBuilder buf = new StringBuilder();
         // Step 1: build the query
         int i, index = 0;
         buf.append("select d from DBCarDesign d");
         if(request.getList() == null) buf.append(" where d.stockCar=true and d.reviewed=true and d.hidden=false");
-        else buf.append(" join d.onLists l where l.name=?");
+        else buf.append(" join d.onLists l where l.name=?").append(++index);
         if(request.getVehicle() != null && request.getVehicle().size() > 0) {
             buf.append(" and d.vehicle in (");
             for(i=0; i<request.getVehicle().size(); i++) {
@@ -63,15 +73,16 @@ public class CarWarsDB {
         if(request.getOffset() != 0) query.setFirstResult(request.getOffset());
         // Step 2: fill in parameters
         index = 0;
+        if(request.getList() != null) query.setParameter(++index, limitSize(request.getList(), 30));
         if(request.getVehicle() != null && request.getVehicle().size() > 0) {
             for(i=0; i<request.getVehicle().size(); i++) {
                 query.setParameter(++index, request.getVehicle().get(i));
             }
         }
-        if(request.getEncumbrance() != null) query.setParameter(++index, request.getEncumbrance());
+        if(request.getEncumbrance() != null) query.setParameter(++index, limitSize(request.getEncumbrance(), 10));
         if(request.getTags() != null) {
             for (String tag : request.getTags())
-                query.setParameter(++index, tag);
+                query.setParameter(++index, limitSize(tag, 20));
         }
         // Step 3: look up results
         return populateCarData(query.getResultList(), currentUser);

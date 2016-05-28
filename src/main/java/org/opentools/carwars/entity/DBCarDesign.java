@@ -15,7 +15,9 @@ import java.util.List;
 @Table(name = "designs")
 @NamedQueries({
         @NamedQuery(name = "Design.latestStock", query = "select d from DBCarDesign d where d.stockCar=true " +
-                "and d.reviewed=true and d.hidden=false order by d.stockUpdateDate desc")
+                "and d.reviewed=true and d.hidden=false order by d.stockUpdateDate desc"),
+        @NamedQuery(name = "Design.publicByName", query = "select d from DBCarDesign d where d.stockCar=true " +
+                "and d.hidden=false and d.designName like ?1 order by d.cost asc")
 })
 public class DBCarDesign implements DesignHistory {
     @Id

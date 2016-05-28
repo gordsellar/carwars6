@@ -4,14 +4,13 @@ import org.opentools.carwars.dao.CarWarsDB;
 import org.opentools.carwars.json.SearchStockCarRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.opentools.carwars.config.AllowedText.cleanse;
 
 /**
  * Functions for stock cars
@@ -25,6 +24,22 @@ public class StockCarController {
     public Map getLatest(Authentication user) {
         Map result = new HashMap();
         result.put("designs", db.getLatestStockCars(user == null ? null : user.getName()));
+        return result;
+    }
+
+    @RequestMapping(value = "/stock/search/{name}", method = RequestMethod.GET)
+    public Map getPublicByName(@PathVariable String name, @RequestParam(required = false) String offset, Authentication user) {
+        int off = 0;
+        if(offset != null) off = Integer.parseInt(offset);
+        Map result = new HashMap();
+        List<Map> cars = db.getPublicCarsByName(cleanse(name, 30), off, user == null ? null : user.getName());
+        boolean more = false;
+        if(cars.size() > 20) {
+            more = true;
+            cars.remove(cars.size()-1);
+        }
+        result.put("designs", cars);
+        result.put("more", more);
         return result;
     }
 

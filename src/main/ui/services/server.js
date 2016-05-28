@@ -219,7 +219,7 @@ angular.module('carwars').
                 $http.post('/admin/stock/update', data).success(success).error(error);
             },
             searchByName: function(name, offset, success, error) {
-                $http.get('/search/'+name, {params: {offset: offset}}).success(success).error(error);
+                $http.get('/api/stock/search/'+name, {params: {offset: offset}}).success(success).error(error);
             },
             recentStockCars: function(success, error) {
                 var cancel = $q.defer();
