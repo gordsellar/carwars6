@@ -6,14 +6,17 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.apache.pdfbox.util.Matrix;
 import org.opentools.carwars.json.PDFRequest;
 
 import java.awt.Color;
 import java.io.*;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,6 +46,8 @@ public class PDFGenerator {
             float armorHeight = drawBasicInformation();
             drawDescriptions(armorHeight);
             drawDiagram(armorHeight);
+            drawURL();
+            drawDesignWorksheet();
             return saveDocument(saveDir);
         } finally {
             doc.close();
@@ -303,7 +308,43 @@ public class PDFGenerator {
         fitText(90, 420-armorHeight, 310, 92, request.summary, true);
         fitText(410, 420-armorHeight, 150, 92, "Walkaround: "+request.walkaround, true);// TODO: bold "Walkaround:"
 
+        if(!request.legal) {
+            pdf.setFont(font, 48);
+            pdf.saveGraphicsState();
+            pdf.transform(Matrix.getRotateInstance(0.25, 90+310/2, 420+46-armorHeight));
+            PDExtendedGraphicsState state = new PDExtendedGraphicsState();
+            state.setNonStrokingAlphaConstant(0.3f);
+            pdf.setGraphicsStateParameters(state);
+            pdf.beginText();
+            String message = "Illegal Design";
+            pdf.newLineAtOffset(-font.getStringWidth(message)*48f/2000f, -font.getFontDescriptor().getAscent()*48f/2000f);
+            pdf.showText(message);
+            pdf.endText();
+            pdf.restoreGraphicsState();
+        }
+
         closeStream();
+    }
+
+    private void drawURL() throws IOException {
+        newStream();
+        setFont(PDType1Font.HELVETICA_OBLIQUE, 8);
+        String message = "http://carwars.opentools.org/ (version "+version+").  PDF'd at "+
+                new SimpleDateFormat("MM/dd/yyyy hh:mm aa").format(new Date())+".";
+        if(request.statistics.stock_id != null) message += "  Stock ID "+request.statistics.stock_id;
+        if(request.statistics.save_id != null) message += "  Design ID "+request.statistics.save_id;
+        pdf.setStrokingColor(Color.BLACK);
+        pdf.saveGraphicsState();
+        pdf.transform(Matrix.getRotateInstance(Math.PI/2, 72, 36));
+        pdf.beginText();
+        pdf.newLineAtOffset(0, -2-font.getFontDescriptor().getAscent()*8f/1000f);
+        pdf.showText(message);
+        pdf.endText();
+        pdf.restoreGraphicsState();
+        closeStream();
+    }
+
+    private void drawDesignWorksheet() throws IOException {
     }
 
     private void drawDiagram(float armorHeight) throws IOException {
@@ -583,8 +624,6 @@ public class PDFGenerator {
                 String text = matcher.group(1);
                 x = (int)Float.parseFloat(matcher.group(2));
                 y = (int)Float.parseFloat(matcher.group(3));
-                System.err.println(line);
-                System.err.println("    Text "+text+" at "+x+","+y);
                 pdf.setNonStrokingColor(Color.BLACK);
                 pdf.beginText();
                 pdf.newLineAtOffset(x, transformed ? y : ytop-y);

@@ -62,6 +62,7 @@ public class PDFRequest {
         public int passengers;
         public String range;
         public Long save_id;
+        public Long stock_id;
         public BigDecimal sidecarCargoSpace;
         public Integer sidecarCargoWeight;
     }
