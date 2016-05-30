@@ -6,6 +6,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.util.Matrix;
 import org.opentools.carwars.json.PDFRequest;
 
 import java.awt.Color;
@@ -14,6 +15,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.GZIPOutputStream;
 
 /**
@@ -29,6 +32,7 @@ public class PDFGenerator {
     private PDPageContentStream pdf;
     private PDFont font;
     private float fontSize;
+    private int version;
 
     public String generatePDF(PDFRequest request, File fontDir, File saveDir) throws IOException {
         this.request = request;
@@ -36,8 +40,9 @@ public class PDFGenerator {
             startDocument();
             loadFonts(fontDir);
             drawBackground();
-            drawBasicInformation();
-
+            float armorHeight = drawBasicInformation();
+            drawDescriptions(armorHeight);
+            drawDiagram(armorHeight);
             return saveDocument(saveDir);
         } finally {
             doc.close();
@@ -98,7 +103,7 @@ public class PDFGenerator {
         closeStream();
     }
 
-    private void drawBasicInformation() throws IOException {
+    private float drawBasicInformation() throws IOException {
         newStream();
 
         // Car Name
@@ -286,11 +291,347 @@ public class PDFGenerator {
             text += armor.location+" "+armor.value+":";
         }
         textAlignRight(415, 520-armorHeight, armorWidth, armorHeight, text, request.armor.size() > 6 ? 0 : 4);
+        closeStream();
 
-        setFont(font, 10);
+        return armorHeight;
+    }
+
+    private void drawDescriptions(float armorHeight) throws IOException {
+        newStream();
+
+        setFont(PDType1Font.HELVETICA, 10);
         fitText(90, 420-armorHeight, 310, 92, request.summary, true);
         fitText(410, 420-armorHeight, 150, 92, "Walkaround: "+request.walkaround, true);// TODO: bold "Walkaround:"
 
+        closeStream();
+    }
+
+    private void drawDiagram(float armorHeight) throws IOException {
+        newStream();
+        float heightDiff = armorHeight-92;
+        float ma = 1, mb = 0, mc = 0, md = 1, me = 90, mf = 0, x1, y1, x2, y2, ytop = 0, vtop = 0, factor;
+        float x=0, y=0, w, h, radius, cx, cy, startAngle, endAngle;
+        int carWidth, carHeight, carOffset, startRounded, endRounded;
+        boolean fill = false, saved = false, transformed = false, antiClockwise;
+        int fillColor = 0xFFFFFF;
+        String lines[] = request.draw.split("\\n"), parts[];
+        pdf.saveGraphicsState();
+        setFont(PDType1Font.HELVETICA, 10);
+        for (String line : lines) {
+            line = line.trim();
+            if(fill && !line.equals("stroke")) {
+                pdf.setNonStrokingColor(new Color(fillColor));
+                pdf.fill();
+            }
+            if(line.startsWith("totalSize")) {
+                // Max Width: 450  Max Height: 290
+                parts = line.split(" ");
+                carHeight = (int)Float.parseFloat(parts[1]);
+                carWidth = (int)Float.parseFloat(parts[2]);
+                carOffset = (int)Float.parseFloat(parts[3]);
+                factor = 1f;
+                if(carHeight > 290-heightDiff) factor = (290f-heightDiff)/carHeight;
+                if(carWidth > 450 && 450f/carWidth < factor) factor = 450f/carWidth;
+                ma = factor;
+                mb = 0;
+                mc = 0;
+                md = factor;
+                me = (int)(90-carOffset*factor)+(450-(carWidth-carOffset)*factor)/2;
+                mf = 0;
+                ytop = carHeight+36/factor; // half-inch margin
+                pdf.transform(new Matrix(ma, mb, mc, md, me, mf));
+            } else if(line.startsWith("version")) {
+                version = Integer.parseInt(line.split(" ")[1]);
+            } else if(line.startsWith("moveTo")) {
+                parts = line.split(" ");
+                x = (int)Float.parseFloat(parts[1]);
+                y = transformed ? (int)Float.parseFloat(parts[2]): ytop-(int)Float.parseFloat(parts[2]);
+                pdf.moveTo(x, y);
+            } else if(line.startsWith("lineTo")) {
+                parts = line.split(" ");
+                x = (int)Float.parseFloat(parts[1]);
+                y = transformed ? (int)Float.parseFloat(parts[2]): ytop-(int)Float.parseFloat(parts[2]);
+                pdf.lineTo(x, y);
+            } else if(line.startsWith("arc ")) {
+                parts = line.split(" ");
+                cx = (int)Float.parseFloat(parts[1]);
+                cy = transformed ? (int)Float.parseFloat(parts[2]) : ytop-(int)Float.parseFloat(parts[2]);
+                radius = (int)Float.parseFloat(parts[3]);
+                startAngle = Float.parseFloat(parts[4]);
+                endAngle = Float.parseFloat(parts[5]);
+                antiClockwise = parts[6].equals("true");
+                startRounded = (int)(startAngle*100);
+                endRounded = (int)(endAngle*100);
+                if (startAngle == 0 && endRounded == 628) {
+                    // draw a full circle
+                    if (antiClockwise) {
+                        drawTopRight(cx, cy, radius, false);
+                        drawTopLeft(cx, cy, radius, false);
+                        drawBottomLeft(cx, cy, radius, false);
+                        drawBottomRight(cx, cy, radius, false);
+                    } else {
+                        drawBottomRight(cx, cy, radius, true);
+                        drawBottomLeft(cx, cy, radius, true);
+                        drawTopLeft(cx, cy, radius, true);
+                        drawTopRight(cx, cy, radius, true);
+                    }
+                    x = cx + radius;
+                    y = cy;
+                } else if (startAngle == 0 && endRounded == 314) {
+                    if (antiClockwise) {
+                        drawTopRight(cx, cy, radius, false);
+                        drawTopLeft(cx, cy, radius, false);
+                    } else {
+                        drawBottomRight(cx, cy, radius, true);
+                        drawBottomLeft(cx, cy, radius, true);
+                    }
+                    x = cx - radius;
+                    y = cy;
+                } else if (startAngle == 0 && endRounded == 471) {
+                    if (antiClockwise) {
+                        drawTopRight(cx, cy, radius, false);
+                    } else {
+                        drawBottomRight(cx, cy, radius, true);
+                        drawBottomLeft(cx, cy, radius, true);
+                        drawTopLeft(cx, cy, radius, true);
+                    }
+                    x = cx;
+                    y = cy - radius;
+                } else if (startRounded == 314 && endRounded == 628) {
+                    if (antiClockwise) {
+                        drawBottomLeft(cx, cy, radius, false);
+                        drawBottomRight(cx, cy, radius, false);
+                    } else {
+                        drawTopLeft(cx, cy, radius, true);
+                        drawTopRight(cx, cy, radius, true);
+                    }
+                    x = cx + radius;
+                    y = cy;
+                } else if (startRounded == 157 && endRounded == 471) {
+                    if (antiClockwise) {
+                        drawBottomRight(cx, cy, radius, false);
+                        drawTopRight(cx, cy, radius, false);
+                    } else {
+                        drawBottomLeft(cx, cy, radius, true);
+                        drawTopLeft(cx, cy, radius, true);
+                    }
+                } else if (startRounded == 157 && endRounded == 0) {
+                    if (antiClockwise) {
+                        drawBottomRight(cx, cy, radius, false);
+                    } else {
+                        drawBottomLeft(cx, cy, radius, true);
+                        drawTopLeft(cx, cy, radius, true);
+                        drawTopRight(cx, cy, radius, true);
+                    }
+                    x = cx + radius;
+                    y = cy;
+                } else if (startRounded == 471 && endRounded == 157) {
+                    if (antiClockwise) {
+                        drawTopLeft(cx, cy, radius, false);
+                        drawBottomLeft(cx, cy, radius, false);
+                    } else {
+                        drawTopRight(cx, cy, radius, true);
+                        drawBottomRight(cx, cy, radius, true);
+                    }
+                } else if (startRounded == 471 && endRounded == 314) {
+                    if (antiClockwise) {
+                        drawTopLeft(cx, cy, radius, false);
+                    } else {
+                        drawTopRight(cx, cy, radius, true);
+                        drawBottomRight(cx, cy, radius, true);
+                        drawBottomLeft(cx, cy, radius, true);
+                    }
+                } else if (startRounded == 314 && endRounded == 157) {
+                    if (antiClockwise) {
+                        drawBottomLeft(cx, cy, radius, false);
+                    } else {
+                        drawTopLeft(cx, cy, radius, true);
+                        drawTopRight(cx, cy, radius, true);
+                        drawBottomRight(cx, cy, radius, true);
+                    }
+                } else {
+                    System.err.println("Not drawing start rounded "+startRounded+" End rounded "+endRounded);
+                    // Draw a partial arc
+                }
+            } else if(line.startsWith("arcTo")) {
+                parts = line.split(" ");
+                x1 = (int)Float.parseFloat(parts[1]);
+                y1 = ytop-(int)Float.parseFloat(parts[2]);
+                x2 = (int)Float.parseFloat(parts[3]);
+                y2 = ytop-(int)Float.parseFloat(parts[4]);
+                radius = (int)Float.parseFloat(parts[5]);
+                if(y == y1 && x1 == x2) {// first line horizontal
+                    if(x1 > x) {// first line horizontal right
+                        cx = x1-radius;
+                        pdf.lineTo(cx, y);
+                        if(y1 > y2) {// second line vertical down
+                            cy = y1-radius;
+                            drawTopRight(cx, cy, radius, true);
+                        } else if(y2 > y1) { // second line vertical up
+                            cy = y1+radius;
+                            drawBottomRight(cx, cy, radius, false);
+                        }
+                    } else if(x > x1) { // first line horizontal left
+                        cx = x1+radius;
+                        pdf.lineTo(cx, y);
+                        if(y2 > y1) { // second line vertical up
+                            cy = y1 + radius;
+                            drawBottomLeft(cx, cy, radius, true);
+                        } else if(y1 > y2) {// second line vertical down
+                            cy = y1 - radius;
+                            drawTopLeft(cx, cy, radius, false);
+                        }
+                    }
+                } else if(x == x1 && y1 == y2) { // first line vertical
+                    if(y1 > y) { // first line vertical up
+                        cy = y1 - radius;
+                        pdf.lineTo(x, cy);
+                        if(x2 > x1) { // second line horizontal right
+                            cx = x1 + radius;
+                            drawTopLeft(cx, cy, radius, true);
+                        } else if(x1 > x2) { // second line horizontal left
+                            cx = x1 - radius;
+                            drawTopRight(cx, cy, radius, false);
+                        }
+                    } else if(y > y1) { // first line vertical down
+                        cy = y1 + radius;
+                        pdf.lineTo(x, cy);
+                        if(x2 > x1) { // second line horizontal right
+                            cx = x1 + radius;
+                            drawBottomLeft(cx, cy, radius, false);
+                        } else if(x1 > x2) { // second line horizontal left
+                            cx = x1-radius;
+                            drawBottomRight(cx, cy, radius, true);
+                        }
+                    }
+                } else {
+                    pdf.lineTo(x1, y1);
+                    pdf.lineTo(x2, y2);
+                }
+                x = x2;
+                y = y2;
+            } else if(line.startsWith("quadraticCurveTo")) {
+                parts = line.split(" ");
+                x = (int)Float.parseFloat(parts[3]);
+                y = transformed ? (int)Float.parseFloat(parts[4]) : ytop-(int)Float.parseFloat(parts[4]);
+                x1 = (int)Float.parseFloat(parts[1]);
+                y1 = transformed ? (int)Float.parseFloat(parts[2]) : ytop-(int)Float.parseFloat(parts[2]);
+                pdf.curveTo(x1, y1, x, y, x, y);
+            } else if(line.startsWith("bezierCurveTo")) {
+                parts = line.split(" ");
+                x = (int)Float.parseFloat(parts[5]);
+                y = transformed ? (int)Float.parseFloat(parts[6]) : ytop-(int)Float.parseFloat(parts[6]);
+                x1 = (int)Float.parseFloat(parts[1]);
+                y1 = transformed ? (int)Float.parseFloat(parts[2]) : ytop-(int)Float.parseFloat(parts[2]);
+                x2 = (int)Float.parseFloat(parts[3]);
+                y2 = transformed ? (int)Float.parseFloat(parts[4]) : ytop-(int)Float.parseFloat(parts[4]);
+                pdf.curveTo(x1, y1, x2, y2, x, y);
+            } else if(line.startsWith("rect ")) {
+                parts = line.split(" ");
+                x = (int)Float.parseFloat(parts[1]);
+                y = (int)Float.parseFloat(parts[2]);
+                w = (int)Float.parseFloat(parts[3]);
+                h = (int)Float.parseFloat(parts[4]);
+                pdf.moveTo(x, ytop-y);
+                pdf.lineTo(x+w, ytop-y);
+                pdf.lineTo(x+w, ytop-(y+h));
+                pdf.lineTo(x, ytop-(y+h));
+                pdf.lineTo(x, ytop-y);
+            } else if(line.startsWith("strokeRect")) {
+                parts = line.split(" ");
+                x = (int)Float.parseFloat(parts[1]);
+                y = transformed ? (int)Float.parseFloat(parts[2]) : ytop-(int)Float.parseFloat(parts[2]);
+                w = (int)Float.parseFloat(parts[3]);
+                h = (int)Float.parseFloat(parts[4]);
+                pdf.setStrokingColor(Color.BLACK);
+                pdf.addRect(x, y-h, w, h);
+                pdf.stroke();
+            } else if(line.startsWith("fillRect")) {
+                parts = line.split(" ");
+                x = (int)Float.parseFloat(parts[1]);
+                y = transformed ? (int)Float.parseFloat(parts[2]) : ytop-(int)Float.parseFloat(parts[2]);
+                w = (int)Float.parseFloat(parts[3]);
+                h = (int)Float.parseFloat(parts[4]);
+                if(parts.length > 5)
+                    fillColor = Integer.parseInt(parts[5].substring(1), 16);
+                else
+                    fillColor = 0xFFFFFF;
+                pdf.setNonStrokingColor(new Color(fillColor));
+                pdf.addRect(x, y-h, w, h);
+                pdf.fill();
+            } else if(line.startsWith("fill ") || line.equals("fill")) {
+                fill = true;
+                parts = line.split(" ");
+                if(parts.length > 1)
+                    fillColor = Integer.parseInt(parts[1].substring(1), 16);
+                else
+                    fillColor=0xFFFFFF;
+            } else if(line.equals("stroke")) {
+                pdf.setStrokingColor(Color.BLACK);
+                if(fill) {
+                    pdf.setNonStrokingColor(new Color(fillColor));
+                    pdf.fillAndStroke();
+                    fill = false;
+                } else pdf.stroke();
+            } else if(line.startsWith("beginPath")) {
+                // This space intentionally left blank
+            } else if(line.startsWith("fontSize")) {
+                pdf.setFont(font, Integer.parseInt(line.split(" ")[1]));
+            } else if(line.startsWith("fillText")) {
+                Matcher matcher = Pattern.compile("'(.*)' (-?\\d*\\.?\\d*) (-?\\d*\\.?\\d*)").matcher(line);
+                matcher.find();
+                String text = matcher.group(1);
+                x = (int)Float.parseFloat(matcher.group(2));
+                y = (int)Float.parseFloat(matcher.group(3));
+                System.err.println(line);
+                System.err.println("    Text "+text+" at "+x+","+y);
+                pdf.setNonStrokingColor(Color.BLACK);
+                pdf.beginText();
+                pdf.newLineAtOffset(x, transformed ? y : ytop-y);
+                pdf.showText(text);
+                pdf.endText();
+            } else if(line.startsWith("closePath")) {
+                pdf.closePath();
+            } else if(line.startsWith("transform")) {
+                if(!saved) {
+                    pdf.saveGraphicsState();
+                    saved = true;
+                }
+                parts = line.split(" ");
+                ma = Float.parseFloat(parts[1]);
+                mb = Float.parseFloat(parts[2]);
+                mc = Float.parseFloat(parts[3]);
+                md = Float.parseFloat(parts[4]);
+                me = Float.parseFloat(parts[5]);
+                mf = Float.parseFloat(parts[6]);
+                pdf.transform(new Matrix(ma, mb, mc, md, me, vtop-mf));
+                transformed = true;
+            } else if(line.startsWith("setTransform")) {
+                if(saved) { // Always start setTransform from the base state
+                    pdf.restoreGraphicsState();
+                    saved = false;
+                    transformed = false;
+                }
+                parts = line.split(" ");
+                ma = Float.parseFloat(parts[1]);
+                mb = Float.parseFloat(parts[2]);
+                mc = Float.parseFloat(parts[3]);
+                md = Float.parseFloat(parts[4]);
+                me = Float.parseFloat(parts[5]);
+                mf = Float.parseFloat(parts[6]);
+                if(ma != 1 || mb != 0 || mc != 0 || md != 1 || me != 0 || mf != 0) {
+                    pdf.saveGraphicsState();
+                    saved = true;
+                    if(mb == -1 && mc == 1) pdf.transform(new Matrix(ma, -mb, -mc, md, ytop+me, ytop-mf));
+                    else if(mb == 1 && mc == -1) pdf.transform(new Matrix(ma, -mb, -mc, md, me-ytop, ytop-mf));
+                    else pdf.transform(new Matrix(ma, mb, mc, md, me, mf));
+                }
+            } else if(line.startsWith("createLinearGradient")) {
+            } else System.err.println("UNRECOGNIZED DRAW LINE: "+line);
+            if(!line.equals("fill") && !line.startsWith("fill ")) fill = false;
+        }
+        if(saved) pdf.restoreGraphicsState();
+        pdf.restoreGraphicsState();
         closeStream();
     }
 
