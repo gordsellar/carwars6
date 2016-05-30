@@ -8,9 +8,12 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.opentools.carwars.json.PDFRequest;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.zip.GZIPOutputStream;
 
 /**
@@ -231,9 +234,66 @@ public class PDFGenerator {
         textAlignLeft(415, 550, 70, 80, ltext);
         textAlignRight(415, 550, 70, 80, text);
 
+        // Weapons box
+        int armorWidth = 65, armorHeight = 92;
+        if(request.armor.size() > 9) {
+            armorWidth = request.armor.get(0).value.contains("/") ? 90 : 85;
+            armorHeight = 12*request.armor.size();
+        }
+        if(request.weapons.size()*11+15 > armorHeight) armorHeight = request.weapons.size()*11+15;
+        drawRoundedRectangle(90, 520-armorHeight, 310, armorHeight+20, 3);
+        pdf.stroke();
+        setFont(font, 14);
+        textAlignCenter(90, 518, 310, 20, "WEAPONS");
+        pdf.moveTo(105, 535);
+        pdf.lineTo(204, 535);
+        pdf.moveTo(95, 532);
+        pdf.lineTo(204, 532);
+        pdf.moveTo(105, 529);
+        pdf.lineTo(204, 529);
+        pdf.moveTo(385, 535);
+        pdf.lineTo(286, 535);
+        pdf.moveTo(395, 532);
+        pdf.lineTo(286, 532);
+        pdf.moveTo(385, 529);
+        pdf.lineTo(286, 529);
+        pdf.stroke();
+        setFont(font, 8);
+        // TODO: Weapons table
+
+        // Armor Box
+        drawRoundedRectangle(410, 520-armorHeight, 150, armorHeight+20, 3);
+        pdf.stroke();
+        setFont(font, 14);
+        textAlignCenter(410, 518, 150, 20, "ARMOR");
+        pdf.moveTo(425, 535);
+        pdf.lineTo(454, 535);
+        pdf.moveTo(415, 532);
+        pdf.lineTo(454, 532);
+        pdf.moveTo(425, 529);
+        pdf.lineTo(454, 529);
+        pdf.moveTo(545, 535);
+        pdf.lineTo(516, 535);
+        pdf.moveTo(555, 532);
+        pdf.lineTo(516, 532);
+        pdf.moveTo(545, 529);
+        pdf.lineTo(516, 529);
+        pdf.stroke();
+        setFont(font, 10);
+        text = "";
+        for (PDFRequest.Armor armor : request.armor) {
+            if(text.length() > 0) text += "\n";
+            text += armor.location+" "+armor.value+":";
+        }
+        textAlignRight(415, 520-armorHeight, armorWidth, armorHeight, text, request.armor.size() > 6 ? 0 : 4);
+
+        setFont(font, 10);
+        fitText(90, 420-armorHeight, 310, 92, request.summary, true);
+        fitText(410, 420-armorHeight, 150, 92, "Walkaround: "+request.walkaround, true);// TODO: bold "Walkaround:"
 
         closeStream();
     }
+
 
     private String saveDocument(File dir) throws IOException {
 //        int number = (int)(Math.random()*Integer.MAX_VALUE);
@@ -269,6 +329,9 @@ public class PDFGenerator {
     }
 
     private void textAlignRight(float x, float y, float w, float h, String text) throws IOException {
+        textAlignRight(x, y, w, h, text, 0);
+    }
+    private void textAlignRight(float x, float y, float w, float h, String text, float extraSpace) throws IOException {
         float tw, top;
         String[] lines = text.split("\\n");
 
@@ -285,7 +348,7 @@ public class PDFGenerator {
                 pdf.showText(line);
                 pdf.restoreGraphicsState();
             }
-            top -= fontSize*LEADING;
+            top -= fontSize*LEADING+extraSpace;
         }
         pdf.endText();
         pdf.restoreGraphicsState();
@@ -315,10 +378,46 @@ public class PDFGenerator {
     }
 
     private void fitText(float x, float y, float w, float h, String text, boolean wrap) throws IOException {
+        float size = fontSize;
         if(wrap) {
-            // TODO
+            int i;
+            String[] paras = text.split("\\n");
+            List<String> words = new ArrayList<>();
+            for(i=0; i<paras.length; i++) {
+                if(words.size() > 0) words.add("\n");
+                words.addAll(Arrays.asList(paras[i].split("\\s+")));
+            }
+            String line, test;
+            List<String> lines = new ArrayList<>();
+            float yTot;
+            while(true) {
+                yTot = size*LEADING;
+                lines.clear();
+                line = "";
+                for(i=0; i<words.size(); i++) {
+                    test = line.length() > 0 ? line + " " + words.get(i) : words.get(i);
+                    if(words.get(i).equals("\n") || font.getStringWidth(test)*size/1000f > w) {
+                        lines.add(line);
+                        line = "";
+                        yTot += size * LEADING;
+                        if(yTot > h) break;
+                        if(!words.get(i).equals("\n")) i -= 1;
+                    } else line = test;
+                }
+                if(line.length() > 0) lines.add(line);
+                if(yTot < h || size <= 2) break;
+                size -= 1;
+            }
+            float oldSize = fontSize;
+            setFont(font, size);
+            test = "";
+            for(i=0; i<lines.size(); i++) {
+                if(i > 0) test += "\n";
+                test += lines.get(i);
+            }
+            textAlignLeft(x, y, w, h, test);
+            setFont(font, oldSize);
         } else {
-            float size = fontSize;
             while (font.getStringWidth(text)*size/1000f > w || fontSize > h) size -= 1;
 //            pdf.saveGraphicsState();
 //            pdf.setStrokingColor(Color.BLACK);
