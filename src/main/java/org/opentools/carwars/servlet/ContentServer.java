@@ -30,6 +30,9 @@ public class ContentServer extends HttpServlet {
         if(filePath.endsWith(".pdf")) {
             filePath += ".gz";
             gzip = true;
+        } else if(!filePath.endsWith(".png")) {
+            resp.sendError(resp.SC_FORBIDDEN);
+            return;
         }
         File source = new File(dataDir, filePath);
         if(!source.exists() || !source.canRead()) {

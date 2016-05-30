@@ -200,7 +200,7 @@ angular.module('carwars').
                     weapons: car.weaponValues(),
                     legal: car.legal
                 };
-                $http.post('/pdf', data).success(success).error(error);
+                $http.post('/api/pdf', data).success(success).error(error);
             },
             updateStockCar: function(car, car2d, imageData, id, updateText, success, error) {
                 var data = {
