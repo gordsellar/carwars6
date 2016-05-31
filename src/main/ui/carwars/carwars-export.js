@@ -13,8 +13,6 @@
 (function() {
     "use strict";
 
-    CW.versionOfExport = "$Revision: 1179 $";
-
     CW.exportDesign = function (car) {
         var context = {type: "pdf"};
         var data = [];
@@ -100,7 +98,7 @@
 
     CW.exportStatistics = function (car, designId) {
         var out = {
-            version: CW.latestRevision(),
+            version: CW.latestRevision,
             techLevel: car.techLevel,
             name: car.designName,
             body: car.body.name.replace("Standard", "Std.").replace("Sleeper", "Slp."),

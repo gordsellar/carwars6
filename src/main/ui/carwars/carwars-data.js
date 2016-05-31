@@ -12,8 +12,6 @@
 (function() {
     "use strict";
 
-    CW.versionOfData = "$Revision: 1172 $";
-
     CW.create = function (o) {
         var result = {};
         for (var i in o) {

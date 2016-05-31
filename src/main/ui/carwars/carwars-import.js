@@ -12,8 +12,6 @@
 (function() {
     "use strict";
 
-    CW.versionOfImport = "$Revision: 1161 $";
-
     CW.copyObject = function (a, b, ignore) {
         var i;
         for (i in b) {

@@ -13,8 +13,6 @@
 (function() {
     "use strict";
 
-    CW.versionOfValidate = "$Revision: 1180 $";
-
     CW.validateClassic = function(car, errors) {
         var error = function(item) {errors.push(item+(/s$/.test(item) ? " are" : " is")+" not available with Classic technology");};
         if((car.type === 'Car' && car.body.racingFrame) || (car.type !== 'Car' && car.type !== 'Cycle' && car.type !== 'Trike'))

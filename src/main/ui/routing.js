@@ -12,8 +12,6 @@
 (function() {
     "use strict";
 
-    CW.versionOfRouting = "$Revision: 1168 $";
-
     angular.module('carwars')
         .config(function ($routeProvider) {
             $routeProvider

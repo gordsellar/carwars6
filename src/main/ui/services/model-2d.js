@@ -2,8 +2,6 @@
 
 (function() {
     "use strict";
-    CW.versionOf2D = "$Revision: 1172 $";
-
     angular.module('carwars').
         factory('model2d', function(vehicle, $rootScope) {
             return {

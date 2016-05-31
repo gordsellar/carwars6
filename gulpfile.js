@@ -22,7 +22,7 @@
             .pipe(gulp.dest('target/ui/content/'));
     });
     gulp.task("carwars", function () {
-        return gulp.src(['src/main/ui/carwars/*.js',qaStatus])
+        return gulp.src(['src/main/ui/carwars/*.js','src/main/ui/version.js',qaStatus])
             .pipe(jshint('.jshintrc'))
             .pipe(jshint.reporter('default'))
             .pipe(concat('carwars.js'))
@@ -62,7 +62,7 @@
         ;
     });
     gulp.task("boot", function () {
-        return gulp.src('src/main/ui/*.js')
+        return gulp.src(['src/main/ui/boot.js','src/main/ui/routing.js'])
             .pipe(jshint('.jshintrc'))
             .pipe(jshint.reporter('default'))
             .pipe(gulp.dest('target/ui/js/'))

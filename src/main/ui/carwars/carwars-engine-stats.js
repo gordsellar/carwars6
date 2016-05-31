@@ -13,8 +13,6 @@
 (function() {
     "use strict";
 
-    CW.versionOfEngines = "$Revision: 1172 $";
-
     CW.findEngines = function (vehicleType, maxWeight, wheels, streamlined, acceleration, topSpeed, gas, electric, range, techLevel, noShortAllowed, maxEngineSpace, maxEngineWeight) {
         var i, j, entry, engine, engineAccel, engineTopSpeed, engineRange, usedMaxWeight, baseAccel;
         var working, result, maxResults = 2, weightIndex, found;

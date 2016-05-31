@@ -12,8 +12,6 @@
 (function() {
     "use strict";
 
-    CW.versionOfDraw = "$Revision: 1142 $";
-
     if (!CWD.globalTransform) CWD.globalTransform = [1, 0, 0, 1, 0, 0];
     CWD.createShape = function (text, link) {
         var shape = {

@@ -12,8 +12,6 @@
 (function() {
     "use strict";
 
-    CW.versionOfModel = "$Revision: 1190 $";
-
     CW.createVehicle = function () {
         var vehicle = {};
 
@@ -1593,7 +1591,7 @@
             if (this.designer_name) delete this.designer_name;
             if (this.tags) delete this.tags;
             // Revision that saved the design
-            this.garageVersion = CW.latestRevision();
+            this.garageVersion = CW.latestRevision;
         };
 
         vehicle.spaceForEngine = function () {
@@ -5995,18 +5993,6 @@
             || location === 'BackLeft' || location === 'BackRight'
             || location === 'CarrierFrontLeft' || location === 'CarrierFrontRight'
             || location === 'CarrierBackLeft' || location === 'CarrierBackRight';
-    };
-
-    CW.latestRevision = function () {
-        var rev = 0, temp, i;
-        var all = [CW.versionOfData, CW.versionOfDraw, CW.versionOfEngines, CW.versionOfExport, CW.versionOfImport,
-            CW.versionOfModel, CW.versionOfValidate, CW.versionOfRouting, CW.versionOf2D, CW.versionOf3D];
-        for (i = 0; i < all.length; i++) {
-            if (!all[i]) continue;
-            temp = parseInt(/[0-9]+/.exec(all[i]));
-            if (temp > rev) rev = temp;
-        }
-        return rev;
     };
 
     CW.sortItems = function (items) {
