@@ -355,17 +355,17 @@
             var h = 100;
             var rFactor = ctx.type === 'pdf' ? -1 : 1;
             if (!ctx.cwLineTo) {
-                ctx.cwMoveTo = function (x, y) {
-                    ctx.moveTo(x, rFactor * y);
+                ctx.cwMoveTo = function (rf, x, y) {
+                    ctx.moveTo(x, rf * y);
                 };
-                ctx.cwLineTo = function (x, y) {
-                    ctx.lineTo(x, rFactor * y);
+                ctx.cwLineTo = function (rf, x, y) {
+                    ctx.lineTo(x, rf * y);
                 };
-                ctx.cwQuadraticCurveTo = function (x1, y1, x2, y2) {
-                    ctx.quadraticCurveTo(x1, rFactor * y1, x2, rFactor * y2);
+                ctx.cwQuadraticCurveTo = function (rf, x1, y1, x2, y2) {
+                    ctx.quadraticCurveTo(x1, rf * y1, x2, rf * y2);
                 };
-                ctx.cwArc = function (x, y, r, a1, a2, dir) {
-                    ctx.arc(x, rFactor * y, r, a1, a2, dir);
+                ctx.cwArc = function (rf, x, y, r, a1, a2, dir) {
+                    ctx.arc(x, rf * y, r, a1, a2, dir);
                 };
             }
 
@@ -375,57 +375,57 @@
             ctx.beginPath();
             ctx.fillStyle = CWD.backgroundColor;
             ctx.strokeStyle = borderColor;
-            ctx.cwMoveTo(x + w / 2, y); // Middle top of head
-            ctx.cwQuadraticCurveTo(x + w, y, x + w, y + 20); // right shoulder
-            ctx.cwLineTo(x + w, y + h / 2);        // outside of arm
-            ctx.cwLineTo(x + w - 10, y + h / 2);     // horiz wrist
-            ctx.cwLineTo(x + w - 10, y + h / 2 - 20);  // Up to armpit
-            ctx.cwLineTo(x + w - 10, y + h - 10);    // Down to ankle
-            ctx.cwLineTo(x + w / 2, y + h - 10);     // Across right ankle to middle
-            ctx.cwLineTo(x + w / 2, y + h - 20);     // Up pants leg
-            ctx.cwLineTo(x + w / 2, y + h - 10);     // Back down pants leg
-            ctx.cwLineTo(x + 10, y + h - 10);            // Across to left ankle
-            ctx.cwLineTo(x + 10, y + h / 2 - 20);          // Up to armpit
-            ctx.cwLineTo(x + 10, y + h / 2);             // Down to wrist
-            ctx.cwLineTo(x, y + h / 2);                // Across left wrist
-            ctx.cwLineTo(x, y + 20);                       // outside of left arm
-            ctx.cwQuadraticCurveTo(x, y, x + w / 2, y);  // Back to top of head
+            ctx.cwMoveTo(rFactor, x + w / 2, y); // Middle top of head
+            ctx.cwQuadraticCurveTo(rFactor, x + w, y, x + w, y + 20); // right shoulder
+            ctx.cwLineTo(rFactor, x + w, y + h / 2);        // outside of arm
+            ctx.cwLineTo(rFactor, x + w - 10, y + h / 2);     // horiz wrist
+            ctx.cwLineTo(rFactor, x + w - 10, y + h / 2 - 20);  // Up to armpit
+            ctx.cwLineTo(rFactor, x + w - 10, y + h - 10);    // Down to ankle
+            ctx.cwLineTo(rFactor, x + w / 2, y + h - 10);     // Across right ankle to middle
+            ctx.cwLineTo(rFactor, x + w / 2, y + h - 20);     // Up pants leg
+            ctx.cwLineTo(rFactor, x + w / 2, y + h - 10);     // Back down pants leg
+            ctx.cwLineTo(rFactor, x + 10, y + h - 10);            // Across to left ankle
+            ctx.cwLineTo(rFactor, x + 10, y + h / 2 - 20);          // Up to armpit
+            ctx.cwLineTo(rFactor, x + 10, y + h / 2);             // Down to wrist
+            ctx.cwLineTo(rFactor, x, y + h / 2);                // Across left wrist
+            ctx.cwLineTo(rFactor, x, y + 20);                       // outside of left arm
+            ctx.cwQuadraticCurveTo(rFactor, x, y, x + w / 2, y);  // Back to top of head
             ctx.closePath();
             // Eyes
-            ctx.cwMoveTo(x + w / 2 - 10, y + 8);
-            ctx.cwArc(x + w / 2 - 15, y + 8, 5, 0, Math.PI * 2, false); // set to true to show background through
+            ctx.cwMoveTo(rFactor, x + w / 2 - 10, y + 8);
+            ctx.cwArc(rFactor, x + w / 2 - 15, y + 8, 5, 0, Math.PI * 2, false); // set to true to show background through
             ctx.closePath();
-            ctx.cwMoveTo(x + w / 2 + 20, y + 8);
-            ctx.cwArc(x + w / 2 + 15, y + 8, 5, 0, Math.PI * 2, false);
+            ctx.cwMoveTo(rFactor, x + w / 2 + 20, y + 8);
+            ctx.cwArc(rFactor, x + w / 2 + 15, y + 8, 5, 0, Math.PI * 2, false);
             ctx.closePath();
 
 
             // Shoes
-            ctx.cwMoveTo(x + w / 2 + 10, y + h - 10);
-            ctx.cwLineTo(x + w / 2 + 10, y + h);
-            ctx.cwLineTo(x + w, y + h);
-            ctx.cwQuadraticCurveTo(x + w, y + h - 10, x + w / 2 + 20, y + h - 10);
+            ctx.cwMoveTo(rFactor, x + w / 2 + 10, y + h - 10);
+            ctx.cwLineTo(rFactor, x + w / 2 + 10, y + h);
+            ctx.cwLineTo(rFactor, x + w, y + h);
+            ctx.cwQuadraticCurveTo(rFactor, x + w, y + h - 10, x + w / 2 + 20, y + h - 10);
             ctx.closePath();
-            ctx.cwMoveTo(x + w / 2 - 10, y + h - 10);
-            ctx.cwLineTo(x + w / 2 - 10, y + h);
-            ctx.cwLineTo(x, y + h);
-            ctx.cwQuadraticCurveTo(x, y + h - 10, x + w / 2 - 20, y + h - 10);
+            ctx.cwMoveTo(rFactor, x + w / 2 - 10, y + h - 10);
+            ctx.cwLineTo(rFactor, x + w / 2 - 10, y + h);
+            ctx.cwLineTo(rFactor, x, y + h);
+            ctx.cwQuadraticCurveTo(rFactor, x, y + h - 10, x + w / 2 - 20, y + h - 10);
             ctx.closePath();
 
             // Hands
-            ctx.cwMoveTo(x + w, y + h / 2);
-            ctx.cwArc(x + w - 5, y + h / 2 + 5, 5, 0, Math.PI * 2, false);
+            ctx.cwMoveTo(rFactor, x + w, y + h / 2);
+            ctx.cwArc(rFactor, x + w - 5, y + h / 2 + 5, 5, 0, Math.PI * 2, false);
             ctx.closePath();
-            ctx.cwMoveTo(x + 10, y + h / 2);
-            ctx.cwArc(x + 5, y + h / 2 + 5, 5, 0, Math.PI * 2, false);
+            ctx.cwMoveTo(rFactor, x + 10, y + h / 2);
+            ctx.cwArc(rFactor, x + 5, y + h / 2 + 5, 5, 0, Math.PI * 2, false);
             ctx.closePath();
             ctx.fill();
             ctx.stroke();
 
             ctx.beginPath();
-            ctx.cwMoveTo(x + w / 2 - 15, y + 16);
-            ctx.cwQuadraticCurveTo(x + w / 2 - 15, y + 21, x + w / 2, y + 21);
-            ctx.cwQuadraticCurveTo(x + w / 2 + 15, y + 21, x + w / 2 + 15, y + 16);
+            ctx.cwMoveTo(rFactor, x + w / 2 - 15, y + 16);
+            ctx.cwQuadraticCurveTo(rFactor, x + w / 2 - 15, y + 21, x + w / 2, y + 21);
+            ctx.cwQuadraticCurveTo(rFactor, x + w / 2 + 15, y + 21, x + w / 2 + 15, y + 16);
 
             ctx.stroke();
             // Name and DP

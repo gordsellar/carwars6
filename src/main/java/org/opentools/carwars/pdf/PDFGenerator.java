@@ -40,7 +40,6 @@ public class PDFGenerator {
     private PDPageContentStream pdf;
     private PDFont font;
     private float fontSize;
-    private int version;
 
     public String generatePDF(PDFRequest request, File fontDir, File saveDir) throws IOException {
         this.request = request;
@@ -371,7 +370,7 @@ public class PDFGenerator {
     private void drawURL() throws IOException {
         newStream();
         setFont(PDType1Font.HELVETICA_OBLIQUE, 8);
-        String message = "http://carwars.opentools.org/ (version "+version+").  PDF'd at "+
+        String message = "http://carwars.opentools.org/ (version "+request.statistics.version+").  PDF'd at "+
                 new SimpleDateFormat("MM/dd/yyyy hh:mm aa").format(new Date())+".";
         if(request.statistics.stock_id != null) message += "  Stock ID "+request.statistics.stock_id;
         if(request.statistics.save_id != null) message += "  Design ID "+request.statistics.save_id;
@@ -449,7 +448,7 @@ public class PDFGenerator {
     private void drawDiagram(float armorHeight) throws IOException {
         newStream();
         float heightDiff = armorHeight-92;
-        float ma = 1, mb = 0, mc = 0, md = 1, me = 90, mf = 0, x1, y1, x2, y2, ytop = 0, vtop = 0, factor;
+        float ma = 1, mb = 0, mc = 0, md = 1, me = 90, mf = 0, x1, y1, x2, y2, ytop = 0, factor;
         float x=0, y=0, w, h, radius, cx, cy, startAngle, endAngle;
         int carWidth, carHeight, carOffset, startRounded, endRounded;
         boolean fill = false, saved = false, transformed = false, antiClockwise;
@@ -480,8 +479,6 @@ public class PDFGenerator {
                 mf = 0;
                 ytop = carHeight+36/factor; // half-inch margin
                 pdf.transform(new Matrix(ma, mb, mc, md, me, mf));
-            } else if(line.startsWith("version")) {
-                version = Integer.parseInt(line.split(" ")[1]);
             } else if(line.startsWith("moveTo")) {
                 parts = line.split(" ");
                 x = (int)Float.parseFloat(parts[1]);
@@ -742,7 +739,7 @@ public class PDFGenerator {
                 md = Float.parseFloat(parts[4]);
                 me = Float.parseFloat(parts[5]);
                 mf = Float.parseFloat(parts[6]);
-                pdf.transform(new Matrix(ma, mb, mc, md, me, vtop-mf));
+                pdf.transform(new Matrix(ma, mb, mc, md, me, ytop-mf));
                 transformed = true;
             } else if(line.startsWith("setTransform")) {
                 if(saved) { // Always start setTransform from the base state
@@ -765,6 +762,9 @@ public class PDFGenerator {
                     else pdf.transform(new Matrix(ma, mb, mc, md, me, mf));
                 }
             } else if(line.startsWith("createLinearGradient")) {
+                pdf.setStrokingColor(Color.BLACK);
+                pdf.setNonStrokingColor(Color.WHITE);
+                pdf.fillAndStroke();
             } else System.err.println("UNRECOGNIZED DRAW LINE: "+line);
             if(!line.equals("fill") && !line.startsWith("fill ")) fill = false;
         }

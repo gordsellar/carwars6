@@ -154,6 +154,13 @@
             return this.cab.hasWheelguardsOrHubs();
         };
 
+        var oldRemoveWpn = carrier.removeWeapon;
+        carrier.removeWeapon = function(weapon, location) {
+            var result = oldRemoveWpn.call(carrier, weapon, location);
+            carrier.cab.recalculate();
+            return result;
+        };
+
         carrier.recalculate = function () {
             this.baseRecalculate();
             if (this.isFlatbed()) {
