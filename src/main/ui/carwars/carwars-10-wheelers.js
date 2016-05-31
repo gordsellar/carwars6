@@ -249,14 +249,38 @@
 
         cab.armorValues = function () {
             var composite = this.compositeArmor();
+            var carrierComp = this.carrier.compositeArmor();
             return [
-                {location: 'Front', value: this.frontArmor.armorPointDescription(composite) + (this.stealthKoteIn('Front') ? "+1" : "")},
-                {location: 'Left', value: this.leftArmor.armorPointDescription(composite) + (this.stealthKoteIn('Left') ? "+1" : "")},
-                {location: 'Right', value: this.rightArmor.armorPointDescription(composite) + (this.stealthKoteIn('Right') ? "+1" : "")},
-                {location: 'Back', value: this.backArmor.armorPointDescription(composite) + (this.stealthKoteIn('Back') ? "+1" : "")},
-                {location: 'Top', value: this.topArmor.armorPointDescription(composite) + (this.stealthKoteIn('Top') ? "+1" : "")},
-                {location: 'Under', value: this.underbodyArmor.armorPointDescription(composite) + (this.stealthKoteIn('Underbody') ? "+1" : "")}
+                {location: 'Cab Front', value: this.frontArmor.armorPointDescription(composite) + (this.stealthKoteIn('Front') ? "+1" : "")},
+                {location: 'Cab Left', value: this.leftArmor.armorPointDescription(composite) + (this.stealthKoteIn('Left') ? "+1" : "")},
+                {location: 'Cab Right', value: this.rightArmor.armorPointDescription(composite) + (this.stealthKoteIn('Right') ? "+1" : "")},
+                {location: 'Cab Back', value: this.backArmor.armorPointDescription(composite) + (this.stealthKoteIn('Back') ? "+1" : "")},
+                {location: 'Cab Top', value: this.topArmor.armorPointDescription(composite) + (this.stealthKoteIn('Top') ? "+1" : "")},
+                {location: 'Cab Under', value: this.underbodyArmor.armorPointDescription(composite) + (this.stealthKoteIn('Underbody') ? "+1" : "")},
+                {location: 'Cr. Front', value: this.carrier.frontArmor.armorPointDescription(carrierComp) + (this.carrier.stealthKoteIn('Front') ? "+1" : "")},
+                {location: 'Cr. Left', value: this.carrier.leftArmor.armorPointDescription(carrierComp) + (this.carrier.stealthKoteIn('Left') ? "+1" : "")},
+                {location: 'Cr. Right', value: this.carrier.rightArmor.armorPointDescription(carrierComp) + (this.carrier.stealthKoteIn('Right') ? "+1" : "")},
+                {location: 'Cr. Back', value: this.carrier.backArmor.armorPointDescription(carrierComp) + (this.carrier.stealthKoteIn('Back') ? "+1" : "")},
+                {location: 'Cr. Top', value: this.carrier.topArmor.armorPointDescription(carrierComp) + (this.carrier.stealthKoteIn('Top') ? "+1" : "")},
+                {location: 'Cr. Under', value: this.carrier.underbodyArmor.armorPointDescription(carrierComp) + (this.carrier.stealthKoteIn('Underbody') ? "+1" : "")}
             ];
+        };
+
+        var oldWV = cab.weaponValues;
+        cab.weaponValues = function() {
+            var cabList = oldWV.call(cab);
+            var carList = this.carrier.weaponValues();
+            carList.forEach(function(item) {
+                var found = false;
+                for(var i=0; i<cabList.length; i++) {
+                    if(cabList[i].weapon === item.weapon && cabList[i].ammo === item.ammo) {
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found) cabList.push(item);
+            });
+            return cabList;
         };
 
         var bodyOptions = [CW.tenWheelerBody.cabover, CW.tenWheelerBody.longnose];

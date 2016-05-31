@@ -1,5 +1,10 @@
 package org.opentools.carwars.pdf;
 
+import be.quodlibet.boxable.BaseTable;
+import be.quodlibet.boxable.Cell;
+import be.quodlibet.boxable.HorizontalAlignment;
+import be.quodlibet.boxable.Row;
+import be.quodlibet.boxable.datatable.DataTable;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -268,8 +273,6 @@ public class PDFGenerator {
         pdf.moveTo(385, 529);
         pdf.lineTo(286, 529);
         pdf.stroke();
-        setFont(font, 8);
-        // TODO: Weapons table
 
         // Armor Box
         drawRoundedRectangle(410, 520-armorHeight, 150, armorHeight+20, 3);
@@ -296,6 +299,45 @@ public class PDFGenerator {
             text += armor.location+" "+armor.value+":";
         }
         textAlignRight(415, 520-armorHeight, armorWidth, armorHeight, text, request.armor.size() > 6 ? 0 : 4);
+
+        pdf.saveGraphicsState();
+        pdf.addRect(91, 519-armorHeight, 308, armorHeight+2);
+        pdf.clip();
+        closeStream();
+
+        BaseTable base = new BaseTable(520, 0, 0, 300, 95, doc, page, false, true);
+        DataTable data = new DataTable(base, page);
+        List<List> rows = new ArrayList<>();
+        rows.add(Arrays.asList("Weapon Name","Ammo Type","To Hit", "Damage", "FM", "BD"));
+        for (PDFRequest.Weapon weapon : request.weapons) {
+            List<String> row = new ArrayList<>();
+            row.add(weapon.weapon.equals("Vulcan Machine Gun") ? "Vulcan MG" : weapon.weapon);
+            row.add(weapon.ammo.equals("High-Temperature") ? "High Temp." : weapon.ammo);
+            row.add(weapon.toHit.equals("0") ? "" : weapon.toHit);
+            row.add(weapon.damage.equals("0") ? "" : weapon.damage);
+            row.add(weapon.fireModifier != null && weapon.fireModifier > 0 ? weapon.fireModifier.toString() : "");
+            row.add(weapon.fireModifier != null && weapon.fireModifier > 0 ? weapon.burnDuration.toString() : "");
+            rows.add(row);
+        }
+        data.addListToTable(rows, true);
+        for (Row<PDPage> row : base.getRows()) {
+            for (int i = 0; i < row.getCells().size(); i++) {
+                Cell<PDPage> cell = row.getCells().get(i);
+                cell.setFontSize(8);
+                cell.setFillColor(null);
+                cell.setTopPadding(request.weapons.size() > 7 ? 1 : 3);
+                cell.setBottomPadding(request.weapons.size() > 7 ? 1 : 3);
+                cell.setLeftPadding(1);
+                cell.setRightPadding(1);
+                cell.setHeight(null);
+                if(i > 1) cell.setAlign(HorizontalAlignment.CENTER);
+            }
+            row.setHeight(0);
+        }
+        base.draw();
+
+        newStream();
+        pdf.restoreGraphicsState();
         closeStream();
 
         return armorHeight;
@@ -345,6 +387,63 @@ public class PDFGenerator {
     }
 
     private void drawDesignWorksheet() throws IOException {
+        page = new PDPage();
+        doc.addPage(page);
+        newStream();
+        setFont(PDType1Font.HELVETICA, 20);
+        pdf.setNonStrokingColor(Color.BLACK);
+        textAlignCenter(36, 72*10.5f-20, 7.5f*72, 20, "Design Worksheet");
+        closeStream();
+        BaseTable base = new BaseTable(72*10.5f-24, 72*10.5f, 36, 7.5f*72, 36, doc, page, true, true);
+        DataTable data = new DataTable(base, page);
+        List<List> rows = new ArrayList<>();
+        rows.add(Arrays.asList("Description","Cost","Total","Weight","Total","Space","Total"));
+        BigDecimal totalCost = BigDecimal.ZERO, totalWeight = BigDecimal.ZERO, totalSpace = BigDecimal.ZERO,
+                otherCost = BigDecimal.ZERO, otherWeight=BigDecimal.ZERO;
+        boolean useGE = request.statistics.useGE;
+        for (PDFRequest.Line line : request.worksheet) {
+            if(line.name.equals("")) {
+                otherCost = totalCost;
+                otherWeight = totalWeight;
+                totalCost = BigDecimal.ZERO;
+                totalWeight = BigDecimal.ZERO;
+                totalSpace = BigDecimal.ZERO;
+                rows.add(Arrays.asList("","","","","","",""));
+            } else {
+                totalCost = totalCost.add(line.cost);
+                if((!useGE || line.ge == null) && line.ignoreWeight == null)
+                    totalWeight = totalWeight.add(line.weight);
+                if(line.vehicularSpace)
+                    totalSpace = totalSpace.add(line.space);
+                List<String> row = new ArrayList<>();
+                row.add(line.name);
+                row.add("$"+line.cost);
+                row.add("$"+totalCost);
+                row.add(useGE && line.ge != null ? line.ge+" GE"+(line.vehicularSpace ? "" : "*") : line.weight+(line.ignoreWeight != null && line.ignoreWeight && line.weight.signum() > 0 ? "*" : "")+" lbs");
+                row.add(totalWeight+" lbs");
+                row.add(line.space+(line.vehicularSpace || line.space.signum() == 0 ? "" : "*")+(line.cargo ? "c" : ""));
+                row.add(totalSpace.toString());
+                rows.add(row);
+            }
+        }
+        data.addListToTable(rows, true);
+        for (Row<PDPage> row : base.getRows()) {
+            for (int i = 0; i < row.getCells().size(); i++) {
+                Cell<PDPage> cell = row.getCells().get(i);
+                cell.setFontSize(10);
+                cell.setLeftPadding(3);
+                cell.setRightPadding(3);
+                cell.setTopPadding(2);
+                cell.setBottomPadding(2);
+                if(i>4) cell.setAlign(HorizontalAlignment.CENTER);
+            }
+        }
+        base.draw();
+        if(totalCost.add(otherCost).compareTo(new BigDecimal(request.statistics.cost.replace(",", ""))) != 0 ||
+                totalWeight.add(otherWeight).compareTo(new BigDecimal(request.statistics.weight)) != 0) {
+            System.err.println("ERROR "+totalCost.add(otherCost)+" <> "+request.statistics.cost+" OR "+totalWeight.add(otherWeight)+" <> "+request.statistics.weight);
+            // TODO: email it
+        }
     }
 
     private void drawDiagram(float armorHeight) throws IOException {
