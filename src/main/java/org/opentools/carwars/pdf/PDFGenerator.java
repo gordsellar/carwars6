@@ -5,6 +5,7 @@ import be.quodlibet.boxable.Cell;
 import be.quodlibet.boxable.HorizontalAlignment;
 import be.quodlibet.boxable.Row;
 import be.quodlibet.boxable.datatable.DataTable;
+import com.sun.mail.util.MailConnectException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -14,10 +15,16 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.apache.pdfbox.util.Matrix;
 import org.opentools.carwars.json.PDFRequest;
+import org.springframework.mail.MailException;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 
+import javax.mail.internet.MimeMessage;
 import java.awt.Color;
 import java.io.*;
 import java.math.BigDecimal;
+import java.net.ConnectException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +40,7 @@ import java.util.zip.GZIPOutputStream;
 public class PDFGenerator {
     private final static float KAPPA = (float) (4.0 * ((Math.sqrt(2) - 1.0) / 3.0));
     private final static float LEADING = 1.15f;
+    private JavaMailSender mailSender;
     private PDDocument doc;
     private PDPage page;
     private PDFRequest request;
@@ -40,9 +48,13 @@ public class PDFGenerator {
     private PDPageContentStream pdf;
     private PDFont font;
     private float fontSize;
+    private File generatedPDF = null;
+    private String generatedName = null;
+    private boolean designMismatch = false;
 
-    public String generatePDF(PDFRequest request, File fontDir, File saveDir) throws IOException {
+    public String generatePDF(PDFRequest request, File fontDir, File saveDir, JavaMailSender mailSender) throws IOException {
         this.request = request;
+        this.mailSender = mailSender;
         try {
             startDocument();
             loadFonts(fontDir);
@@ -52,7 +64,9 @@ public class PDFGenerator {
             drawDiagram(armorHeight);
             drawURL();
             drawDesignWorksheet();
-            return saveDocument(saveDir);
+            saveDocument(saveDir);
+            if(designMismatch) sendMismatchEmail();
+            return generatedName;
         } finally {
             doc.close();
         }
@@ -440,8 +454,8 @@ public class PDFGenerator {
         base.draw();
         if(totalCost.add(otherCost).compareTo(new BigDecimal(request.statistics.cost.replace(",", ""))) != 0 ||
                 totalWeight.add(otherWeight).compareTo(new BigDecimal(request.statistics.weight)) != 0) {
-            System.err.println("ERROR "+totalCost.add(otherCost)+" <> "+request.statistics.cost+" OR "+totalWeight.add(otherWeight)+" <> "+request.statistics.weight);
-            // TODO: email it
+//            System.err.println("ERROR "+totalCost.add(otherCost)+" <> "+request.statistics.cost+" OR "+totalWeight.add(otherWeight)+" <> "+request.statistics.weight);
+            designMismatch = true;
         }
     }
 
@@ -775,14 +789,14 @@ public class PDFGenerator {
 
 
     private String saveDocument(File dir) throws IOException {
-//        int number = (int)(Math.random()*Integer.MAX_VALUE);
-        int number = 0;
-        String fileName = "car-design-" + request.statistics.name.replaceAll("[^A-Za-z0-9]", "_") + "-" + number + ".pdf";
-        OutputStream out = new GZIPOutputStream(new BufferedOutputStream(new FileOutputStream(new File(dir, fileName + ".gz"))));
+        int number = (int)(Math.random()*Integer.MAX_VALUE);
+        generatedName = "car-design-" + request.statistics.name.replaceAll("[^A-Za-z0-9]", "_") + "-" + number + ".pdf";
+        generatedPDF = new File(dir, generatedName + ".gz");
+        OutputStream out = new GZIPOutputStream(new BufferedOutputStream(new FileOutputStream(generatedPDF)));
         doc.save(out);
         out.flush();
         out.close();
-        return fileName;
+        return generatedName;
     }
 
     private void textAlignLeft(float x, float y, float w, float h, String text) throws IOException {
@@ -979,4 +993,58 @@ public class PDFGenerator {
         else
             pdf.curveTo(x - r, y - cpl, x - cpl, y - r, x, y - r);
     }
+
+    private void sendMismatchEmail() {
+        final String text = "<p>I noticed a problem with the following design:</p>"+
+            "<p>"+request.summary+"\n"+
+            "<p>You can view the PDF here: <a href='http://carwars.opentools.org/content/pdfs/"+generatedName+"'>"+generatedName+"</a></p>";
+        MimeMessagePreparator mmp = new MimeMessagePreparator() {
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+                message.setTo("Aaron Mulder <ammulder@alumni.princeton.edu>");
+                message.setFrom("Car Wars Combat Garage <garage@carwars.opentools.org>");
+                message.setSubject("Combat Garage Worksheet Discrepancy");
+                message.setText(text, true);
+            }
+        };
+        try {
+            this.mailSender.send(mmp);
+        } catch (MailException e) {
+            if(e.getCause() instanceof MailConnectException && e.getCause().getCause() instanceof ConnectException &&
+                    e.getCause().getMessage().contains("localhost")) {
+                System.err.println(text);
+            } else {
+                e.printStackTrace();
+            }
+        }
+    }
+
+//    private void sendDesignEmail(final String email) {
+//        MimeMessagePreparator mmp = new MimeMessagePreparator() {
+//            public void prepare(MimeMessage mimeMessage) throws Exception {
+//                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+//                message.setTo(email);
+//                message.setFrom("garage@carwars.opentools.org");
+//                message.setSubject("Your Car Design");
+//                String text = "<h2>Car Designs</h2>\n" +
+//                        "<p>These are the car designs on record for Aaron Mulder:</p>\n" +
+//                        "<table border='1'>\n" +
+//                        "  <tr>\n" +
+//                        "    <th>Name</th>\n" +
+//                        "    <th>Body</th>\n" +
+//                        "    <th>Cost</th>\n" +
+//                        "    <th>Date</th>\n" +
+//                        "  </tr>\n";
+//                text += "<tr><td>Fireball</td><td>Subcompact</td><td>$39,995</td><td>1/1/2001</td></tr>\n";
+//                text += "</table>\n";
+//                text += "<p>Your generated file was "+generatedPDF.getAbsolutePath()+"</p>";
+//                message.setText(text, true);
+//            }
+//        };
+//        try {
+//            this.mailSender.send(mmp);
+//        } catch (MailException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

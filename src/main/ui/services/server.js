@@ -161,7 +161,7 @@ angular.module('carwars').
                 lastSavedName = authorName;
                 var data = this.generateDesignData(car,authorName,authorEmail,stockCar,tags,notes,signature,image);
                 car.designId = Math.round(Math.random() * 1000000000000000); // Don't want to save twice with the same ID
-                $http.post('/designs', data).success(function() {
+                $http.post('/api/designs', data).success(function() {
                     car.tags = [];
                     for(var i=0; i<tags.length; i++) {
                         car.tags.push({tag: tags[i], count: 1});

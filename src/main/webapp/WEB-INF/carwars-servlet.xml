@@ -64,4 +64,22 @@
     <!-- responsible for registering the necessary Spring components that power annotation-driven transaction management;
          such as when @Transactional methods are invoked -->
     <tx:annotation-driven/>
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${CARWARS_MAIL_HOST}"/>
+        <property name="port" value="465"/>
+        <property name="username" value="garage@carwars.opentools.org"/>
+        <property name="password" value="${CARWARS_MAIL_PASS}" />
+        <property name="javaMailProperties">
+            <props>
+                <!-- Use SMTP transport protocol -->
+                <prop key="mail.transport.protocol">smtps</prop>
+                <!-- Use SMTP-AUTH to authenticate to SMTP server -->
+                <prop key="mail.smtp.auth">true</prop>
+                <!--<prop key="mail.smtp.starttls.enable">true</prop>-->
+                <prop key="mail.debug">false</prop>
+            </props>
+        </property>
+    </bean>
+
 </beans>

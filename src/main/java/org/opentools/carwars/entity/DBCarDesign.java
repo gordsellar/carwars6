@@ -67,9 +67,9 @@ public class DBCarDesign implements DesignHistory {
     @Column(name = "stock_update_date")
     private Date stockUpdateDate;
     private Integer passengers;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "design")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "design", cascade = CascadeType.ALL)
     private Collection<DBDesignRating> ratings;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "design")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "design", cascade = CascadeType.ALL)
     private Collection<DBDesignTag> tags;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "design_list_designs",

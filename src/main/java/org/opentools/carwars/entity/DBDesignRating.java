@@ -11,7 +11,7 @@ public class DBDesignRating {
     @Id
     private int id;
     @Column(columnDefinition = "tinyint")
-    private int rating;
+    private Integer rating;
     @Column(columnDefinition = "text")
     private String comments;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,11 +29,11 @@ public class DBDesignRating {
         this.id = id;
     }
 
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 

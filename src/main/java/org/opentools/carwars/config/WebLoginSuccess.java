@@ -24,10 +24,22 @@ public class WebLoginSuccess implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         DBCarWarsUser user = users.findOne(authentication.getName());
-        response.addCookie(new Cookie("author_email", user.getEmail()));
-        response.addCookie(new Cookie("author_name", user.getName()));
-        response.addCookie(new Cookie("author_design_sig", user.getDesignSignature()));
-        response.addCookie(new Cookie("role", user.getRole()));
+        Cookie cookie = new Cookie("author_email", user.getEmail());
+        cookie.setPath("/");
+        cookie.setMaxAge(86400*30);
+        response.addCookie(cookie);
+        cookie = new Cookie("author_name", user.getName());
+        cookie.setPath("/");
+        cookie.setMaxAge(86400*30);
+        response.addCookie(cookie);
+        cookie = new Cookie("author_design_sig", user.getDesignSignature());
+        cookie.setPath("/");
+        cookie.setMaxAge(86400*30);
+        response.addCookie(cookie);
+        cookie = new Cookie("role", user.getRole());
+        cookie.setPath("/");
+        cookie.setMaxAge(86400*30);
+        response.addCookie(cookie);
         response.setStatus(200);
     }
 }

@@ -12,4 +12,6 @@ public interface DesignHistory {
     long getUiId();
     String getDesignName();
     Date getCreateDate();
+    String getBody();
+    int getCost();
 }

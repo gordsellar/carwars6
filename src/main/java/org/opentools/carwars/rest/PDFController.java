@@ -3,6 +3,7 @@ package org.opentools.carwars.rest;
 import org.opentools.carwars.json.PDFRequest;
 import org.opentools.carwars.pdf.PDFGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +20,9 @@ import java.util.Map;
  */
 @RestController
 public class PDFController {
+    @Autowired
+    private JavaMailSender mailSender;
+
     @RequestMapping(value = "/pdf", method = RequestMethod.POST)
     public Map generatePDF(@RequestBody PDFRequest request, HttpServletRequest req) throws IOException {
         PDFGenerator generator = new PDFGenerator();
@@ -28,7 +32,7 @@ public class PDFController {
         File outputDir = new File(dataDir, "content/pdfs");
         if(!outputDir.isDirectory() || !outputDir.canRead() || !outputDir.canWrite())
             throw new IllegalArgumentException("Invalid setting for PDF output directory: "+outputDir.getAbsolutePath());
-        String fileName = generator.generatePDF(request, dataDir, outputDir);
+        String fileName = generator.generatePDF(request, dataDir, outputDir, mailSender);
         Map result = new HashMap();
         result.put("url", req.getContextPath()+"/content/pdfs/"+fileName);
         return result;
