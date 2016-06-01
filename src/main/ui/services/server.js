@@ -4,6 +4,9 @@ angular.module('carwars').
         "use strict";
         var lastSavedEmail, lastSavedName;
         return {
+            checkLogin: function(complete) {
+                $http.get('/api/checkLogin').then(complete, complete);
+            },
             currentUser: function() {
                 return CW.readCookie('author_email');
             },
@@ -60,7 +63,9 @@ angular.module('carwars').
             logout: function(success, error) {
                 lastSavedName = null;
                 lastSavedEmail = null;
-                $http.post('/logout').then(success, error);
+                $http.post('/logout').then(function() {
+                    return $http.get('/api/checkLogin');
+                }).then(success, error);
             },
             listDesigns: function(success, error) {
                 $http.get('/api/secure/designs').success(function(data) {

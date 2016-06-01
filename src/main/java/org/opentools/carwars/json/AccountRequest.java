@@ -6,4 +6,6 @@ package org.opentools.carwars.json;
 public class AccountRequest {
     public String email;
     public String key;
+    public String name;
+    public String password;
 }

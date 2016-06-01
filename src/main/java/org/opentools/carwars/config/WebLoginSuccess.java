@@ -24,6 +24,11 @@ public class WebLoginSuccess implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         DBCarWarsUser user = users.findOne(authentication.getName());
+        setCookies(response, user);
+        response.setStatus(200);
+    }
+
+    public void setCookies(HttpServletResponse response, DBCarWarsUser user) {
         Cookie cookie = new Cookie("author_email", user.getEmail());
         cookie.setPath("/");
         cookie.setMaxAge(86400*30);
@@ -40,6 +45,24 @@ public class WebLoginSuccess implements AuthenticationSuccessHandler {
         cookie.setPath("/");
         cookie.setMaxAge(86400*30);
         response.addCookie(cookie);
-        response.setStatus(200);
+    }
+
+    public void clearCookies(HttpServletResponse response) {
+        Cookie cookie = new Cookie("author_email", "");
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        cookie = new Cookie("author_name", "");
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        cookie = new Cookie("author_design_sig", "");
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        cookie = new Cookie("role", "");
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
     }
 }

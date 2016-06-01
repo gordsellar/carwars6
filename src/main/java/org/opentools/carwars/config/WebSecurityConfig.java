@@ -71,22 +71,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth, DataSource dataSource) throws Exception {
-        final ShaPasswordEncoder sha = new ShaPasswordEncoder(256);
-        sha.setEncodeHashAsBase64(true);
-        PasswordEncoder passwordEncoder = new PasswordEncoder() {
-            @Override
-            public String encode(CharSequence charSequence) {
-                return sha.encodePassword(password.getPrefix()+charSequence, null);
-            }
-
-            @Override
-            public boolean matches(CharSequence enteredPassword, String storedHash) {
-                return encode(enteredPassword).equals(storedHash);
-            }
-        };
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
-                .passwordEncoder(passwordEncoder)
+                .passwordEncoder(password.getPasswordEncoder())
                 .usersByUsernameQuery(
                         "select email, password, confirmed from car_wars_users where email=?")
                 .authoritiesByUsernameQuery(

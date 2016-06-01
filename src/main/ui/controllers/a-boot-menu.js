@@ -29,7 +29,7 @@
             $scope.legal = true;
             $scope.errorMessages = [];
             $scope.infoMessages = [];
-            $scope.preload = CW.preload.present();
+            $scope.preload = true;
             $scope.loadingMessage = null;
             $scope.lastSavedID = null;
             $scope.tourRunning = false;
@@ -70,7 +70,6 @@
             $scope.checkLogin = function () {
                 $scope.loggedIn = !!server.currentUser();
             };
-            $scope.checkLogin();
             $scope.logout = function (callback) {
                 server.logout(function () {
                     $scope.checkLogin();
@@ -232,7 +231,7 @@
                 $scope.openScreen('stock');
             };
             $scope.alert = function(message) {
-                $timeout(function() {$window.alert(message);});
+                $window.alert(message);
             };
             $scope.confirm = function(message, onConfirm) {
                 $timeout(function() {
@@ -492,7 +491,7 @@
                     processDesignToLoad(data);
                 }, function () {
                     $scope.hideLoadingMessage();
-                    alert("Unable to load design.  Please report this.");
+                    $scope.alert("Unable to load design.  Please report this.");
                     $scope.createNewDesign();
                 });
             };
@@ -631,25 +630,31 @@
                     $timeout(callback); // Otherwise 2D canvas is not in place
                 });
             };
-            if ($scope.preload) { // Uses the value in the scope to suppress the initial menu
-                var working;
-                if (CW.preload.design) {
-                    working = CW.preload.design;
-                    delete CW.preload.design;
-                    executePreload(function () {
-                        processDesignToLoad(working);
-                        delete $scope.preload;
-                    });
-                } else if (CW.preload.name) {
-                    executePreload($scope.searchDesigns);
-                } else if (CW.preload.tag || CW.preload.list || CW.preload.stock) {
-                    executePreload($scope.browseStock);
-                } else if (CW.preload.confirm) {
-                    executePreload(function () {
-                        $scope.mainDisplay = 'selector';
-                        $scope.openScreen('confirmAccount');
-                    });
+
+            // Ping the server when first coming up
+            server.checkLogin(function() {
+                $scope.checkLogin();
+                $scope.preload = CW.preload.present();
+                if ($scope.preload) { // Uses the value in the scope to suppress the initial menu
+                    var working;
+                    if (CW.preload.design) {
+                        working = CW.preload.design;
+                        delete CW.preload.design;
+                        executePreload(function () {
+                            processDesignToLoad(working);
+                            delete $scope.preload;
+                        });
+                    } else if (CW.preload.name) {
+                        executePreload($scope.searchDesigns);
+                    } else if (CW.preload.tag || CW.preload.list || CW.preload.stock) {
+                        executePreload($scope.browseStock);
+                    } else if (CW.preload.confirm) {
+                        executePreload(function () {
+                            $scope.mainDisplay = 'selector';
+                            $scope.openScreen('confirmAccount');
+                        });
+                    }
                 }
-            }
+            });
         });
 })();
