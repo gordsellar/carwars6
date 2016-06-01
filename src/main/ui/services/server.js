@@ -29,19 +29,20 @@ angular.module('carwars').
                 return lastSavedName;
             },
             createAccount: function(email, success, error) {
-                $http.post('/beginAccount', {email: email}).success(success).error(error);
+                $http.post('/api/beginAccount', {email: email}).then(success, error);
             },
             loadAccountConfirm: function(key, success, error) {
-                $http.post('/confirm', {key: key}).success(success).error(error);
+                $http.post('/api/confirm', {key: key}).success(success).error(error);
             },
             confirmAccount: function(email, name, password, key, success, error) {
                 var data = {email: email, name: name, password: password, key: key};
-                $http.post('/createAccount', data).success(success).error(error);
+                $http.post('/api/createAccount', data).success(success).error(error);
             },
             resetPassword: function(email, success, error) {
-                $http.post('/resetPassword', {email: email}).success(success).error(error);
+                $http.post('/api/resetPassword', {email: email}).success(success).error(error);
             },
             login: function(email, password, success, error) {
+                // Back end doesn't accept JSON for this request
                 var data = "username=" + encodeURIComponent(email) +
                      "&password=" + encodeURIComponent(password);
                 $http({
@@ -59,7 +60,7 @@ angular.module('carwars').
             logout: function(success, error) {
                 lastSavedName = null;
                 lastSavedEmail = null;
-                $http.post('/logout').success(success).error(error);
+                $http.post('/logout').then(success, error);
             },
             listDesigns: function(success, error) {
                 $http.get('/api/secure/designs').success(function(data) {

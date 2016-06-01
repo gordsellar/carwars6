@@ -17,13 +17,15 @@ angular.module('carwars').
                 function() {
                     $scope.working = false;
                     $scope.visible = false;
-                    $timeout(function() {
-                        alert("E-mail sent.  Please check your mail for the next step.");
-                    });
+                    alert("E-mail sent.  Please check your mail for the next step.");
                 },
-                function() {
+                function(errorResp) {
                     $scope.working = false;
-                    $timeout(function() {alert("Unable to create account.  Maybe you already have one?\nYou can try to Sign In and if needed use the Forgot Password link there.\n\n\n");});
+                    if(errorResp.status === 403) {
+                        alert("Unable to create account.  Maybe you already have one?\nYou can try to Sign In and if needed use the Forgot Password link there.\n\n\n");
+                    } else {
+                        alert("Unable to create account.  Please reload the page and try again.");
+                    }
                 });
         };
 
