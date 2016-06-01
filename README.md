@@ -21,3 +21,18 @@ is starting with virtually nothing and will hopefully come together before too l
 
 It requires a MySQL database and will be deployed on Tomcat, but should function with
 mvn jetty:run
+
+## Environment Variables
+
+To run the app, the following environment variables are needed:
+
+    export OPENSHIFT_DATA_DIR=
+    export OPENSHIFT_MYSQL_DB_HOST=
+    export OPENSHIFT_MYSQL_DB_PORT=
+    export CARWARS_DB_NAME=
+    export CARWARS_DB_USER=
+    export CARWARS_DB_PASS=
+    export CARWARS_MAIL_HOST=
+    export CARWARS_MAIL_PASS=
+    export CARWARS_PASSWORD_PREFIX=
+    export CARWARS_CONFIRMATION_PREFIX=
