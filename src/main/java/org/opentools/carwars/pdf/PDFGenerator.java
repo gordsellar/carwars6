@@ -1018,33 +1018,4 @@ public class PDFGenerator {
             }
         }
     }
-
-//    private void sendDesignEmail(final String email) {
-//        MimeMessagePreparator mmp = new MimeMessagePreparator() {
-//            public void prepare(MimeMessage mimeMessage) throws Exception {
-//                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-//                message.setTo(email);
-//                message.setFrom("garage@carwars.opentools.org");
-//                message.setSubject("Your Car Design");
-//                String text = "<h2>Car Designs</h2>\n" +
-//                        "<p>These are the car designs on record for Aaron Mulder:</p>\n" +
-//                        "<table border='1'>\n" +
-//                        "  <tr>\n" +
-//                        "    <th>Name</th>\n" +
-//                        "    <th>Body</th>\n" +
-//                        "    <th>Cost</th>\n" +
-//                        "    <th>Date</th>\n" +
-//                        "  </tr>\n";
-//                text += "<tr><td>Fireball</td><td>Subcompact</td><td>$39,995</td><td>1/1/2001</td></tr>\n";
-//                text += "</table>\n";
-//                text += "<p>Your generated file was "+generatedPDF.getAbsolutePath()+"</p>";
-//                message.setText(text, true);
-//            }
-//        };
-//        try {
-//            this.mailSender.send(mmp);
-//        } catch (MailException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

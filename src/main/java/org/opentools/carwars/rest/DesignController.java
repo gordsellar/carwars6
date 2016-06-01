@@ -1,11 +1,10 @@
 package org.opentools.carwars.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.mail.util.MailConnectException;
 import org.opentools.carwars.config.Roles;
-import org.opentools.carwars.dao.CarWarsDB;
 import org.opentools.carwars.data.DesignHistory;
 import org.opentools.carwars.data.DesignRepository;
-import org.opentools.carwars.data.TagCount;
 import org.opentools.carwars.data.UserRepository;
 import org.opentools.carwars.entity.DBCarDesign;
 import org.opentools.carwars.entity.DBCarWarsUser;
@@ -16,18 +15,20 @@ import org.opentools.carwars.json.SavingDesign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.ConnectException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.opentools.carwars.config.AllowedText.cleanse;
@@ -163,7 +164,7 @@ public class DesignController {
                 if(design.designer_signature != null) {
                     user.setDesignSignature(design.designer_signature);
                     users.save(user);
-                    if(auth.getName() != null) {
+                    if(auth != null && auth.getName() != null) {
                         Cookie cookie = new Cookie("author_design_sig", design.designer_signature);
                         cookie.setPath("/");
                         cookie.setMaxAge(86400*30);
@@ -173,7 +174,6 @@ public class DesignController {
             }
         }
         out = designs.save(out);
-        System.err.println("Saved design with ID "+out.getId());
 
         if(design.image != null && design.image.startsWith("data:image/png;base64,")) {
             try {
@@ -201,10 +201,48 @@ public class DesignController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private void sendDesignEmail(String name, String email) {
+    private void sendDesignEmail(final String name, final String email) {
+        StringBuilder buf = new StringBuilder();
+        buf.append("<h2>Car Designs</h2>\n").append(
+                "<p>These are the car designs on record for "+email+":</p>\n").append(
+                "<table border='1'>\n").append(
+                "  <tr>\n").append(
+                "    <th>Name</th>\n").append(
+                "    <th>Body</th>\n").append(
+                "    <th>Cost</th>\n").append(
+                "    <th>Date</th>\n").append(
+                "  </tr>\n");
         List<DBCarDesign> list = designs.findLatestByAuthor(email);
         for (DesignHistory design : list) {
-            System.err.println(design.getDesignName()+" "+design.getBody()+" $"+design.getCost()+" "+design.getUiId());
+            buf.append("  <tr><td><a href='http://carwars.opentools.org/load/").append(design.getUiId()).append("'>").append(
+                    design.getDesignName()).append("</a></td>").append(
+                    "<td>").append(design.getBody()).append("</td><td>$").append(design.getCost()).append("</td><td>").append(
+                    new SimpleDateFormat("MM/dd/yyyy hh:mm aa").format(design.getCreateDate())).append("</td></tr>\n");
+        }
+        buf.append("</table>\n");
+        // TODO: check whether confirmed, if not provide link to sign up
+        buf.append("<p>Happy duelling!</p>\n");
+
+        final String text = buf.toString();
+        MimeMessagePreparator mmp = new MimeMessagePreparator() {
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+                String to = name == null || name.equals("") ? email : name+" <"+email+">";
+                message.setTo(to);
+                message.setFrom("Car Wars Combat Garage <garage@carwars.opentools.org>");
+                message.setSubject("Your Car Design");
+                message.setText(text, true);
+            }
+        };
+        try {
+            this.mailSender.send(mmp);
+        } catch (MailException e) {
+            if(e.getCause() instanceof MailConnectException && e.getCause().getCause() instanceof ConnectException &&
+                    e.getCause().getMessage().contains("localhost")) {
+                System.err.println(text);
+            } else {
+                e.printStackTrace();
+            }
         }
     }
 }
