@@ -1,5 +1,5 @@
 /* global CW */
 (function() {
     "use strict";
-    CW.latestRevision = 1203;
+    CW.latestRevision = 1204;
 })();
