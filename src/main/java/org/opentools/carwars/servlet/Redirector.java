@@ -35,6 +35,8 @@ public class Redirector extends HttpServlet {
             resp.sendRedirect(req.getContextPath()+"/#/load/search/"+cleanse(value, 30));
         } else if(req.getServletPath().equals("/stock")) {
             resp.sendRedirect(req.getContextPath()+"/#/load/stock");
+        } else if(req.getServletPath().equals("/confirm")) {
+            resp.sendRedirect(req.getContextPath()+"/#/load/confirm/"+cleanse(value, 60));
         }
     }
 }

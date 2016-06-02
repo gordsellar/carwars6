@@ -1,9 +1,7 @@
 package org.opentools.carwars.rest;
 
 import com.sun.mail.util.MailConnectException;
-import org.opentools.carwars.config.PasswordConfig;
 import org.opentools.carwars.config.WebLoginSuccess;
-import org.opentools.carwars.data.UserRepository;
 import org.opentools.carwars.entity.DBCarWarsUser;
 import org.opentools.carwars.json.AccountRequest;
 import org.opentools.carwars.json.PendingUser;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,11 +32,7 @@ import static org.opentools.carwars.config.AllowedText.cleanse;
  * except for login/logout which are handled by the security system
  */
 @RestController
-public class AccountController {
-    @Autowired
-    private UserRepository users;
-    @Autowired
-    private PasswordConfig passwords;
+public class AccountController extends BaseController {
     @Autowired
     private JavaMailSender mailSender;
     @Autowired
@@ -58,7 +51,7 @@ public class AccountController {
         request.email = cleanse(request.email, 50);
         DBCarWarsUser user = users.findOne(request.email);
         if(user == null) {
-            String key = createUserRecord(request.email, "", null);
+            String key = createUserRecord(request.email, "", null).getConfirmationKey();
             sendAccountEmail(request.email, "", key);
         } else {
             if(user.isConfirmed()) return new ResponseEntity(HttpStatus.FORBIDDEN);
@@ -104,7 +97,7 @@ public class AccountController {
         StringBuilder buf = new StringBuilder();
         buf.append("<p>Someone has requested a new Car Wars Combat Garage account for this e-mail address.\n").append(
                 "If you would like to confirm this and create an account, please\n").append(
-                "<a href='http://carwars.opentools.org/#/load/confirm/").append(key).append(
+                "<a href='http://carwars.opentools.org/confirm/").append(key).append(
                 "'>click here</a>.</p>");
         buf.append("<p>Creating an account will let you access your previous car designs through the Web interface\n").append(
                 "rather than just clicking the links I e-mail to you.  You will also be able to review stock\n").append(
@@ -134,17 +127,4 @@ public class AccountController {
         }
     }
 
-    protected String createUserRecord(String email, String name, String password) {
-        String key = passwords.createConfirmationKey();
-        DBCarWarsUser user = new DBCarWarsUser();
-        user.setEmail(email);
-        user.setName(name);
-        user.setConfirmationKey(key);
-        user.setConfirmed(false);
-        user.setRole("User");
-        if(password != null && !password.equals(""))
-            user.setPassword(passwords.createNewPassword(password));
-        users.save(user);
-        return key;
-    }
 }

@@ -37,11 +37,9 @@ import static org.opentools.carwars.config.AllowedText.cleanse;
  * Loads and saves vehicle designs
  */
 @RestController
-public class DesignController {
+public class DesignController extends BaseController {
     @Autowired
     private DesignRepository designs;
-    @Autowired
-    private UserRepository users;
     @Autowired
     private JavaMailSender mailSender;
 
@@ -202,6 +200,13 @@ public class DesignController {
     }
 
     private void sendDesignEmail(final String name, final String email) {
+        DBCarWarsUser user = users.findOne(email);
+        if(user == null) {
+            user = createUserRecord(email, name, null);
+        } else if(user.getName().equals("") && name != null && !name.equals("")) {
+            user.setName(name);
+            users.save(user);
+        }
         StringBuilder buf = new StringBuilder();
         buf.append("<h2>Car Designs</h2>\n").append(
                 "<p>These are the car designs on record for "+email+":</p>\n").append(
@@ -220,7 +225,10 @@ public class DesignController {
                     new SimpleDateFormat("MM/dd/yyyy hh:mm aa").format(design.getCreateDate())).append("</td></tr>\n");
         }
         buf.append("</table>\n");
-        // TODO: check whether confirmed, if not provide link to sign up
+        if(!user.isConfirmed()) {
+            buf.append("\n<p>If you'd like to create an account to load your designs through the UI, <a href='http://carwars.opentools.org/confirm/").append(
+                    user.getConfirmationKey()).append("'>click here</a>.</p>");
+        }
         buf.append("<p>Happy duelling!</p>\n");
 
         final String text = buf.toString();

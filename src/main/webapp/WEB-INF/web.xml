@@ -33,6 +33,7 @@ http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
         <url-pattern>/lists/*</url-pattern>
         <url-pattern>/tags/*</url-pattern>
         <url-pattern>/name/*</url-pattern>
+        <url-pattern>/confirm/*</url-pattern>
         <url-pattern>/stock</url-pattern>
     </servlet-mapping>
 
