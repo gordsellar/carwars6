@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.net.ConnectException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static org.opentools.carwars.config.AllowedText.cleanse;
 
@@ -93,9 +95,23 @@ public class AccountController extends BaseController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @RequestMapping(value="/resetPassword", method = RequestMethod.POST)
+    public ResponseEntity resetPassword(@RequestBody AccountRequest request) {
+        request.email = cleanse(request.email, 50);
+        DBCarWarsUser user = users.findOne(request.email);
+        if(user == null) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+        user.setConfirmed(false);
+        user.setConfirmationKey(passwords.createConfirmationKey());
+        users.save(user);
+        sendResetEmail(request.email, user.getName(), user.getConfirmationKey());
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     private void sendAccountEmail(final String email, final String name, final String key) {
         StringBuilder buf = new StringBuilder();
-        buf.append("<p>Someone has requested a new Car Wars Combat Garage account for this e-mail address.\n").append(
+        buf.append("<p>Someone has requested a new Car Wars Combat Garage account for ").append(email).append(".\n").append(
                 "If you would like to confirm this and create an account, please\n").append(
                 "<a href='http://carwars.opentools.org/confirm/").append(key).append(
                 "'>click here</a>.</p>");
@@ -112,6 +128,37 @@ public class AccountController extends BaseController {
                 message.setTo(to);
                 message.setFrom("Car Wars Combat Garage <garage@carwars.opentools.org>");
                 message.setSubject("Car Wars Combat Garage Account");
+                message.setText(text, true);
+            }
+        };
+        try {
+            this.mailSender.send(mmp);
+        } catch (MailException e) {
+            if(e.getCause() instanceof MailConnectException && e.getCause().getCause() instanceof ConnectException &&
+                    e.getCause().getMessage().contains("localhost")) {
+                System.err.println(text);
+            } else {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void sendResetEmail(final String email, final String name, final String key) {
+        StringBuilder buf = new StringBuilder();
+        buf.append("<p>The Car Wars Combat Garage password for ").append(email).append(" was reset\n").append(
+                "on ").append(new SimpleDateFormat("MM/dd/yyyy hh:mm aa").format(new Date())).append(
+                ".  To choose a new password, please\n").append("<a href='http://carwars.opentools.org/confirm/").append(
+                key).append("'>click here</a>.</p>\n\n");
+        buf.append("<p>Happy duelling!</p>");
+
+        final String text = buf.toString();
+        MimeMessagePreparator mmp = new MimeMessagePreparator() {
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+                String to = name == null || name.equals("") ? email : name+" <"+email+">";
+                message.setTo(to);
+                message.setFrom("Car Wars Combat Garage <garage@carwars.opentools.org>");
+                message.setSubject("Car Wars Combat Garage Password Reset");
                 message.setText(text, true);
             }
         };

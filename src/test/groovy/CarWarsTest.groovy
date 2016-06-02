@@ -228,7 +228,7 @@ class CarWarsTest extends GebReportingTest {
         ps.close()
         con.close()
         go("http://google.com/")
-        go("#/load/confirm/" + key)
+        go("/confirm/" + key)
         at ConfirmAccountPage
         assert email == 'foo@bar.com'
         assert createAccount.classes().contains("link-disabled")

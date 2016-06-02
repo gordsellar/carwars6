@@ -218,11 +218,12 @@ public class DesignController extends BaseController {
                 "    <th>Date</th>\n").append(
                 "  </tr>\n");
         List<DBCarDesign> list = designs.findLatestByAuthor(email);
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
         for (DesignHistory design : list) {
             buf.append("  <tr><td><a href='http://carwars.opentools.org/load/").append(design.getUiId()).append("'>").append(
                     design.getDesignName()).append("</a></td>").append(
                     "<td>").append(design.getBody()).append("</td><td>$").append(design.getCost()).append("</td><td>").append(
-                    new SimpleDateFormat("MM/dd/yyyy hh:mm aa").format(design.getCreateDate())).append("</td></tr>\n");
+                    sdf.format(design.getCreateDate())).append("</td></tr>\n");
         }
         buf.append("</table>\n");
         if(!user.isConfirmed()) {
