@@ -259,7 +259,7 @@ angular.module('carwars').
             },
             saveReview: function(designId, rating, comments, tags, success, error) {
                 var data = {rating: rating, comments: comments, tags: tags};
-                $http.post("/stock/rating/"+designId, data).success(success).error(error);
+                $http.post("/api/secure/stock/rating/"+designId, data).success(success).error(error);
             },
             deferStockCar: function(designId, success, error) {
                 $http.post("/admin/defer/"+designId).success(success).error(error);

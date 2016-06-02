@@ -4,6 +4,7 @@ import org.opentools.carwars.data.TagCount;
 import org.opentools.carwars.data.UserRating;
 import org.opentools.carwars.entity.DBCarDesign;
 import org.opentools.carwars.entity.DBCarWarsUser;
+import org.opentools.carwars.entity.DBDesignTag;
 import org.opentools.carwars.json.Review;
 import org.opentools.carwars.json.SearchStockCarRequest;
 import org.springframework.stereotype.Repository;
@@ -30,6 +31,10 @@ import static org.opentools.carwars.config.AllowedText.limitSize;
 public class CarWarsDB {
     @PersistenceContext
     private EntityManager mgr;
+
+    public void saveTag(DBDesignTag tag) {
+        mgr.persist(tag);
+    }
 
     public List<Map> getLatestStockCars(String currentUser) {
         List<DBCarDesign> designs = mgr.createNamedQuery("Design.latestStock", DBCarDesign.class)

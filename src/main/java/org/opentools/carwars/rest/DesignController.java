@@ -103,7 +103,7 @@ public class DesignController extends BaseController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         DBCarDesign saved = designs.findFirstByUiId(id);
-        if((saved.getAuthorEmail() == null || !saved.getAuthorEmail().equals(user.getName())) && !req.isUserInRole("Owner")) {
+        if((saved.getAuthorEmail() == null || !saved.getAuthorEmail().equalsIgnoreCase(user.getName())) && !req.isUserInRole("Owner")) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         saved.setHidden(true);
