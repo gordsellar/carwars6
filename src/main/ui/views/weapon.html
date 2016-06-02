@@ -21,7 +21,7 @@
                             ng-disabled="type.count < 1" title="Fewer Shots"></button>
                     <button class="button button-small icon ion-close-circled" ng-click="removeAmmo(type.ammo)"
                             ng-disabled="type.count < 1" title="Remove All"></button>
-                    <button class="button button-small icon ion-android-storage" ng-click="addClip(type.ammo)"
+                    <button class="button button-small icon ion-android-list" ng-click="addClip(type.ammo)"
                             ng-disabled="(type.requiredTech === 'CWC' && classicTech) || (type.requiredTech === 'All' && cwcClassicTech) || (type.requiredTech === 'Military' && techLevel !== 'Military')"
                             title="Add Clip"></button>
                     <button class="button button-small icon ion-plus-circled" ng-click="increaseAmmo(type.ammo)"

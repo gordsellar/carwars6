@@ -49,17 +49,17 @@
                 </div>
             </div>
             <a class="item item-icon-left item-icon-right" ng-click="editGear()">
-                <i class="icon ion-ios7-briefcase"></i>
+                <i class="icon ion-ios-briefcase"></i>
                 Hand Weapons &amp; Gear
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </a>
             <a class="item item-icon-left item-icon-right" ng-click="addGunner()" ng-show="driver && !gunnerPresent">
-                <i class="icon ion-android-user-menu"></i>
+                <i class="icon ion-android-person-add"></i>
                 Add Gunner
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </a>
             <a class="item item-icon-left item-icon-right" ng-click="removePerson()" ng-show="!driver">
-                <i class="icon" ng-class="{'ion-android-social-user': name === 'Passenger','ion-android-user-menu': name !== 'Passenger'}"></i>
+                <i class="icon" ng-class="{'ion-ios-person-outline': name === 'Passenger','ion-android-person': name !== 'Passenger'}"></i>
                 Remove {{name}}
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </a>
