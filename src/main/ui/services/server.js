@@ -179,7 +179,7 @@ angular.module('carwars').
                 }).error(error);
             },
             deleteDesign: function(id, success, error) {
-                $http.get('/delete/'+id).success(success).error(error);
+                $http.post('/api/secure/designs/delete/'+id).success(success).error(error);
             },
             generateDiagramData: function(car) {
                 var result;

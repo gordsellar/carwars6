@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.ConnectException;
@@ -91,6 +92,23 @@ public class DesignController extends BaseController {
             out.add(CarDesign.forList(design));
         }
         return out;
+    }
+
+    @RequestMapping(value = "/secure/designs/delete/{designId}", method = RequestMethod.POST)
+    public ResponseEntity deleteDesign(@PathVariable String designId, Authentication user, HttpServletRequest req) {
+        long id;
+        try {
+            id = Long.parseLong(designId);
+        } catch (NumberFormatException e) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+        DBCarDesign saved = designs.findFirstByUiId(id);
+        if((saved.getAuthorEmail() == null || !saved.getAuthorEmail().equals(user.getName())) && !req.isUserInRole("Owner")) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+        saved.setHidden(true);
+        designs.save(saved);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/designs", method = RequestMethod.POST)
