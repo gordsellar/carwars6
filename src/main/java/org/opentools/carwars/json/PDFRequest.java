@@ -16,6 +16,8 @@ public class PDFRequest {
     public List<Line> worksheet = new ArrayList<>();
     public String walkaround;
     public Statistics statistics;
+    public String image; // For admin updates
+    public String text;  // For admin updates
 
     public static class Armor {
         public String location;
@@ -62,7 +64,6 @@ public class PDFRequest {
         public int passengers;
         public String range;
         public Long save_id;
-        public Long stock_id;
         public BigDecimal sidecarCargoSpace;
         public Integer sidecarCargoWeight;
     }

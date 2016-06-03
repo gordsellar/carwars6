@@ -5,7 +5,7 @@ angular.module('carwars').
         $scope.visible = true;
         $scope.working = false;
         $scope.userName = server.currentUserName();
-        $scope.admin = CW.adminLoaded && server.currentUser() === 'ammulder@alumni.princeton.edu';
+        $scope.admin = CW.adminLoaded && server.isOwner();
         $scope.reviewer = CW.adminLoaded && !$scope.admin && server.isAdmin();
         var hasNext = false;
 

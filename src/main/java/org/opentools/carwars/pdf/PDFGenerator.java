@@ -52,7 +52,12 @@ public class PDFGenerator {
     private String generatedName = null;
     private boolean designMismatch = false;
 
-    public String generatePDF(PDFRequest request, File fontDir, File saveDir, JavaMailSender mailSender) throws IOException {
+    public static class GenerateResult {
+        public int pages;
+        public String fileName;
+    }
+
+    public GenerateResult generatePDF(PDFRequest request, File fontDir, File saveDir, JavaMailSender mailSender) throws IOException {
         this.request = request;
         this.mailSender = mailSender;
         try {
@@ -65,8 +70,11 @@ public class PDFGenerator {
             drawURL();
             drawDesignWorksheet();
             saveDocument(saveDir);
+            GenerateResult result = new GenerateResult();
+            result.pages = doc.getNumberOfPages();
+            result.fileName = generatedName;
             if(designMismatch) sendMismatchEmail();
-            return generatedName;
+            return result;
         } finally {
             doc.close();
         }
@@ -386,7 +394,6 @@ public class PDFGenerator {
         setFont(PDType1Font.HELVETICA_OBLIQUE, 8);
         String message = "http://carwars.opentools.org/ (version "+request.statistics.version+").  PDF'd at "+
                 new SimpleDateFormat("MM/dd/yyyy hh:mm aa").format(new Date())+".";
-        if(request.statistics.stock_id != null) message += "  Stock ID "+request.statistics.stock_id;
         if(request.statistics.save_id != null) message += "  Design ID "+request.statistics.save_id;
         pdf.setStrokingColor(Color.BLACK);
         pdf.saveGraphicsState();

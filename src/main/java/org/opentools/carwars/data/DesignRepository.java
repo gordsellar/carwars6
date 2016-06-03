@@ -30,4 +30,6 @@ public interface DesignRepository extends PagingAndSortingRepository<DBCarDesign
     @Transactional
     @Query("update DBCarDesign d set d.hidden=true where d.authorEmail=?1 and d.designName=?2 and d.uiId <> ?3")
     int hideOldDesigns(String email, String designName, long uiId);
+    @Query("select d.uiId from DBCarDesign d where d.stockCar=true and d.hidden=false and d.deferred=false")
+    List<Long> findPendingStockCars();
 }

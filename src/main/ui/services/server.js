@@ -25,6 +25,9 @@ angular.module('carwars').
             isAdmin: function() {
                 return CW.readCookie('role') === 'Admin';
             },
+            isOwner: function() {
+                return CW.readCookie('role') === 'Owner';
+            },
             lastSaveAuthorEmail: function() {
                 return lastSavedEmail;
             },
@@ -117,7 +120,7 @@ angular.module('carwars').
                 $http.get('/api/designs/'+designId).success(success).error(error);
             },
             loadDesignAdmin: function(designId, success, error) {
-                $http.get('/admin/designs/'+designId).success(success).error(error);
+                $http.get('/api/admin/designs/'+designId).success(success).error(error);
             },
             generateDesignData: function(car, authorName, authorEmail, stockCar, tags, notes, signature, image) {
                 car.prepareForSave();
@@ -210,7 +213,6 @@ angular.module('carwars').
             },
             updateStockCar: function(car, car2d, imageData, id, updateText, success, error) {
                 var data = {
-                    id: id,
                     image: imageData,
                     draw: car2d ? CW.exportDesign(car2d) : null,
                     summary: car.textDescription(true),
@@ -222,7 +224,7 @@ angular.module('carwars').
                     legal: car.legal,
                     text: updateText
                 };
-                $http.post('/admin/stock/update', data).success(success).error(error);
+                $http.post('/api/admin/stock/update', data).success(success).error(error);
             },
             searchByName: function(name, offset, success, error) {
                 $http.get('/api/stock/search/'+name, {params: {offset: offset}}).success(success).error(error);
@@ -255,7 +257,7 @@ angular.module('carwars').
                 $http.get('/admin/stock').success(success).error(error);
             },
             allCarIDs: function(success, error) {
-                $http.get('/admin/ids').success(success).error(error);
+                $http.get('/api/admin/ids').success(success).error(error);
             },
             saveReview: function(designId, rating, comments, tags, success, error) {
                 var data = {rating: rating, comments: comments, tags: tags};

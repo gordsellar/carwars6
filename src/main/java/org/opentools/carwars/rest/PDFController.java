@@ -19,20 +19,10 @@ import java.util.Map;
  * Functions that deal with PDFs
  */
 @RestController
-public class PDFController {
-    @Autowired
-    private JavaMailSender mailSender;
-
+public class PDFController extends BaseController {
     @RequestMapping(value = "/pdf", method = RequestMethod.POST)
     public Map generatePDF(@RequestBody PDFRequest request, HttpServletRequest req) throws IOException {
-        PDFGenerator generator = new PDFGenerator();
-        File dataDir = new File(System.getenv("OPENSHIFT_DATA_DIR"));
-        if(!dataDir.isDirectory() || !dataDir.canRead() || !dataDir.canWrite())
-            throw new IllegalArgumentException("Invalid setting for $OPENSHIFT_DATA_DIR: "+dataDir.getAbsolutePath());
-        File outputDir = new File(dataDir, "content/pdfs");
-        if(!outputDir.isDirectory() || !outputDir.canRead() || !outputDir.canWrite())
-            throw new IllegalArgumentException("Invalid setting for PDF output directory: "+outputDir.getAbsolutePath());
-        String fileName = generator.generatePDF(request, dataDir, outputDir, mailSender);
+        String fileName = writePDF(request).fileName;
         Map result = new HashMap();
         result.put("url", req.getContextPath()+"/content/pdfs/"+fileName);
         return result;

@@ -5,7 +5,6 @@ import com.sun.mail.util.MailConnectException;
 import org.opentools.carwars.config.Roles;
 import org.opentools.carwars.data.DesignHistory;
 import org.opentools.carwars.data.DesignRepository;
-import org.opentools.carwars.data.UserRepository;
 import org.opentools.carwars.entity.DBCarDesign;
 import org.opentools.carwars.entity.DBCarWarsUser;
 import org.opentools.carwars.entity.DBDesignRating;
@@ -16,14 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeUtility;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,18 +38,25 @@ import static org.opentools.carwars.config.AllowedText.cleanse;
 public class DesignController extends BaseController {
     @Autowired
     private DesignRepository designs;
-    @Autowired
-    private JavaMailSender mailSender;
 
     @RequestMapping(value = "/designs/{designId}", method = RequestMethod.GET)
-    public ResponseEntity<Map> getDesign(@PathVariable String designId, Authentication user) throws IOException {
+    public ResponseEntity<Map> getDesign(@PathVariable long designId, Authentication user) throws IOException {
+        return loadDesign(designId, user == null ? null : user.getName(), false);
+    }
+
+    @RequestMapping(value = "/admin/designs/{designId}", method = RequestMethod.GET)
+    public ResponseEntity<Map> getDesignForAdmin(@PathVariable long designId, Authentication user) throws IOException {
+        return loadDesign(designId, user.getName(), true);
+    }
+
+    private ResponseEntity<Map> loadDesign(long designId, String user, boolean admin) throws IOException {
         List<Map> values;
         DBCarDesign saved = designs.findFirstByUiId(new Long(designId));
         if(saved == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         Map design = new ObjectMapper().readValue(saved.getDesignJson(), Map.class);
-        if(user != null && user.getName() != null) {
-            List<DBCarDesign> history = designs.findHistoricalDesigns(saved.getDesignName(), user.getName(), saved.getCreateDate());
+        if(user != null) {
+            List<DBCarDesign> history = designs.findHistoricalDesigns(saved.getDesignName(), user, saved.getCreateDate());
             values = new ArrayList<>();
             for (DesignHistory old : history) {
                 Map row = new HashMap();
@@ -62,13 +66,13 @@ public class DesignController extends BaseController {
                 values.add(row);
             }
             design.put("history", values);
-            if(saved.getAuthorEmail() != null && user.getName().equalsIgnoreCase(saved.getAuthorEmail())) {
+            if(saved.getAuthorEmail() != null && user.equalsIgnoreCase(saved.getAuthorEmail())) {
                 design.put("signature", saved.getSignature());
                 design.put("designer_name", saved.getAuthorName());
                 DBDesignRating rating = designs.getAuthorRating(saved.getUiId());
                 design.put("designer_comments", rating == null ? null : rating.getComments());
             }
-            if(Roles.isAdmin(user)) {
+            if(admin) {
                 design.put("author_name", saved.getAuthorName());
                 design.put("author_email", saved.getAuthorEmail());
                 design.put("saved_cost", saved.getCost());
@@ -84,6 +88,7 @@ public class DesignController extends BaseController {
         return new ResponseEntity<>(design, HttpStatus.OK);
     }
 
+
     @RequestMapping(value = "/secure/designs")
     public List<CarDesign> listUserDesigns(Authentication user) {
         List<DBCarDesign> list = designs.findByAuthorEmail(user.getName());
@@ -95,7 +100,7 @@ public class DesignController extends BaseController {
     }
 
     @RequestMapping(value = "/secure/designs/delete/{designId}", method = RequestMethod.POST)
-    public ResponseEntity deleteDesign(@PathVariable String designId, Authentication user, HttpServletRequest req) {
+    public ResponseEntity deleteDesign(@PathVariable String designId, Authentication user) {
         long id;
         try {
             id = Long.parseLong(designId);
@@ -103,12 +108,26 @@ public class DesignController extends BaseController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         DBCarDesign saved = designs.findFirstByUiId(id);
-        if((saved.getAuthorEmail() == null || !saved.getAuthorEmail().equalsIgnoreCase(user.getName())) && !req.isUserInRole("Owner")) {
+        if((saved.getAuthorEmail() == null || !saved.getAuthorEmail().equalsIgnoreCase(user.getName())) && !Roles.isOwner(user)) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         saved.setHidden(true);
         designs.save(saved);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/admin/ids")
+    public List<Long> listIDs() {
+        List<Long> list = new ArrayList<>(designs.findPendingStockCars());
+        ListIterator<Long> it = list.listIterator();
+        File dir = new File(System.getenv("OPENSHIFT_DATA_DIR"), "content/designs");
+        if(!dir.isDirectory() || !dir.canRead()) throw new IllegalStateException(dir.getAbsolutePath());
+        while (it.hasNext()) {
+            Long id = it.next();
+            if(new File(dir, id+".pdf.gz").exists() && new File(dir, id+".png").exists())
+                it.remove();
+        }
+        return list;
     }
 
     @RequestMapping(value = "/designs", method = RequestMethod.POST)
@@ -191,23 +210,7 @@ public class DesignController extends BaseController {
         }
         out = designs.save(out);
 
-        if(design.image != null && design.image.startsWith("data:image/png;base64,")) {
-            try {
-                File outFile = new File(System.getenv("OPENSTACK_DATA_DIR"), "content/designs/"+design.id+".png");
-                InputStream in = MimeUtility.decode(new ByteArrayInputStream(design.image.substring(22).getBytes("US-ASCII")), "base64");
-                FileOutputStream fout = new FileOutputStream(outFile);
-                byte[] buf = new byte[2048];
-                int len;
-                while((len = in.read(buf)) > 0) {
-                    fout.write(buf, 0, len);
-                }
-                fout.flush();
-                fout.close();
-                in.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        saveImageFile(design.id, design.image);
 
         if(design.author_email != null) {
             designs.hideOldDesigns(design.author_email, design.design_name, design.id);

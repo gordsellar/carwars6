@@ -1,22 +1,28 @@
 package org.opentools.carwars.rest;
 
+import org.opentools.carwars.config.Roles;
 import org.opentools.carwars.dao.CarWarsDB;
 import org.opentools.carwars.data.DesignRatings;
 import org.opentools.carwars.data.DesignRepository;
 import org.opentools.carwars.data.RatingRepository;
-import org.opentools.carwars.data.UserRepository;
 import org.opentools.carwars.entity.DBCarDesign;
 import org.opentools.carwars.entity.DBCarWarsUser;
 import org.opentools.carwars.entity.DBDesignRating;
 import org.opentools.carwars.entity.DBDesignTag;
+import org.opentools.carwars.json.PDFRequest;
 import org.opentools.carwars.json.Review;
 import org.opentools.carwars.json.SearchStockCarRequest;
+import org.opentools.carwars.json.StockUpdateResult;
+import org.opentools.carwars.pdf.PDFGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,15 +33,13 @@ import static org.opentools.carwars.config.AllowedText.cleanse;
  * Functions for stock cars
  */
 @RestController
-public class StockCarController {
+public class StockCarController extends BaseController {
     @Autowired
     private CarWarsDB db;
     @Autowired
     private DesignRepository designs;
     @Autowired
     private RatingRepository ratings;
-    @Autowired
-    private UserRepository users;
 
     @RequestMapping(value = "/stock/latest", method = RequestMethod.GET)
     public Map getLatest(Authentication user) {
@@ -127,6 +131,35 @@ public class StockCarController {
         DesignRatings result = new DesignRatings();
         result.average = ratings.getAverageRating(designId);
         result.tags = designs.getTagsForDesign(designId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/admin/stock/update", method = RequestMethod.POST)
+    public ResponseEntity<StockUpdateResult> updateStockCar(@RequestBody PDFRequest request, Authentication auth) throws IOException {
+        if(!Roles.isOwner(auth)) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        DBCarDesign design = designs.findFirstByUiId(request.statistics.save_id);
+        if(design == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        saveImageFile(request.statistics.save_id, request.image);
+        if(request.text != null && !request.text.equals("")) {
+            design.setStockUpdateDate(new Date());
+            design.setSummary(request.summary);
+            design.setPassengers(request.statistics.passengers);
+            design.setTechLevel(request.statistics.techLevel);
+            design = designs.save(design);
+        }
+        StockUpdateResult result = new StockUpdateResult();
+        if(request.draw != null && !request.draw.equals("")) {
+            result.page_count = writePDF(request).pages;
+        }
+        if(!request.legal) {
+            if(design.isHidden())
+                result.legal = "Illegal stock car "+request.statistics.save_id+" is already deferred";
+            else {
+                design.setHidden(true);
+                designs.save(design);
+                result.legal = "Deferred illegal stock car "+request.statistics.save_id;
+            }
+        }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

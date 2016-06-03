@@ -162,16 +162,17 @@
             });
         };
 
+        server.allCarIDs(function(data) {
+            ids = data;
+            $scope.errorMessage = null;
+            $scope.total = ids.length;
+        }, function() {
+            $scope.alert("ID Load Failed");
+        });
+
         $scope.start = function () {
-            server.allCarIDs(function(data) {
-                ids = data.ids;
-                $scope.errorMessage = null;
-                $scope.running = true;
-                $scope.total = ids.length;
-                executeNext();
-            }, function() {
-                $scope.alert("ID Load Failed");
-            });
+            $scope.running = true;
+            executeNext();
         };
 
         var illegal = [

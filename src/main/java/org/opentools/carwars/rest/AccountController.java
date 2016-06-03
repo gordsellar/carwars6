@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.core.Authentication;
@@ -35,8 +34,6 @@ import static org.opentools.carwars.config.AllowedText.cleanse;
  */
 @RestController
 public class AccountController extends BaseController {
-    @Autowired
-    private JavaMailSender mailSender;
     @Autowired
     private WebLoginSuccess cookieHandler;
 

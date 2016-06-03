@@ -120,7 +120,7 @@ var CW = {}, CWD = {};
             loadFile('js', 'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-touch.min.js');
             //loadFile('js', 'http://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular-touch.min.js');
         loadFile('js', 'js/angular-app.js');
-        if(CW.readCookie('role') === 'Admin')
+        if(CW.readCookie('role') === 'Admin' || CW.readCookie('role') === 'Owner')
             loadFile('js', 'js/admin.js');
         loadFile('js', 'js/views.js');
         loadFile('js', 'js/routing.js');
