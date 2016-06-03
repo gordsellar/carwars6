@@ -70,7 +70,7 @@
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="${CARWARS_MAIL_HOST}"/>
         <property name="port" value="465"/>
-        <property name="username" value="garage@carwars.opentools.org"/>
+        <property name="username" value="combat-garage@opentools.org"/>
         <property name="password" value="${CARWARS_MAIL_PASS}" />
         <property name="javaMailProperties">
             <props>
