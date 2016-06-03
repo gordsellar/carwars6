@@ -42,6 +42,12 @@ public class CarWarsDB {
         return populateCarData(designs, currentUser);
     }
 
+    public List<Map> getPendingStockCars(String currentUser) {
+        List<DBCarDesign> designs = mgr.createNamedQuery("Design.pendingStock", DBCarDesign.class)
+                .setMaxResults(20).getResultList();
+        return populateCarData(designs, currentUser);
+    }
+
     public List<Map> getPublicCarsByName(String name, int offset, String currentUser) {
         TypedQuery<DBCarDesign> query = mgr.createNamedQuery("Design.publicByName", DBCarDesign.class)
                 .setParameter(1, "%"+name+"%").setMaxResults(21);

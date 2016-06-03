@@ -32,4 +32,6 @@ public interface DesignRepository extends PagingAndSortingRepository<DBCarDesign
     int hideOldDesigns(String email, String designName, long uiId);
     @Query("select d.uiId from DBCarDesign d where d.stockCar=true and d.hidden=false and d.deferred=false")
     List<Long> findPendingStockCars();
+    @Query("select count(d) from DBCarDesign d where d.stockCar=true and d.hidden=false and d.reviewed=false and d.deferred=false")
+    int countPendingStockCars();
 }

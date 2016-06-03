@@ -134,6 +134,41 @@ public class StockCarController extends BaseController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @RequestMapping(value="/admin/stock/count", method = RequestMethod.GET)
+    public Map countPendingStockCars() {
+        Map result = new HashMap();
+        result.put("count", designs.countPendingStockCars());
+        return result;
+    }
+
+    @RequestMapping(value="/admin/defer/{designId}", method = RequestMethod.POST)
+    public ResponseEntity deferStockCar(@PathVariable long designId, Authentication auth) {
+        DBCarDesign car = designs.findFirstByUiId(designId);
+        if(car == null || !car.isStockCar() || car.isReviewed() || car.isDeferred() || car.getReviewer() != null)
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        car.setStockUpdateDate(new Date());
+        car.setReviewed(false);
+        car.setDeferred(true);
+        car.setReviewer(auth.getName());
+        designs.save(car);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/admin/stock", method = RequestMethod.GET)
+    public List<Map> listPendingStockCars(Authentication user) {
+        return db.getPendingStockCars(user.getName());
+    }
+
+    @RequestMapping(value="/admin/stock", method = RequestMethod.POST)
+    public Map publishStockCar(@RequestBody PDFRequest request, Authentication user) {
+        Map result = new HashMap();
+
+        result.put("error", "Design already reviewed");
+        return result;
+    }
+
+    // Really just for the owner to administratively revise a design due to some flaw in how it was
+    // originally done or a significant upgrade in imaging/PDF writing
     @RequestMapping(value="/admin/stock/update", method = RequestMethod.POST)
     public ResponseEntity<StockUpdateResult> updateStockCar(@RequestBody PDFRequest request, Authentication auth) throws IOException {
         if(!Roles.isOwner(auth)) return new ResponseEntity<>(HttpStatus.FORBIDDEN);

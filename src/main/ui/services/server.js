@@ -251,10 +251,10 @@ angular.module('carwars').
                 return cancel;
             },
             countPendingStockCars: function(success, error) {
-                $http.get('/admin/stock/count').success(success).error(error);
+                $http.get('/api/admin/stock/count').success(success).error(error);
             },
             pendingStockCars: function(success, error) {
-                $http.get('/admin/stock').success(success).error(error);
+                $http.get('/api/admin/stock').success(success).error(error);
             },
             allCarIDs: function(success, error) {
                 $http.get('/api/admin/ids').success(success).error(error);
@@ -264,13 +264,12 @@ angular.module('carwars').
                 $http.post("/api/secure/stock/rating/"+designId, data).success(success).error(error);
             },
             deferStockCar: function(designId, success, error) {
-                $http.post("/admin/defer/"+designId).success(success).error(error);
+                $http.post("/api/admin/defer/"+designId).success(success).error(error);
             },
             approveStockCar: function(designId, car, designerNotes, signature, reviewerNotes, reviewerRating,
                                       tags, success, error) {
                 var data = {
                     // Fields needed to update stock car record
-                    id: designId,
                     tech_level: car.techLevel,
                     reviewer_notes: reviewerNotes,
                     reviewer_rating: reviewerRating,
@@ -287,7 +286,7 @@ angular.module('carwars').
                     weapons: car.weaponValues(),
                     legal: car.legal
                 };
-                $http.post("/admin/stock", data).success(success).error(error);
+                $http.post("/api/admin/stock", data).success(success).error(error);
             },
             loadDesignURL: function(designId) {
                 return $location.protocol()+"://"+$location.host()+"/load/"+designId;

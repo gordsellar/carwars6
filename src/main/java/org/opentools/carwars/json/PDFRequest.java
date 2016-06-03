@@ -6,6 +6,9 @@ import java.util.List;
 
 /**
  * A JSON request to generate a PDF document
+ * Also used to publish or revise a stock car, in which
+ * case a PDF needs to be generated but some extra fields
+ * are used.
  */
 public class PDFRequest {
     public String summary;
@@ -18,6 +21,12 @@ public class PDFRequest {
     public Statistics statistics;
     public String image; // For admin updates
     public String text;  // For admin updates
+    public String tech_level; // For publishing a stock car
+    public String reviewer_notes; // For publishing a stock car
+    public String reviewer_rating; // For publishing a stock car
+    public String designer_notes; // For publishing a stock car
+    public String signature; // For publishing a stock car
+    public List<String> tags; // For publishing a stock car
 
     public static class Armor {
         public String location;
