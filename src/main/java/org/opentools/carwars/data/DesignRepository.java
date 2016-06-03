@@ -22,7 +22,7 @@ public interface DesignRepository extends PagingAndSortingRepository<DBCarDesign
     @Query("select d from DBCarDesign d where d.designName=?1 and d.authorEmail=?2 and d.createDate < ?3 order by d.createDate desc")
     List<DBCarDesign> findHistoricalDesigns(String designName, String email, Date compareTo);
     DBCarDesign findFirstByUiId(long uiId);
-    @Query("select r from DBCarDesign d join d.ratings r where d.uiId = ?1 and r.user.email = d.authorEmail")
+    @Query("select r from DBCarDesign d join d.ratings r where d.uiId = ?1 and r.user = d.authorEmail")
     DBDesignRating getAuthorRating(long uiId);
     @Query("select new org.opentools.carwars.data.TagCount(t.tag, count(t)) from DBCarDesign d join d.tags t where d.uiId=?1 group by t.tag")
     List<TagCount> getTagsForDesign(long uiId);

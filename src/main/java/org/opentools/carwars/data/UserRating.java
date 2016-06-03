@@ -13,7 +13,7 @@ public class UserRating {
     public UserRating(int designId, String email, String name, String comments, Integer rating) {
         this.designId = designId;
         this.email = email;
-        this.name = name;
+        this.name = name == null ? email : name;
         this.comments = comments;
         this.rating = rating;
     }

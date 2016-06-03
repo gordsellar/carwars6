@@ -13,10 +13,7 @@ public class DBDesignTag implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "design_id")
     private DBCarDesign design;
-    @Id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "email")
-    private DBCarWarsUser user;
+    private String email;
     @Id
     private String tag;
 
@@ -28,19 +25,19 @@ public class DBDesignTag implements Serializable {
         this.design = design;
     }
 
-    public DBCarWarsUser getUser() {
-        return user;
-    }
-
-    public void setUser(DBCarWarsUser user) {
-        this.user = user;
-    }
-
     public String getTag() {
         return tag;
     }
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

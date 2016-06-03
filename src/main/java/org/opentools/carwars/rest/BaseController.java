@@ -55,12 +55,12 @@ public class BaseController {
         }
     }
 
-    protected PDFGenerator.GenerateResult writePDF(PDFRequest request) throws IOException {
+    protected PDFGenerator.GenerateResult writePDF(PDFRequest request, boolean temporary) throws IOException {
         PDFGenerator generator = new PDFGenerator();
         File dataDir = new File(System.getenv("OPENSHIFT_DATA_DIR"));
         if(!dataDir.isDirectory() || !dataDir.canRead() || !dataDir.canWrite())
             throw new IllegalArgumentException("Invalid setting for $OPENSHIFT_DATA_DIR: "+dataDir.getAbsolutePath());
-        File outputDir = new File(dataDir, "content/pdfs");
+        File outputDir = new File(dataDir, temporary ? "content/pdfs" : "content/designs");
         if(!outputDir.isDirectory() || !outputDir.canRead() || !outputDir.canWrite())
             throw new IllegalArgumentException("Invalid setting for PDF output directory: "+outputDir.getAbsolutePath());
         return generator.generatePDF(request, dataDir, outputDir, mailSender);

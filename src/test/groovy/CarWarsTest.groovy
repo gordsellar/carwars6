@@ -347,9 +347,17 @@ class CarWarsTest extends GebReportingTest {
         startTagging.click()
         sporty.click()
         finishTagging.click()
+        waitFor {save.displayed}
         save.click()
         def id = designId
 //      // Confirm that it's listed on the pending stock car screen
+        // Must reload so that admin functions are loaded
+        go()
+        at LoadingPage
+        newDesignLink.click()
+        at NewVehiclePage
+        clickOnCanvas('createNewCar')
+        at DefaultPage
         mainMenuButton.click()
         adminMenu.click()
         reviewStock.click()
@@ -586,7 +594,7 @@ class CarWarsTest extends GebReportingTest {
         stockCars.click()
         arenaHeader.click()
         div15.click()
-        waitFor { loading.displayed }
+        Thread.sleep(400)
         waitFor { !loading.displayed }
         assert designName(id).text() == name
         assert designCost(id) == "14218"

@@ -9,7 +9,7 @@
 <body ng-controller="CarWarsCtrl">
 <div id="Loading">
     <canvas id="LoadingScreen" width="800" height="400"></canvas>
-    <div ng-include="'views/loaded-menu.html'"></div>
+    <div ng-include="'views/loaded-menu.html'" ng-cloak></div>
 </div>
 <div id="Running" ng-show="started" ng-cloak>
     <div id="Controls" ng-view ng-mouseenter="mouseNotify('mouse-in-controls')"

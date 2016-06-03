@@ -3,17 +3,14 @@ package org.opentools.carwars.dao;
 import org.opentools.carwars.data.TagCount;
 import org.opentools.carwars.data.UserRating;
 import org.opentools.carwars.entity.DBCarDesign;
-import org.opentools.carwars.entity.DBCarWarsUser;
 import org.opentools.carwars.entity.DBDesignTag;
 import org.opentools.carwars.json.Review;
 import org.opentools.carwars.json.SearchStockCarRequest;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -140,9 +137,9 @@ public class CarWarsDB {
         if(result.size() > 0) {
             // Get all the user ratings on the matching designs
             TypedQuery<UserRating> query = mgr.createQuery("select new org.opentools.carwars.data.UserRating(" +
-                    "r.design.id, u.email, u.name, r.comments, r.rating) from DBDesignRating r join r.user u " +
-                    "where r.design.id in ("+ids+") and (r.comments is not null or r.rating is not null" +
-                    (currentUser == null ? "" : " or u.email=?1")+") order by r.id asc", UserRating.class);
+                    "r.design.id, r.user, u.name, r.comments, r.rating) from DBDesignRating r left join DBCarWarsUser u " +
+                    "on u.email = r.user where r.design.id in ("+ids+") and (r.comments is not null or r.rating is not null" +
+                    (currentUser == null ? "" : " or r.user=?1")+") order by r.id asc", UserRating.class);
             if(currentUser != null) query.setParameter(1, currentUser);
             for (UserRating rating : query.getResultList()) {
                 Review rev = new Review();
@@ -171,7 +168,7 @@ public class CarWarsDB {
             if(currentUser != null) {
                 TypedQuery<TagCount> q3 = mgr.createQuery("select new org.opentools.carwars.data.TagCount(" +
                         "t.design.id, t.tag) from DBDesignTag t where t.design.id in ("+ids+")" +
-                        "and t.user.email=?1", TagCount.class);
+                        "and t.email=?1", TagCount.class);
                 q3.setParameter(1, currentUser);
                 for (TagCount tc : q3.getResultList()) {
                     Map car = byId.get(tc.getDesignId());

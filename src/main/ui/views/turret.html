@@ -18,7 +18,7 @@
                ng-click="editWeapon(weapon)">
                 <i class="icon ion-pinpoint"></i>
                 {{weapon.fake ? "Fake" : ""}}
-                {{weapon.abbv}} -- {{weapon.spaceInsideTurret()}}sp{{!weapon.fake && weapon.shots > 0 ? +", "+weapon.ammoTotal()+" shots" : ""}}
+                {{weapon.abbv}} -- {{weapon.spaceInsideTurret()}}sp{{(!weapon.fake && weapon.shots > 0) ? ", "+weapon.ammoTotal()+" shots" : ""}}
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </a>
             <a class="item item-icon-left item-icon-right" ng-click="addWeapon()" ng-show="spaces > 0">

@@ -866,7 +866,7 @@ class WeaponPage extends CarWarsPage {
         ammoUp { id -> $("span.AmmoCount.${id} button.ion-plus-circled") }
         ammoDown { id -> $("span.AmmoCount.${id} button.ion-minus-circled") }
         ammoNone { id -> $("span.AmmoCount.${id} button.ion-close-circled") }
-        ammoAddClip { id -> $("span.AmmoCount.${id} button.ion-android-storage") }
+        ammoAddClip { id -> $("span.AmmoCount.${id} button.ion-android-list") }
         ammoText { id -> $("span.AmmoCount.${id}").parent().find("span.ng-binding").text() }
         caUp { $("span.button-group.CA button.ion-plus-circled") }
         caDown { $("span.button-group.CA button.ion-minus-circled") }
@@ -1325,7 +1325,7 @@ class StockListPage extends Page {
         weight { $("button.button", text: "Weight") }
         either { $("button.button", text: "Any") }
 
-        design(required: false) { id -> $("div.StockCarDiv.ID${id}") }
+        design(required: false) { id -> $("div:not(.Copy) > div.StockCarDiv.ID${id}") }
         designName(to: StockCarPage) { id -> design(id).find(".StockCarName") }
         designCost { id -> design(id).find(".StockCar.Cost.Field").text() }
         designBody { id -> design(id).find(".StockCar.Body.Field").text() }
@@ -1333,9 +1333,8 @@ class StockListPage extends Page {
         designCargoWeight { id -> design(id).find(".StockCar.CargoWeight.Field", 0).text() }
         designMaxPull { id -> design(id).find(".StockCar.CargoWeight.Field", 1).text() }
         designTotalWeight { id -> design(id).find(".StockCar.CargoWeight.Field", 2).text() }
-        designHC { id -> design(id).find(".StockCar.HC.Field", 0).text() }
-        designPassengers { id -> design(id).find(".StockCar.HC.Field", 1).text() }
-//        designPassengers { id -> design(id).find(".StockCar.HC.Field", 1).text() }
+        designHC { id -> design(id).find(".StockHC .StockCar.HC.Field", 0).text() }
+        designPassengers { id -> design(id).find(".StockPass .StockCar.HC.Field").text() }
         designTopSpeed { id -> design(id).find(".StockCar.Speed.Field").text() }
         designAcceleration { id -> design(id).find(".StockCar.Acceleration.Field").text() }
         designTags { id -> design(id).find(".StockCarTags").text() }
@@ -1373,7 +1372,7 @@ class StockCarPage extends Page {
         selectedName { selected.find(".StockCarName") }
         selectedCost { selected.find(".StockCar.Cost.Field").text() }
         selectedBody { selected.find(".StockCar.Body.Field").text() }
-        selectedHC { selected.find(".StockCar.HC.Field").text() }
+        selectedHC { selected.find(".StockHC .StockCar.HC.Field").text() }
         selectedTopSpeed { selected.find(".StockCar.Speed.Field").text() }
         selectedAcceleration { selected.find(".StockCar.Acceleration.Field").text() }
         selectedTags { selected.find(".StockCarTags").text() }
@@ -1431,7 +1430,7 @@ class AdminReviewPage extends Page {
         designName() { id -> design(id).find(".StockCarName") }
         designCost { id -> design(id).find(".StockCar.Cost.Field").text() }
         designBody { id -> design(id).find(".StockCar.Body.Field").text() }
-        designHC { id -> design(id).find(".StockCar.HC.Field").text() }
+        designHC { id -> design(id).find(".StockHC .StockCar.HC.Field").text() }
         designTopSpeed { id -> design(id).find(".StockCar.Speed.Field").text() }
         designAcceleration { id -> design(id).find(".StockCar.Acceleration.Field").text() }
         designTags { id -> design(id).find(".StockCarTags").text() }
@@ -1443,7 +1442,7 @@ class AdminReviewPage extends Page {
         selectedName { selected.find(".StockCarName") }
         selectedCost { selected.find(".StockCar.Cost.Field").text() }
         selectedBody { selected.find(".StockCar.Body.Field").text() }
-        selectedHC { selected.find(".StockCar.HC.Field").text() }
+        selectedHC { selected.find(".StockHC .StockCar.HC.Field").text() }
         selectedTopSpeed { selected.find(".StockCar.Speed.Field").text() }
         selectedAcceleration { selected.find(".StockCar.Acceleration.Field").text() }
         selectedTags { selected.find(".StockCarTags").text() }

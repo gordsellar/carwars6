@@ -11,11 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional(readOnly = true)
 public interface RatingRepository extends CrudRepository<DBDesignRating, Long> {
-    @Query("select r from DBDesignRating r where r.user.email = ?1 and r.design.uiId = ?2")
+    @Query("select r from DBDesignRating r where r.user = ?1 and r.design.uiId = ?2")
     DBDesignRating getRatingForCar(String email, long uiId);
     @Modifying
     @Transactional
-    @Query("delete from DBDesignTag t where t.user.email=?1 and t.design.id = (select d.id from DBCarDesign d where d.uiId=?2)")
+    @Query("delete from DBDesignTag t where t.email=?1 and t.design.id = (select d.id from DBCarDesign d where d.uiId=?2)")
     int deleteTags(String email, long uiId);
     @Query("select avg(r.rating) from DBDesignRating r where r.design.uiId = ?1")
     float getAverageRating(long uiId);

@@ -13,14 +13,12 @@ import org.opentools.carwars.json.PDFRequest;
 import org.opentools.carwars.json.Review;
 import org.opentools.carwars.json.SearchStockCarRequest;
 import org.opentools.carwars.json.StockUpdateResult;
-import org.opentools.carwars.pdf.PDFGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -97,36 +95,9 @@ public class StockCarController extends BaseController {
         if(design.getAuthorEmail() != null && design.getAuthorEmail().equalsIgnoreCase(user.getName())) {
             review.setRating(null); // Don't allow the author to rate their own design
         }
-        DBCarWarsUser cwUser = users.findOne(user.getName());
-        if(cwUser == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
         // Save
-        DBDesignRating rating = ratings.getRatingForCar(user.getName(), designId);
-        if(rating != null) {
-            if(review.getRating() == null && review.getComments() == null)
-                ratings.delete(rating);
-            else {
-                rating.setRating(review.getRating());
-                rating.setComments(review.getComments());
-                ratings.save(rating);
-            }
-        } else if(review.getRating() != null && review.getComments() != null){
-            rating = new DBDesignRating();
-            rating.setComments(review.getComments());
-            rating.setRating(review.getRating());
-            rating.setDesign(design);
-            rating.setUser(cwUser);
-            ratings.save(rating);
-        }
-        ratings.deleteTags(user.getName(), designId);
-        for (String tag : review.getTags()) {
-            DBDesignTag dbt = new DBDesignTag();
-            dbt.setUser(cwUser);
-            dbt.setDesign(design);
-            dbt.setTag(tag);
-            db.saveTag(dbt);
-        }
+        saveRating(review.getComments(), review.getRating(), design, user.getName());
+        saveTags(review.getTags(), design, user.getName());
         // Get updated statistics
         DesignRatings result = new DesignRatings();
         result.average = ratings.getAverageRating(designId);
@@ -160,10 +131,39 @@ public class StockCarController extends BaseController {
     }
 
     @RequestMapping(value="/admin/stock", method = RequestMethod.POST)
-    public Map publishStockCar(@RequestBody PDFRequest request, Authentication user) {
+    public Map publishStockCar(@RequestBody PDFRequest request, Authentication user) throws IOException {
+        for (int i = 0; i < request.tags.size(); i++) {
+            request.tags.set(i, cleanse(request.tags.get(i), 20));
+        }
+        request.tech_level = cleanse(request.tech_level, 20);
+        request.reviewer_notes = cleanse(request.reviewer_notes, 20000);
+        request.designer_notes = cleanse(request.designer_notes, 20000);
+        request.signature = cleanse(request.signature, 200);
         Map result = new HashMap();
+        DBCarDesign car = designs.findFirstByUiId(request.statistics.save_id);
+        if(car == null|| !car.isStockCar()) {
+            result.put("error", "Invalid design ID");
+            return result;
+        } else if(car.isReviewed() || car.isDeferred() || car.getReviewer() != null) {
+            result.put("error", "Design already reviewed");
+            return result;
+        }
+        car.setStockUpdateDate(new Date());
+        car.setReviewed(true);
+        car.setDeferred(false);
+        car.setReviewer(user.getName());
+        car.setTechLevel(request.tech_level);
+        car.setSignature(request.signature);
+        designs.save(car);
+        if(car.getAuthorEmail() != null && !car.getAuthorEmail().equalsIgnoreCase("")
+                && !car.getAuthorEmail().equalsIgnoreCase(user.getName())) {
+            saveRating(request.designer_notes, null, car, car.getAuthorEmail());
+        }
+        saveRating(car.getAuthorEmail().equals(user.getName()) ? request.designer_notes : request.reviewer_notes,
+                car.getAuthorEmail().equals(user.getName()) ? null : request.reviewer_rating, car, user.getName());
+        saveTags(request.tags, car, user.getName());
 
-        result.put("error", "Design already reviewed");
+        result.put("page_count", writePDF(request, false).pages);
         return result;
     }
 
@@ -184,7 +184,7 @@ public class StockCarController extends BaseController {
         }
         StockUpdateResult result = new StockUpdateResult();
         if(request.draw != null && !request.draw.equals("")) {
-            result.page_count = writePDF(request).pages;
+            result.page_count = writePDF(request, false).pages;
         }
         if(!request.legal) {
             if(design.isHidden())
@@ -196,5 +196,36 @@ public class StockCarController extends BaseController {
             }
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    private void saveTags(List<String> tags, DBCarDesign design, String email) {
+        ratings.deleteTags(email, design.getUiId());
+        for (String tag : tags) {
+            DBDesignTag dbt = new DBDesignTag();
+            dbt.setEmail(email);
+            dbt.setDesign(design);
+            dbt.setTag(tag);
+            db.saveTag(dbt);
+        }
+    }
+
+    private void saveRating(String comments, Integer rated, DBCarDesign design, String email) {
+        DBDesignRating rating = ratings.getRatingForCar(email, design.getUiId());
+        if(rating != null) {
+            if(rated == null && comments == null)
+                ratings.delete(rating);
+            else {
+                rating.setRating(rated);
+                rating.setComments(comments);
+                ratings.save(rating);
+            }
+        } else if(rated != null || comments != null) {
+            rating = new DBDesignRating();
+            rating.setComments(comments);
+            rating.setRating(rated);
+            rating.setDesign(design);
+            rating.setUser(email);
+            ratings.save(rating);
+        }
     }
 }

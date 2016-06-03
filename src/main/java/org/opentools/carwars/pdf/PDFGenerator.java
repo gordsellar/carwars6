@@ -51,6 +51,7 @@ public class PDFGenerator {
     private File generatedPDF = null;
     private String generatedName = null;
     private boolean designMismatch = false;
+    private boolean temporary;
 
     public static class GenerateResult {
         public int pages;
@@ -60,6 +61,7 @@ public class PDFGenerator {
     public GenerateResult generatePDF(PDFRequest request, File fontDir, File saveDir, JavaMailSender mailSender) throws IOException {
         this.request = request;
         this.mailSender = mailSender;
+        temporary = saveDir.getName().equals("pdfs");
         try {
             startDocument();
             loadFonts(fontDir);
@@ -796,8 +798,12 @@ public class PDFGenerator {
 
 
     private String saveDocument(File dir) throws IOException {
-        int number = (int)(Math.random()*Integer.MAX_VALUE);
-        generatedName = "car-design-" + request.statistics.name.replaceAll("[^A-Za-z0-9]", "_") + "-" + number + ".pdf";
+        if(temporary) {
+            int number = (int)(Math.random()*Integer.MAX_VALUE);
+            generatedName = "car-design-" + request.statistics.name.replaceAll("[^A-Za-z0-9]", "_") + "-" + number + ".pdf";
+        } else {
+            generatedName = request.statistics.save_id+".pdf";
+        }
         generatedPDF = new File(dir, generatedName + ".gz");
         OutputStream out = new GZIPOutputStream(new BufferedOutputStream(new FileOutputStream(generatedPDF)));
         doc.save(out);

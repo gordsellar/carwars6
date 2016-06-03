@@ -22,7 +22,7 @@ import java.util.Map;
 public class PDFController extends BaseController {
     @RequestMapping(value = "/pdf", method = RequestMethod.POST)
     public Map generatePDF(@RequestBody PDFRequest request, HttpServletRequest req) throws IOException {
-        String fileName = writePDF(request).fileName;
+        String fileName = writePDF(request, true).fileName;
         Map result = new HashMap();
         result.put("url", req.getContextPath()+"/content/pdfs/"+fileName);
         return result;

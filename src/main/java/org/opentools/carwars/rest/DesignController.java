@@ -176,6 +176,8 @@ public class DesignController extends BaseController {
         out.setPassengers(design.passengers);
 
         if(design.author_email != null) {
+            // Technically the code supports saving comments for a user without an account
+            // But for now I'd prefer not leaving that window to spam open
             DBCarWarsUser user = users.findOne(design.author_email);
             if(user != null) {
                 if(design.tags != null && design.tags.size() > 0) {
@@ -184,13 +186,13 @@ public class DesignController extends BaseController {
                         DBDesignTag dt = new DBDesignTag();
                         dt.setDesign(out);
                         dt.setTag(tag);
-                        dt.setUser(user);
+                        dt.setEmail(design.author_email);
                         out.getTags().add(dt);
                     }
                 }
                 if(design.designer_notes != null) {
                     DBDesignRating rating = new DBDesignRating();
-                    rating.setUser(user);
+                    rating.setUser(design.author_email);
                     rating.setDesign(out);
                     rating.setComments(design.designer_notes);
                     out.setRatings(new ArrayList<DBDesignRating>());

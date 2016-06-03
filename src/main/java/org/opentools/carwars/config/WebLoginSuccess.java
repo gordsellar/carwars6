@@ -12,6 +12,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  *
@@ -33,11 +35,28 @@ public class WebLoginSuccess implements AuthenticationSuccessHandler {
         cookie.setPath("/");
         cookie.setMaxAge(86400*30);
         response.addCookie(cookie);
-        cookie = new Cookie("author_name", user.getName());
+        String value;
+        if(user.getName() != null) {
+            try {
+                value = URLEncoder.encode(user.getName(), "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                value = user.getName();
+            }
+        } else value = null;
+        cookie = new Cookie("author_name", value);
+        cookie.setVersion(0);
         cookie.setPath("/");
         cookie.setMaxAge(86400*30);
         response.addCookie(cookie);
-        cookie = new Cookie("author_design_sig", user.getDesignSignature());
+        if(user.getDesignSignature() != null) {
+            try {
+                value = URLEncoder.encode(user.getDesignSignature(), "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                value = user.getDesignSignature();
+            }
+        } else value = null;
+        cookie = new Cookie("author_design_sig", value);
+        cookie.setVersion(0);
         cookie.setPath("/");
         cookie.setMaxAge(86400*30);
         response.addCookie(cookie);

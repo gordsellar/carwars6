@@ -12,11 +12,11 @@
         <div class="StockCar Body Field Row1">{{data.body}}</div>
         <div class="StockCar Tech Label Row2">Tech Level</div>
         <div class="StockCar Tech Field Row2" ng-bind="data.tech_level"></div>
-        <div ng-hide="data.vehicle === 'SemiTrailer' || data.vehicle === 'CarTrailer' || data.vehicle === 'Bus'">
+        <div class="StockHC" ng-hide="data.vehicle === 'SemiTrailer' || data.vehicle === 'CarTrailer' || data.vehicle === 'Bus'">
             <div class="StockCar HC Label Row1" ng-class="{'Tight': data.average_rating}">HC</div>
             <div class="StockCar HC Field Row1" ng-class="{'Tight': data.average_rating}">{{data.hc}}</div>
         </div>
-        <div ng-show="data.vehicle === 'Bus'">
+        <div class="StockPass" ng-show="data.vehicle === 'Bus'">
             <div class="StockCar HC Label Row1" ng-class="{'Tight': data.average_rating}">Pass</div>
             <div class="StockCar HC Field Row1" ng-class="{'Tight': data.average_rating}">{{data.passengers}}</div>
         </div>

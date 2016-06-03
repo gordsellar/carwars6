@@ -23,7 +23,7 @@ public class PDFRequest {
     public String text;  // For admin updates
     public String tech_level; // For publishing a stock car
     public String reviewer_notes; // For publishing a stock car
-    public String reviewer_rating; // For publishing a stock car
+    public Integer reviewer_rating; // For publishing a stock car
     public String designer_notes; // For publishing a stock car
     public String signature; // For publishing a stock car
     public List<String> tags; // For publishing a stock car

@@ -19,10 +19,6 @@ public class DBCarWarsUser {
     @Column(name = "design_signature")
     private String designSignature;
     private String role;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private Collection<DBDesignRating> ratings;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private Collection<DBDesignTag> tags;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
     private Collection<DBDesignList> lists;
 
@@ -80,22 +76,6 @@ public class DBCarWarsUser {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public Collection<DBDesignRating> getRatings() {
-        return ratings;
-    }
-
-    public void setRatings(Collection<DBDesignRating> ratings) {
-        this.ratings = ratings;
-    }
-
-    public Collection<DBDesignTag> getTags() {
-        return tags;
-    }
-
-    public void setTags(Collection<DBDesignTag> tags) {
-        this.tags = tags;
     }
 
     public Collection<DBDesignList> getLists() {

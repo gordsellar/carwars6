@@ -14,9 +14,7 @@ public class DBDesignRating {
     private Integer rating;
     @Column(columnDefinition = "text")
     private String comments;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user")
-    private DBCarWarsUser user;
+    private String user;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="design_id")
     private DBCarDesign design;
@@ -45,11 +43,11 @@ public class DBDesignRating {
         this.comments = comments;
     }
 
-    public DBCarWarsUser getUser() {
+    public String getUser() {
         return user;
     }
 
-    public void setUser(DBCarWarsUser user) {
+    public void setUser(String user) {
         this.user = user;
     }
 
