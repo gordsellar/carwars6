@@ -38,7 +38,7 @@ public class BaseController {
     protected void saveImageFile(long id, String image) {
         if(image != null && image.startsWith("data:image/png;base64,")) {
             try {
-                File outFile = new File(System.getenv("OPENSTACK_DATA_DIR"), "content/designs/"+id+".png");
+                File outFile = new File(System.getenv("OPENSHIFT_DATA_DIR"), "content/designs/"+id+".png");
                 InputStream in = MimeUtility.decode(new ByteArrayInputStream(image.substring(22).getBytes("US-ASCII")), "base64");
                 FileOutputStream fout = new FileOutputStream(outFile);
                 byte[] buf = new byte[2048];
