@@ -31,41 +31,26 @@ public class WebLoginSuccess implements AuthenticationSuccessHandler {
     }
 
     public void setCookies(HttpServletResponse response, DBCarWarsUser user) {
-        Cookie cookie = new Cookie("author_email", user.getEmail());
-        cookie.setVersion(0);
-        cookie.setPath("/");
-        cookie.setMaxAge(86400*30);
-        response.addCookie(cookie);
-        String value;
-        if(user.getName() != null) {
+        response.addCookie(prepareCookie("author_email", user.getEmail()));
+        response.addCookie(prepareCookie("author_design_sig", user.getDesignSignature()));
+        response.addCookie(prepareCookie("author_name", user.getName()));
+        response.addCookie(prepareCookie("role",  user.getRole()));
+    }
+
+    private Cookie prepareCookie(String name, String value) {
+        String working;
+        if(value != null) {
             try {
-                value = URLEncoder.encode(user.getName(), "UTF-8");
+                working = URLEncoder.encode(value, "UTF-8");
             } catch (UnsupportedEncodingException e) {
-                value = user.getName();
+                working = value;
             }
-        } else value = null;
-        cookie = new Cookie("author_name", value);
+        } else working = null;
+        Cookie cookie = new Cookie(name, working);
         cookie.setVersion(0);
         cookie.setPath("/");
         cookie.setMaxAge(86400*30);
-        response.addCookie(cookie);
-        if(user.getDesignSignature() != null) {
-            try {
-                value = URLEncoder.encode(user.getDesignSignature(), "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                value = user.getDesignSignature();
-            }
-        } else value = null;
-        cookie = new Cookie("author_design_sig", value);
-        cookie.setVersion(0);
-        cookie.setPath("/");
-        cookie.setMaxAge(86400*30);
-        response.addCookie(cookie);
-        cookie = new Cookie("role", user.getRole());
-        cookie.setVersion(0);
-        cookie.setPath("/");
-        cookie.setMaxAge(86400*30);
-        response.addCookie(cookie);
+        return cookie;
     }
 
     public void clearCookies(HttpServletResponse response) {

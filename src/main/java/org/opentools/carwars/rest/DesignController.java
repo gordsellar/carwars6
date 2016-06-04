@@ -190,7 +190,7 @@ public class DesignController extends BaseController {
                         out.getTags().add(dt);
                     }
                 }
-                if(design.designer_notes != null) {
+                if(design.designer_notes != null && !design.designer_notes.equals("")) {
                     DBDesignRating rating = new DBDesignRating();
                     rating.setUser(design.author_email);
                     rating.setDesign(out);
@@ -198,7 +198,7 @@ public class DesignController extends BaseController {
                     out.setRatings(new ArrayList<DBDesignRating>());
                     out.getRatings().add(rating);
                 }
-                if(design.designer_signature != null) {
+                if(design.designer_signature != null && !design.designer_signature.equals("")) {
                     user.setDesignSignature(design.designer_signature);
                     users.save(user);
                     if(auth != null && auth.getName() != null) {
