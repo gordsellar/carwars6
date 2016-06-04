@@ -1,6 +1,5 @@
 package org.opentools.carwars.rest;
 
-import com.sun.mail.util.MailConnectException;
 import org.opentools.carwars.config.WebLoginSuccess;
 import org.opentools.carwars.entity.DBCarWarsUser;
 import org.opentools.carwars.json.AccountRequest;
@@ -8,23 +7,15 @@ import org.opentools.carwars.json.PendingUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.MailException;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import java.net.ConnectException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import static org.opentools.carwars.config.AllowedText.cleanse;
 
@@ -51,10 +42,10 @@ public class AccountController extends BaseController {
         DBCarWarsUser user = users.findOne(request.email);
         if(user == null) {
             String key = createUserRecord(request.email, "", null).getConfirmationKey();
-            sendAccountEmail(request.email, "", key);
+            mailer.sendAccountEmail(request.email, "", key);
         } else {
             if(user.isConfirmed()) return new ResponseEntity(HttpStatus.FORBIDDEN);
-            sendAccountEmail(request.email, user.getName(), user.getConfirmationKey());
+            mailer.sendAccountEmail(request.email, user.getName(), user.getConfirmationKey());
         }
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -102,73 +93,8 @@ public class AccountController extends BaseController {
         user.setConfirmed(false);
         user.setConfirmationKey(passwords.createConfirmationKey());
         users.save(user);
-        sendResetEmail(request.email, user.getName(), user.getConfirmationKey());
+        mailer.sendResetEmail(request.email, user.getName(), user.getConfirmationKey());
         return new ResponseEntity(HttpStatus.OK);
-    }
-
-    private void sendAccountEmail(final String email, final String name, final String key) {
-        StringBuilder buf = new StringBuilder();
-        buf.append("<p>Someone has requested a new Car Wars Combat Garage account for ").append(email).append(".\n").append(
-                "If you would like to confirm this and create an account, please\n").append(
-                "<a href='http://carwars.opentools.org/confirm/").append(key).append(
-                "'>click here</a>.</p>");
-        buf.append("<p>Creating an account will let you access your previous car designs through the Web interface\n").append(
-                "rather than just clicking the links I e-mail to you.  You will also be able to review stock\n").append(
-                "car designs.</p>\n\n").append(
-                "<p>In any case, happy duelling!</p>");
-
-        final String text = buf.toString();
-        MimeMessagePreparator mmp = new MimeMessagePreparator() {
-            public void prepare(MimeMessage mimeMessage) throws Exception {
-                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-                String to = name == null || name.equals("") ? email : name+" <"+email+">";
-                message.setTo(to);
-                message.setFrom("Car Wars Combat Garage <garage@carwars.opentools.org>");
-                message.setSubject("Car Wars Combat Garage Account");
-                message.setText(text, true);
-            }
-        };
-        try {
-            this.mailSender.send(mmp);
-        } catch (MailException e) {
-            if(e.getCause() instanceof MailConnectException && e.getCause().getCause() instanceof ConnectException &&
-                    e.getCause().getMessage().contains("localhost")) {
-                System.err.println(text);
-            } else {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void sendResetEmail(final String email, final String name, final String key) {
-        StringBuilder buf = new StringBuilder();
-        buf.append("<p>The Car Wars Combat Garage password for ").append(email).append(" was reset\n").append(
-                "on ").append(new SimpleDateFormat("MM/dd/yyyy hh:mm aa").format(new Date())).append(
-                ".  To choose a new password, please\n").append("<a href='http://carwars.opentools.org/confirm/").append(
-                key).append("'>click here</a>.</p>\n\n");
-        buf.append("<p>Happy duelling!</p>");
-
-        final String text = buf.toString();
-        MimeMessagePreparator mmp = new MimeMessagePreparator() {
-            public void prepare(MimeMessage mimeMessage) throws Exception {
-                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-                String to = name == null || name.equals("") ? email : name+" <"+email+">";
-                message.setTo(to);
-                message.setFrom("Car Wars Combat Garage <garage@carwars.opentools.org>");
-                message.setSubject("Car Wars Combat Garage Password Reset");
-                message.setText(text, true);
-            }
-        };
-        try {
-            this.mailSender.send(mmp);
-        } catch (MailException e) {
-            if(e.getCause() instanceof MailConnectException && e.getCause().getCause() instanceof ConnectException &&
-                    e.getCause().getMessage().contains("localhost")) {
-                System.err.println(text);
-            } else {
-                e.printStackTrace();
-            }
-        }
     }
 
 }

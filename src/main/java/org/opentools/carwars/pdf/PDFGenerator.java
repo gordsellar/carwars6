@@ -14,6 +14,7 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.apache.pdfbox.util.Matrix;
+import org.opentools.carwars.email.Mailer;
 import org.opentools.carwars.json.PDFRequest;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -40,7 +41,7 @@ import java.util.zip.GZIPOutputStream;
 public class PDFGenerator {
     private final static float KAPPA = (float) (4.0 * ((Math.sqrt(2) - 1.0) / 3.0));
     private final static float LEADING = 1.15f;
-    private JavaMailSender mailSender;
+    private Mailer mailSender;
     private PDDocument doc;
     private PDPage page;
     private PDFRequest request;
@@ -58,7 +59,7 @@ public class PDFGenerator {
         public String fileName;
     }
 
-    public GenerateResult generatePDF(PDFRequest request, File fontDir, File saveDir, JavaMailSender mailSender) throws IOException {
+    public GenerateResult generatePDF(PDFRequest request, File fontDir, File saveDir, Mailer mailSender) throws IOException {
         this.request = request;
         this.mailSender = mailSender;
         temporary = saveDir.getName().equals("pdfs");
@@ -75,7 +76,7 @@ public class PDFGenerator {
             GenerateResult result = new GenerateResult();
             result.pages = doc.getNumberOfPages();
             result.fileName = generatedName;
-            if(designMismatch) sendMismatchEmail();
+            if(designMismatch) mailSender.sendMismatchEmail(request.summary, generatedName);
             return result;
         } finally {
             doc.close();
@@ -1005,30 +1006,5 @@ public class PDFGenerator {
             pdf.curveTo(x - cpl, y - r, x - r, y - cpl, x - r, y);
         else
             pdf.curveTo(x - r, y - cpl, x - cpl, y - r, x, y - r);
-    }
-
-    private void sendMismatchEmail() {
-        final String text = "<p>I noticed a problem with the following design:</p>"+
-            "<p>"+request.summary+"\n"+
-            "<p>You can view the PDF here: <a href='http://carwars.opentools.org/content/pdfs/"+generatedName+"'>"+generatedName+"</a></p>";
-        MimeMessagePreparator mmp = new MimeMessagePreparator() {
-            public void prepare(MimeMessage mimeMessage) throws Exception {
-                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-                message.setTo("Aaron Mulder <ammulder@alumni.princeton.edu>");
-                message.setFrom("Car Wars Combat Garage <garage@carwars.opentools.org>");
-                message.setSubject("Combat Garage Worksheet Discrepancy");
-                message.setText(text, true);
-            }
-        };
-        try {
-            this.mailSender.send(mmp);
-        } catch (MailException e) {
-            if(e.getCause() instanceof MailConnectException && e.getCause().getCause() instanceof ConnectException &&
-                    e.getCause().getMessage().contains("localhost")) {
-                System.err.println(text);
-            } else {
-                e.printStackTrace();
-            }
-        }
     }
 }

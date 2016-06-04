@@ -32,6 +32,7 @@ public class WebLoginSuccess implements AuthenticationSuccessHandler {
 
     public void setCookies(HttpServletResponse response, DBCarWarsUser user) {
         Cookie cookie = new Cookie("author_email", user.getEmail());
+        cookie.setVersion(0);
         cookie.setPath("/");
         cookie.setMaxAge(86400*30);
         response.addCookie(cookie);
@@ -61,6 +62,7 @@ public class WebLoginSuccess implements AuthenticationSuccessHandler {
         cookie.setMaxAge(86400*30);
         response.addCookie(cookie);
         cookie = new Cookie("role", user.getRole());
+        cookie.setVersion(0);
         cookie.setPath("/");
         cookie.setMaxAge(86400*30);
         response.addCookie(cookie);

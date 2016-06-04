@@ -2,6 +2,7 @@ package org.opentools.carwars.rest;
 
 import org.opentools.carwars.config.PasswordConfig;
 import org.opentools.carwars.data.UserRepository;
+import org.opentools.carwars.email.Mailer;
 import org.opentools.carwars.entity.DBCarWarsUser;
 import org.opentools.carwars.json.PDFRequest;
 import org.opentools.carwars.pdf.PDFGenerator;
@@ -20,7 +21,7 @@ public class BaseController {
     @Autowired
     protected UserRepository users;
     @Autowired
-    protected JavaMailSender mailSender;
+    protected Mailer mailer;
 
     protected DBCarWarsUser createUserRecord(String email, String name, String password) {
         String key = passwords.createConfirmationKey();
@@ -63,6 +64,6 @@ public class BaseController {
         File outputDir = new File(dataDir, temporary ? "content/pdfs" : "content/designs");
         if(!outputDir.isDirectory() || !outputDir.canRead() || !outputDir.canWrite())
             throw new IllegalArgumentException("Invalid setting for PDF output directory: "+outputDir.getAbsolutePath());
-        return generator.generatePDF(request, dataDir, outputDir, mailSender);
+        return generator.generatePDF(request, dataDir, outputDir, mailer);
     }
 }

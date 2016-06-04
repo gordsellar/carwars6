@@ -230,51 +230,7 @@ public class DesignController extends BaseController {
             user.setName(name);
             users.save(user);
         }
-        StringBuilder buf = new StringBuilder();
-        buf.append("<h2>Car Designs</h2>\n").append(
-                "<p>These are the car designs on record for "+email+":</p>\n").append(
-                "<table border='1'>\n").append(
-                "  <tr>\n").append(
-                "    <th>Name</th>\n").append(
-                "    <th>Body</th>\n").append(
-                "    <th>Cost</th>\n").append(
-                "    <th>Date</th>\n").append(
-                "  </tr>\n");
         List<DBCarDesign> list = designs.findLatestByAuthor(email);
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
-        for (DesignHistory design : list) {
-            buf.append("  <tr><td><a href='http://carwars.opentools.org/load/").append(design.getUiId()).append("'>").append(
-                    design.getDesignName()).append("</a></td>").append(
-                    "<td>").append(design.getBody()).append("</td><td>$").append(design.getCost()).append("</td><td>").append(
-                    sdf.format(design.getCreateDate())).append("</td></tr>\n");
-        }
-        buf.append("</table>\n");
-        if(!user.isConfirmed()) {
-            buf.append("\n<p>If you'd like to create an account to load your designs through the UI, <a href='http://carwars.opentools.org/confirm/").append(
-                    user.getConfirmationKey()).append("'>click here</a>.</p>");
-        }
-        buf.append("<p>Happy duelling!</p>\n");
-
-        final String text = buf.toString();
-        MimeMessagePreparator mmp = new MimeMessagePreparator() {
-            public void prepare(MimeMessage mimeMessage) throws Exception {
-                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-                String to = name == null || name.equals("") ? email : name+" <"+email+">";
-                message.setTo(to);
-                message.setFrom("Car Wars Combat Garage <garage@carwars.opentools.org>");
-                message.setSubject("Your Car Design");
-                message.setText(text, true);
-            }
-        };
-        try {
-            this.mailSender.send(mmp);
-        } catch (MailException e) {
-            if(e.getCause() instanceof MailConnectException && e.getCause().getCause() instanceof ConnectException &&
-                    e.getCause().getMessage().contains("localhost")) {
-                System.err.println(text);
-            } else {
-                e.printStackTrace();
-            }
-        }
+        mailer.sendDesignEmail(user, list);
     }
 }
