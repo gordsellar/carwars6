@@ -5455,8 +5455,20 @@
                     }
                 }
                 text += this.weapons[0].textDescription(/ and /.test(location), (this.name === 'Rocket Platform' ? 'on ' : 'in ')
-                    + (this.universal ? "universal " : '') + this.name + (/ and /.test(location) ? 's' : '') + (location === 'Top' ? '' : ' ' + location),
+                    + (this.universal ? "Universal " : '') + this.name + (/ and /.test(location) ? 's' : '') + (location === 'Top' ? '' : ' ' + location),
                     linked);
+
+                var started = false;
+                if((turret.name === CW.turrets.EWP.name || turret.name === CW.turrets.Pintle_Mount.name) && turret.armor) {
+                    text += started ? " and " : " w/";
+                    text += turret.armor.textDescription() + (this.name === CW.turrets.EWP.name ? ' EWP armor' : " Tripod Gunshield");
+                    started = true;
+                }
+                if(/EWP/.test(turret.name) && turret.ewpEjectionSystem) {
+                    text += started ? " and " : " w/";
+                    text += "EWP Ejection System";
+                    started = true;
+                }
             } else {
                 if (turret.fake) text += "Fake ";
                 if (turret.universal) text += "Universal ";

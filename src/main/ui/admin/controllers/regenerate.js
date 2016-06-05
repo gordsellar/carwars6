@@ -162,13 +162,25 @@
             });
         };
 
-        server.allCarIDs(function(data) {
-            ids = data;
-            $scope.errorMessage = null;
-            $scope.total = ids.length;
-        }, function() {
-            $scope.alert("ID Load Failed");
-        });
+        var loadIDs = function() {
+            server.allCarIDs(function(data) {
+                ids = data;
+                $scope.errorMessage = null;
+                $scope.total = ids.length;
+            }, function() {
+                $scope.alert("ID Load Failed");
+            });
+        };
+        loadIDs();
+
+        $scope.changeId = function() {
+            if($scope.regenerateId) {
+                ids = [parseInt($scope.regenerateId)];
+                $scope.total = 1;
+            } else {
+                loadIDs();
+            }
+        };
 
         $scope.start = function () {
             $scope.running = true;

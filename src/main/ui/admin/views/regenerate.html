@@ -13,6 +13,9 @@
             <checkbox-item ng-model="generateImage" ng-hide="running">Regenerate Image</checkbox-item>
             <checkbox-item ng-model="generateText" ng-hide="running">Overwrite Text/Tech/Pass</checkbox-item>
             <label class="item item-input">
+                <input type="text" placeholder="Regenerate One ID" ng-model="regenerateId" ng-change="changeId()">
+            </label>
+            <label class="item item-input">
                 <span class="input-label">{{total}}<span ng-show="generate"> ({{generateCount}})</span>:</span>
                 <input type="number" ng-model="count">
             </label>
